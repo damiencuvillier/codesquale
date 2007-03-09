@@ -10,11 +10,12 @@
 
 ==2. Classe==
 || *Abréviation* || *Détails* || *Description* || *Méthode de calcul* ||
-||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||||
-||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||||
-||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||||
-||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||||
+||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||_N/A_||
+||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||_N/A_||
+||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||_N/A_||
+||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||NCCL = NTLA - NCCL||
 ||*NCCL*||Nombre total de classe *_concrète*_.||Nombre total de classes *_concrètes_* (toutes les classes qui ne sont pas *_abstract_*).||NCCL = NTLA - NACL||
+||*NICL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées_* (toutes les classes *_non static_* contenues dans une classe).||_N/A_||
 
 
 ==3. Ligne de code source==
