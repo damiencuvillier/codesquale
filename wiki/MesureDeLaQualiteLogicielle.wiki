@@ -1,0 +1,11 @@
+#summary Détails et explications des métriques logicielles utilisées dans CodeSquale
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+
+||table||cells||
