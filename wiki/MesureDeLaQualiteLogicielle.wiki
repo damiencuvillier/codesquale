@@ -18,6 +18,9 @@
 ||*NICL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées_* (toutes les classes *_non static_* contenues dans une classe).||_N/A_||
 ||*NICL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées_* (toutes les classes *_non static_* contenues dans une classe).||_N/A_||
 ||*NISC*||Nombre total de classe *_imbriquée et statique*_.||Nombre total de classes *_imbriquées_ et statiques* (toutes les classes *_static_* contenues dans une classe).||_N/A_||
+||*NISC*||Nombre total de classe *_imbriquée et statique*_.||Nombre total de classes *_imbriquées_ et statiques* (toutes les classes *_static_* contenues dans une classe).||_N/A_||
+||*NLCL*||Nombre total de classe *_locale*_.||Nombre total de classes *_locale* (suffixé par le mot clé *_private_* ou par une absence de mot clé).||_N/A_||
+||*NTCL*||Nombre total de classe *_enfant*_.||Nombre total de classes *_enfant* (toutes les classes qui dérivent directement d'une autre classe).||_N/A_||
 
 
 ==3. Ligne de code source==
