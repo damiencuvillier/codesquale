@@ -1,14 +1,23 @@
 #summary Détails et explications des métriques logicielles utilisées dans CodeSquale
 
 =Métriques volumétriques=
+
+==1. Général==
 || *Abréviation* || *Détails* || *Description* ||
 ||*NPAC*||Nombre de paquetages.||Nombre de paquetage distinct dans le projet. Les classes non définies dans un paquetage appartiennent au paquetage _default_.||
 ||*NFIL*||Nombre de fichiers.||Nombre de fichiers sources du projet.||
 ||*NINT*||Nombre d'interfaces.||Nombre total d'interfaces (_public_ et _private_) contenu dans le projet.||
+
+==2. Ligne de code source==
 ||*NSTA*||Nombre d'instructions.||Nombre d'instructions totales du projet.||
 ||*NOAT*||Nombres d'attributs.||Nombre total d'attributs  dans le projet||
+||*ELOC*||Nombre de ligne effective de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides et les commentaires.||
+||*PLOC*||Nombre de ligne physique de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides.||
+||*TOLI*||Nombre de lignes sources totales.||Cette mesure comptabilise toutes les lignes de code sans exception.||
+||*COLI*||Nombre de lignes de commentaire.||Cette mesure comptabilise toutes les lignes de commentaire.||
+||*BLLI*||Nombre de lignes vides.||Cette mesure comptabilise toutes les lignes blanches ou vides.||
 
-                                                                                             =Métriques individuelles par classe=
+=Métriques individuelles par classe=
 || *Abréviation* || *Détails* || *Description* ||
-||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par uen classe.||
-||*ELOC*||Nombre effective de ligne de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides et les commentaires.||
+||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par une classe.||
+
