@@ -15,9 +15,8 @@
 ||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||_N/A_||
 ||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||_N/A_||
 ||*NCCL*||Nombre total de classe *_concrète*_.||Nombre total de classes *_concrètes_* (toutes les classes qui ne sont pas *_abstract_*).||_N/A_||
-||*NICL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées_* (toutes les classes *_non static_* contenues dans une classe).||_N/A_||
-||*NISC*||Nombre total de classe *_imbriquée et statique*_.||Nombre total de classes *_imbriquées_ et statiques* (toutes les classes *_static_* contenues dans une classe).||_N/A_||
 ||*NLCL*||Nombre total de classe *_locale*_.||Nombre total de classes *_locale* (suffixé par le mot clé *_private_* ou par une absence de mot clé).||_N/A_||
+||*NLSC*||Nombre total de classe *_locale et statique*_.||Nombre total de classes *_locales_ et statiques* (suffixé par le mot clé *_private static_* ou seulement *_static_* par ).||_N/A_||
 ||*NTCL*||Nombre total de classe *_enfant*_.||Nombre total de classes *_enfant* (toutes les classes qui dérivent directement d'une autre classe).||_N/A_||
 
 
