@@ -4,4 +4,13 @@
 = Métriques volumétriques =
 
 || *Abréviation* || *Détails* || *Description* ||
-||*NPAC* ||Number of Packages||Total number of distinct packages in the project. Classes that are not defined in a package belong to the default package.||
+||*NPAC*||Nombre de paquetages||Nombre de paquetage distinct dans le projet. Les classes non définies dans un paquetage appartiennent au paquetage _default_.||
+||*NFIL*||Nombre de fichiers||Nombre de fichiers sources du projet.||
+||*NINT*||Nombre d'interfaces||Nombre total d'interfaces (_public_ et _private_) contenu dans le projet.||
+
+= Métriques individuelles par classe =
+
+|| *Abréviation* || *Détails* || *Description* ||
+||*NOII*||Nombre d'interface implémenté||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par uen classe.||
+||**|| || ||
+||**|| || ||
