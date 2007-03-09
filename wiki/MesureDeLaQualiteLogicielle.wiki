@@ -11,7 +11,10 @@
 ==2. Classe==
 || *Abréviation* || *Détails* || *Description* ||
 ||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||
-||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_*.||
+||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||
+||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||
+||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||
+
 
 ==3. Ligne de code source==
 || *Abréviation* || *Détails* || *Description* ||
@@ -23,7 +26,7 @@
 ||*COLI*||Nombre de lignes de commentaire.||Cette mesure comptabilise toutes les lignes de commentaire.||
 ||*BLLI*||Nombre de lignes vides.||Cette mesure comptabilise toutes les lignes blanches ou vides.||
 
-<br>=Métriques individuelles par classe=</br>
+=Métriques individuelles par classe=
 
 || *Abréviation* || *Détails* || *Description* ||
 ||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par une classe.||
