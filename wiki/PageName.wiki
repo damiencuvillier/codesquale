@@ -1,9 +1,9 @@
-#summary One-sentence summary of this page.
+#summary Documentation rapide sur l'utilisation de JavaCC
 #labels parser,java
 
 = JavaCC =
 
-Documentation rapide sur l'utilisation de JavaCC
+
 
 Java CC est un parser syntaxique développé en java permettant de parser de nombreux langages de programmation. 
 
