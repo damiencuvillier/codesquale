@@ -9,11 +9,12 @@
 ||*NINT*||Nombre d'interfaces.||Nombre total d'interfaces (_public_ et _private_).||
 
 ==2. Classe==
-|| *Abréviation* || *Détails* || *Description* ||
-||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||
-||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||
-||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||
-||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||
+|| *Abréviation* || *Détails* || *Description* || *Méthode de calcul* ||
+||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||||
+||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||||
+||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||||
+||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||||
+||*NCCL*||Nombre total de classe *_concrète*_.||Nombre total de classes *_concrètes_* (toutes les classes qui ne sont pas *_abstract_*).||NCCL = NTLA - NACL||
 
 
 ==3. Ligne de code source==
