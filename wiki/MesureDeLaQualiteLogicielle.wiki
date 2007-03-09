@@ -1,4 +1,7 @@
 #summary Détails et explications des métriques logicielles utilisées dans CodeSquale
 
 
+= Métriques volumétriques =
+
 || Abréviation || Détails || Description ||
+|| ||Number of Packages||Total number of distinct packages in the project. Classes that are not defined in a package belong to the default package.||
