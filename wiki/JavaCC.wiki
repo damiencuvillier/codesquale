@@ -1,0 +1,21 @@
+#summary Documentation rapide sur l'utilisation de JavaCC
+#labels syntaxe,parser,java
+
+= JavaCC =
+
+
+
+Java CC est un parser syntaxique développé en java permettant de parser de nombreux langages de programmation. 
+
+= Description = 
+JavaCC est un parser se basant sur une description de grammaire. De part sa conception, il permet ainsi de s'adapter à de nombreux langages de programmations. 
+
+Une fois une grammaire rédigée, en respectant une syntaxe particulière, l'utilisateur fournit avec JavaCC (en ligne de commande) permet de générer un parser. Ce parser est alors utilisable en ligne de commande ou réutilisable dans un projet global.
+
+Dans le cadre du projet CodeSquale, il peut être intéressant d'utiliser un tel outil. Ainsi, l'adaptabilité du produit à de nouveaux langages de programmation se limitera uniquement à l'écriture de nouveaux fichiers de grammaires. En outre, JavaCC dispose déja de nombreux de ces fichiers. Malheureusement, C# n'est pas encore réalisé.
+
+
+= Outillage =
+JavaCC, de part sa notoriété, a l'avantage de bénéficier de nombreux projets annexes. Il y a notamment un plugin Eclipse permettant de simplifier son utilisation en semi-automatisant l'utilisation des fichiers de grammaire.
+
+Ainsi, à partir des fichiers de grammaires, il génére automatiquement les classes du parser. De plus, le plugin fournit également une coloration syntaxique permettant de clarifier le développement de nouvelles grammaires.
