@@ -23,8 +23,7 @@
 ||*COLI*||Nombre de lignes de commentaire.||Cette mesure comptabilise toutes les lignes de commentaire.||
 ||*BLLI*||Nombre de lignes vides.||Cette mesure comptabilise toutes les lignes blanches ou vides.||
 
-
-=Métriques individuelles par classe=
+<br>=Métriques individuelles par classe=</br>
 
 || *Abréviation* || *Détails* || *Description* ||
 ||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par une classe.||
