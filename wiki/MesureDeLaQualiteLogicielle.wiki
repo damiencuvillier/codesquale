@@ -6,9 +6,8 @@
 || *Abréviation* || *Détails* || *Description* ||
 ||*NPAC*||Nombre de paquetages||Nombre de paquetage distinct dans le projet. Les classes non définies dans un paquetage appartiennent au paquetage _default_.||
 ||*NFIL*||Nombre de fichiers||Nombre de fichiers sources du projet.||
-||*NINT*||Nombre d'interfaces||Nombre total d'interfaces (_public_ et _private_) contenu dans le projet.|| 
- 
- 
+||*NINT*||Nombre d'interfaces||Nombre total d'interfaces (_public_ et _private_) contenu dans le projet.||                                                                                              
+
 = Métriques individuelles par classe =
 
 || *Abréviation* || *Détails* || *Description* ||
