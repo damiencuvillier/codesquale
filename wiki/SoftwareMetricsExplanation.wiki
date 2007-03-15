@@ -48,8 +48,14 @@
 ||*NMSV*||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
 
 ==__________________________________________________________________________________________==
-=Metrics by class=
+=Individual metrics=
 ==__________________________________________________________________________________________==
+
+==2. General metrics==
+|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+
+
+==2. Class metrics==
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
@@ -62,6 +68,4 @@
 ||*RSPD*||Percentage of blank line and space compared to the total of LOC.||The space percentage is given by the formula : Space percentage = Total number of characters / Total number of blank characters.||_N/A_||
 ||*RCPD*||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
 ||*RELM*||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
-
-
-
+||*RMBC*||Average number of methods by class.||This measure provides the average quantity of methods by class.||N/A_||
