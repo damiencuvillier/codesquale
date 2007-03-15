@@ -29,16 +29,22 @@ In this particular context has appeared the *source code audit*. There are sever
 Here is the future way of using `CodeSquale`.
 Regroup all the source code in one folder. You don't need to have all the project code and all librairies. You just need to have the source files (i.e. files with .java extension).
 
-The first step aims to *collect all the data we can about the project struture*. All theses informations will be used in the next step to calculate metrics. To do that, you will use a shell command : {{{CS-collect.bat <path>}}} where <path> is the path where your source code is located.
+===1'===
+The first step aims to *collect all the data we can about the project struture*. All theses informations will be used in the next step to calculate metrics. To do that, you will use a shell command : {{{CS-collect.bat <path>}}} where <path> is the path where your source code is located. This command provide an XML file which contains all the data.
 
 This step is composed by three parts : 
  * Lexing
  * Parsing
  * Building a representative tree
 
-
-The second step aims to *sort the collected data to calculate all the metrics*. We will give a complete documentation for each metric. 
+===2'===
+The second step aims to *sort the collected data to calculate all the metrics*. We will give a complete documentation for each metric. Use the following syntax to use this tool : {{{CS-analyse.bat <file>}}}. <file> is the XML file given by the previous command.
 
 Most of the others open source projects we found, are not full documented. Consequently, it is difficult to analyse some metric and to give advices to solve the identified issue.
 
-The document
+The document SoftwareMetricsExplanation will be our reference. We aim to provide all the metrics which are included in this document. 
+
+Besides, the architecture of this feature must be very modular. Thus, it will work by using a plugin system. Each metric will be a plugin.
+
+
+
