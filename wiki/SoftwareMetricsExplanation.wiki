@@ -37,4 +37,4 @@
 =Metrics by class=
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.|_N/A_||
+||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
