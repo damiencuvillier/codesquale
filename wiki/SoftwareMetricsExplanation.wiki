@@ -1,7 +1,8 @@
 #summary Explanation about software metrics used in CodeSquale
-
+==__________________________________________________________________________________________==
 =Volumetry metrics=
 ==__________________________________________________________________________________________==
+
 ==1. General metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
@@ -37,9 +38,9 @@
 ||*COLI*||Number of commented lines.||Count only commented lines.||_N/A_||
 ||*BLLI*||Number of blank lines.||Count only blank lines.||_N/A_||
 
-------------------------------------------------------------------------------------------
+==__________________________________________________________________________________________==
 =Metrics by class=
-------------------------------------------------------------------------------------------
+==__________________________________________________________________________________________==
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
