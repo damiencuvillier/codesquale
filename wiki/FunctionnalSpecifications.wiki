@@ -1,0 +1,15 @@
+#summary Goals & Future Features
+#labels Phase-Requirements,Featured
+= Introduction =
+
+Before starting the project, it is necessary to specify the goals of the project.
+
+ 
+After reading the [[ProjectOrganization]] page, you will understand easily the project lifecycle.
+
+= Features =
+
+
+
+
+
