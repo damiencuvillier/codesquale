@@ -8,7 +8,6 @@
 ||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
 ||*NFIL*||Number of source files.||The total number of sources files included in the project.||_N/A_||
 ||*NINT*||Number of interfaces.||Total number of interfaces(_public_ and_private_).||_N/A_||
-||*NOAT*||NUmber of attributes.||Total number of attributes in the project.||_N/A_||
 
 ==2. Class metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
@@ -38,6 +37,11 @@
 ||*TOLI*||Total number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
 ||*COLI*||Number of commented lines.||Count only commented lines.||_N/A_||
 ||*BLLI*||Number of blank lines.||Count only blank lines.||_N/A_||
+
+
+==5. Variable metrics==
+|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+||*NOAT*||NUmber of attributes.||Total number of attributes in the project.||_N/A_||
 
 ==__________________________________________________________________________________________==
 =Metrics by class=
