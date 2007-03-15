@@ -20,6 +20,7 @@
 ||*NLSC*||Number of *_local and static class*_.||Total number of *_local_ and static class* (suffixed by the keyword *_private static_* or *_static_*).||_N/A_||
 ||*NNCL*||Number of *_nested class_*.||Total number  of *_nested class_* (all classes nested by another class).||N/A_||
 ||*NTCL*||Number of *_child class*_.||Total number  of *_child class_* (all classes which derived directly from another class).||_N/A_||
+||*NCII*||Number of class implementing at least one interface.||This measure provides a count of the total number classes implementing an interface or more.||_N/A_||
 
 ==3. Method metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
@@ -58,8 +59,7 @@
 ==__________________________________________________________________________________________==
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-
-
+||*RSPD*||Percentage of blank line and space compared to the total of LOC.||The space percentage is given by the formula : Space percentage = Total number of characters / Total number of blank characters.||_N/A_||
 
 
 
