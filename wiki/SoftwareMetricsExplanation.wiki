@@ -4,20 +4,28 @@
 
 ==1. General==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NPAC*||Nombre de paquetages.||Nombre de paquetage distinct dans le projet. Les classes non définies dans un paquetage appartiennent au paquetage _default_.||_N/A_||
-||*NFIL*||Nombre de fichiers.||Nombre de fichiers sources du projet.||_N/A_||
-||*NINT*||Nombre d'interfaces.||Nombre total d'interfaces (_public_ et _private_).||_N/A_||
+||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
+||*NFIL*||Number of source files.||The total number of sources files included in the project.||_N/A_||
+||*NINT*||Number of interfaces.||Total number of interfaces(_public_ and_private_).||_N/A_||
 
 ==2. Class==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||_N/A_||
-||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||_N/A_||
-||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||_N/A_||
-||*NACL*||Nombre total de classe *_abstraite*_.||Nombre total de classes *_abstraites_* (suffixé par le mot clé *_abstract_*).||_N/A_||
+||*NTLA*||Number of classes.||Total number of classes.||_N/A_||
+
+||*NPCL*||Total number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
+
+||*NFCL*||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
+
+||*NACL*||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
+
 ||*NCCL*||Nombre total de classe *_concrète*_.||Nombre total de classes *_concrètes_* (toutes les classes qui ne sont pas *_abstract_*).||_N/A_||
+
 ||*NLCL*||Nombre total de classe *_locale*_.||Nombre total de classes *_locales* (suffixé par le mot clé *_private_* ou par une absence de mot clé).||_N/A_||
+
 ||*NLSC*||Nombre total de classe *_locale et statique*_.||Nombre total de classes *_locales_ et statiques* (suffixé par le mot clé *_private static_* ou seulement *_static_* par ).||_N/A_||
+
 ||*NNCL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées* (toutes les classes qui sont imbriquées à l'intérieur d'une classe).||N/A_||
+
 ||*NTCL*||Nombre total de classe *_enfant*_.||Nombre total de classes *_enfants* (toutes les classes qui dérivent directement d'une autre classe).||_N/A_||
 
 ==3. Method==
