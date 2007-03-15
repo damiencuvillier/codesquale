@@ -1,1 +1,1 @@
-[project]
+[http://code.google.com/p/codesquale/ CodeSquale]
