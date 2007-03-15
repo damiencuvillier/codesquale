@@ -60,6 +60,8 @@
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*RSPD*||Percentage of blank line and space compared to the total of LOC.||The space percentage is given by the formula : Space percentage = Total number of characters / Total number of blank characters.||_N/A_||
+||*RCPD*||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
+||*RELM*||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
 
 
 
