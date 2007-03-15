@@ -11,22 +11,14 @@
 ==2. Class==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NTLA*||Number of classes.||Total number of classes.||_N/A_||
-
 ||*NPCL*||Total number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
-
 ||*NFCL*||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
-
 ||*NACL*||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
-
-||*NCCL*||Nombre total de classe *_concrète*_.||Nombre total de classes *_concrètes_* (toutes les classes qui ne sont pas *_abstract_*).||_N/A_||
-
-||*NLCL*||Nombre total de classe *_locale*_.||Nombre total de classes *_locales* (suffixé par le mot clé *_private_* ou par une absence de mot clé).||_N/A_||
-
-||*NLSC*||Nombre total de classe *_locale et statique*_.||Nombre total de classes *_locales_ et statiques* (suffixé par le mot clé *_private static_* ou seulement *_static_* par ).||_N/A_||
-
-||*NNCL*||Nombre total de classe *_imbriquée*_.||Nombre total de classes *_imbriquées* (toutes les classes qui sont imbriquées à l'intérieur d'une classe).||N/A_||
-
-||*NTCL*||Nombre total de classe *_enfant*_.||Nombre total de classes *_enfants* (toutes les classes qui dérivent directement d'une autre classe).||_N/A_||
+||*NCCL*||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
+||*NLCL*||Number of *_local class*_.||Total number of *_local class_* (suffixed by the keyword *_private_* or no suffixed by keyword).||_N/A_||
+||*NLSC*||Number of *_local and static class*_.||Total number of*_local_ and static class* (suffixed by the keyword *_private static_* or *_static_*).||_N/A_||
+||*NNCL*||Number of *_nested class_*.||Total number  of *_nested class_* (all classes nested by another class).||N/A_||
+||*NTCL*||Number of *_child class*_.||Total number  of *_child class_* (all classes which derived directly from another class).||_N/A_||
 
 ==3. Method==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
