@@ -1,15 +1,15 @@
-#summary Détails et explications des métriques logicielles utilisées dans CodeSquale
+#summary Explanation about software metrics used in CodeSquale
 
-=Métriques volumétriques=
+=Volumetry metrics=
 
-==1. Général==
-|| *Abréviation* || *Détails* || *Description* || *Supporté par CodeSquale* ||
+==1. General==
+|| *Metric abbreviation* || *Details* || *Description* || *CodeSquale supported features* ||
 ||*NPAC*||Nombre de paquetages.||Nombre de paquetage distinct dans le projet. Les classes non définies dans un paquetage appartiennent au paquetage _default_.||_N/A_||
 ||*NFIL*||Nombre de fichiers.||Nombre de fichiers sources du projet.||_N/A_||
 ||*NINT*||Nombre d'interfaces.||Nombre total d'interfaces (_public_ et _private_).||_N/A_||
 
 ==2. Classe==
-|| *Abréviation* || *Détails* || *Description* || *Supporté par CodeSquale* ||
+|| *Metric abbreviation* || *Details* || *Description* || *CodeSquale supported features* ||
 ||*NTLA*||Nombre total de classe sans exception.||Nombre total de classes sans exception.||_N/A_||
 ||*NPCL*||Nombre total de classe *_publique*_.||Nombre total de classes *_publiques_* (suffixé par le mot clé *_public_*).||_N/A_||
 ||*NFCL*||Nombre total de classe *_finale*_.||Nombre total de classes *_finales_* (suffixé par le mot clé *_final_*).||_N/A_||
@@ -21,11 +21,11 @@
 ||*NTCL*||Nombre total de classe *_enfant*_.||Nombre total de classes *_enfants* (toutes les classes qui dérivent directement d'une autre classe).||_N/A_||
 
 ==3. Méthode==
-|| *Abréviation* || *Détails* || *Description* || *Supporté par CodeSquale* ||
+|| *Metric abbreviation* || *Details* || *Description* || *CodeSquale supported features* ||
 ||*NOME*||Nombre total de méthodes.||Nombre total de méthodes sans exception.||_N/A_||
 
 ==4. Ligne de code source==
-|| *Abréviation* || *Détails* || *Description* || *Supporté par CodeSquale* ||
+|| *Metric abbreviation* || *Details* || *Description* || *CodeSquale supported features* ||
 ||*NSTA*||Nombre d'instructions.||Nombre d'instructions totales du projet.||_N/A_||
 ||*NOAT*||Nombres d'attributs.||Nombre total d'attributs  dans le projet||_N/A_||
 ||*ELOC*||Nombre de ligne effective de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides et les commentaires.||_N/A_||
@@ -36,5 +36,5 @@
 
 =Métriques individuelles par classe=
 
-|| *Abréviation* || *Détails* || *Description* || *Supporté par CodeSquale* ||
+|| *Metric abbreviation* || *Details* || *Description* || *CodeSquale supported features* ||
 ||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par une classe.||_N/A_||
