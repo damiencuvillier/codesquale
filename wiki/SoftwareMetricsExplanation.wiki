@@ -7,7 +7,7 @@
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
 ||*NFIL*||Number of source files.||The total number of sources files included in the project.||_N/A_||
-||*NINT*||Number of interfaces.||Total number of interfaces(_public_ and_private_).||_N/A_||
+||*NINT*||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_N/A_||
 
 ==2. Class metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
@@ -59,7 +59,11 @@
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
-||*NOCM*||Number of class methods.||Total number of methods for a single class||N/A_||
+||*NOCM*||Number of class methods.||This measure indicates the number of methods that have been explicitly defined in a class.It does not include the methods inherited from a super class.||N/A_||
+||*RROC*||Reuse ratio of a class.||The reuse ratio is given by : U = Number of superclasses/Total number of classes.||N/A_||
+||*RSOC*||Specialization ratio of a class.||This ratio measures the extent to which a superclass has captured abstraction. The specialization ratio is given as : S = Number of
+subclasses / Number of superclasses.||N/A_||
+
 
 ==__________________________________________________________________________________________==
 =Ratio metrics=
