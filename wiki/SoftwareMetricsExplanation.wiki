@@ -26,8 +26,11 @@
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOME*||Number of methods.||Total number  of methods in the project.||_N/A_||
 ||*NONM*||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
-||*NOPM*||Number of *_public_* methods.||Count all the *_public_* methods contained in the project.||_N/A_||
+||*NOPM*||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
 ||*NPRM*||Number of *_private_* methods.||Count all the *_private_* methods.||_N/A_||
+||*NORM*||Number of remote methods.||A remote method call is defined as an invocation
+of a method that is not declared in any of: the class itself; a class or interface
+that the class extends or implements; a class or method that extends the class.||_N/A_||
 
 ==4. Line of source code metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
