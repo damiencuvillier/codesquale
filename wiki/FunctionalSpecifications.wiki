@@ -6,10 +6,19 @@ Before starting the project, it is necessary to specify the goals of the project
 
 If you want to use this project, the document will help you knowing if CodeSquale fits to your needs.
 
-Note : After reading the RoadMap page, you will understand easily the project lifecycle.
+_Note : After reading the RoadMap page, you will understand easily the project lifecycle._
 
 = Context =
-During the last years, offshoring et externalization has been more and more used to lead it project. It has become necessary to control the quality of
+During the last years, offshoring et externalization has been more and more used to lead IT project. It has become necessary to control the quality of the suppliers.
+
+In this particular context has appeared the *source code audit*. There are several kind of audit : 
+ * security audit
+ * architecture audit 
+ * syntax audit
+ * dependance audit
+
+{{{CodeSquale}}} is placed on the last one. The project is borned from a lack of fitted solution. Indeed, most of the actual solutions are dynamic, which means that we need to compile the source code to test it. This fact
+
 
 = Features =
 CodeSquale can analyze a set of source code files, and build from them a logical tree, representating the software architecture. Based on this tree, CodeSquale is able to provide plenty of documented software metrics, which represent the global coding quality.
