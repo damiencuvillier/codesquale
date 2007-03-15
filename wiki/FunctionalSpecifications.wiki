@@ -6,7 +6,7 @@ Before starting the project, it is necessary to specify the goals of the project
 
 If you want to use this project, the document will help you knowing if CodeSquale fits to your needs.
 
-Note : After reading the [[RoadMap]] page, you will understand easily the project lifecycle.
+Note : After reading the RoadMap page, you will understand easily the project lifecycle.
 
 = Context =
 During the last years, offshoring et externalization has been more and more used to lead it project. It has become necessary to control the quality of
