@@ -3,13 +3,13 @@
 
 
 = Main Steps =
-20070404 - First Binary ==> Count numbers of classes, files and lines
-20070418 - 
+ * 20070418 - 
+ * 20070404 - First Binary ==> Count numbers of classes, files and lines
+
 
 = Project Organization=
 The project is organised by using short time iteration. Thus, the development team will be able to provide often some binaries.
 
 We want to use the RUP (Rational Unified Process) to simplify our project organisation. By getting a lot of _quick wins_, the project evolution will be visible. 
-
 
 
