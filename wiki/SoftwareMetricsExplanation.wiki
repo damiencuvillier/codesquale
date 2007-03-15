@@ -39,9 +39,13 @@
 ||*BLLI*||Number of blank lines.||Count only blank lines.||_N/A_||
 
 
-==5. Variable metrics==
+==5. Variable and attribute metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NOAT*||NUmber of attributes.||Total number of attributes in the project.||_N/A_||
+||*NOAT*||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
+||*NOPA*||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_N/A_||
+||*NPRA*||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
+||*NMSV*||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
+
 
 ==__________________________________________________________________________________________==
 =Metrics by class=
