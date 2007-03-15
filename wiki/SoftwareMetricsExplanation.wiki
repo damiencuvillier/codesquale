@@ -1,8 +1,7 @@
 #summary Explanation about software metrics used in CodeSquale
 
 =Volumetry metrics=
-=________________________________________________________________________________________=
-
+==__________________________________________________________________________________________==
 ==1. General metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
