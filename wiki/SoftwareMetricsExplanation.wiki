@@ -2,39 +2,39 @@
 
 =Volumetry metrics=
 
-==1. General==
+==1. General metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
 ||*NFIL*||Number of source files.||The total number of sources files included in the project.||_N/A_||
 ||*NINT*||Number of interfaces.||Total number of interfaces(_public_ and_private_).||_N/A_||
+||*NOAT*||NUmber of attributes.||Total number of attributes in the project.||_N/A_||
 
-==2. Class==
+==2. Class metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NTLA*||Number of classes.||Total number of classes.||_N/A_||
 ||*NPCL*||Total number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
 ||*NFCL*||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
 ||*NACL*||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
 ||*NCCL*||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
-||*NLCL*||Number of *_local class*_.||Total number of *_local class_* (suffixed by the keyword *_private_* or no suffixed by keyword).||_N/A_||
-||*NLSC*||Number of *_local and static class*_.||Total number of*_local_ and static class* (suffixed by the keyword *_private static_* or *_static_*).||_N/A_||
+||*NLCL*||Number of *_local class*_.||Total number of *_local class_* (suffixed by the keyword *_private_* or not suffixed by keyword).||_N/A_||
+||*NLSC*||Number of *_local and static class*_.||Total number of *_local_ and static class* (suffixed by the keyword *_private static_* or *_static_*).||_N/A_||
 ||*NNCL*||Number of *_nested class_*.||Total number  of *_nested class_* (all classes nested by another class).||N/A_||
 ||*NTCL*||Number of *_child class*_.||Total number  of *_child class_* (all classes which derived directly from another class).||_N/A_||
 
-==3. Method==
+==3. Method metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NOME*||Nombre total de méthodes.||Nombre total de méthodes sans exception.||_N/A_||
+||*NOME*||Number of methods||Total number  of methods in the project.||_N/A_||
 
-==4. Ligne de code source==
+==4. Line of source code metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NSTA*||Nombre d'instructions.||Nombre d'instructions totales du projet.||_N/A_||
-||*NOAT*||Nombres d'attributs.||Nombre total d'attributs  dans le projet||_N/A_||
-||*ELOC*||Nombre de ligne effective de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides et les commentaires.||_N/A_||
-||*PLOC*||Nombre de ligne physique de code source.||Cette mesure comptabilise toutes les lignes de code exceptée les lignes vides.||_N/A_||
-||*TOLI*||Nombre de lignes sources totales.||Cette mesure comptabilise toutes les lignes de code sans exception.||_N/A_||
-||*COLI*||Nombre de lignes de commentaire.||Cette mesure comptabilise toutes les lignes de commentaire.||_N/A_||
-||*BLLI*||Nombre de lignes vides.||Cette mesure comptabilise toutes les lignes blanches ou vides.||_N/A_||
+||*NSTA*||Number of statement||Total number of statements in the project.||N/A_||
+||*ELOC*||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
+||*PLOC*||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
+||*TOLI*||Total number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
+||*COLI*||Number of commented lines.||Count only commented lines.||_N/A_||
+||*BLLI*||Number of blank lines.||Count only blank lines.||_N/A_||
 
 =Metrics by class=
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NOII*||Nombre d'interface implémenté.||Une classe peut implémenter zéro ou plusieurs interfaces.Cette mesure indique le nombre d'interfaces implémentés par une classe.||_N/A_||
+||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.|_N/A_||
