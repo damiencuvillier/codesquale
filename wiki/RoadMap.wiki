@@ -1,0 +1,12 @@
+#summary Roadmap of the project
+#labels Featured,Phase-Requirements,Phase-Design
+
+= Introduction =
+To understand the project organization, it is necessary to read first the [FunctionnalSpecifications "project organization" part of the functionnal specifications document]
+
+
+= Main Steps =
+
+
+
+
