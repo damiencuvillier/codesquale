@@ -12,7 +12,7 @@
 ==2. Class metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NTLA*||Number of classes.||Total number of classes.||_N/A_||
-||*NPCL*||Total number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
+||*NPCL*||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
 ||*NFCL*||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
 ||*NACL*||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
 ||*NCCL*||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
@@ -34,7 +34,7 @@
 ||*NSTA*||Number of statement||Total number of statements in the project.||N/A_||
 ||*ELOC*||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
 ||*PLOC*||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
-||*TOLI*||Total number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
+||*TOLI*||Number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
 ||*COLI*||Number of commented lines.||Count only commented lines.||_N/A_||
 ||*BLLI*||Number of blank lines.||Count only blank lines.||_N/A_||
 
@@ -46,10 +46,20 @@
 ||*NPRA*||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
 ||*NMSV*||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
 
-
 ==__________________________________________________________________________________________==
 =Metrics by class=
 ==__________________________________________________________________________________________==
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
+
+==__________________________________________________________________________________________==
+=Ratio metrics=
+==__________________________________________________________________________________________==
+
+|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+
+
+
+
+
