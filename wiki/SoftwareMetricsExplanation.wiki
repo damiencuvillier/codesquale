@@ -1,6 +1,6 @@
 #summary Explanation about software metrics used in CodeSquale
 ==__________________________________________________________________________________________==
-=Volumetry metrics=
+=Counting metrics=
 ==__________________________________________________________________________________________==
 
 ==1. General metrics==
@@ -48,17 +48,18 @@
 ||*NMSV*||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
 
 ==__________________________________________________________________________________________==
-=Individual metrics=
+=Unit metrics=
 ==__________________________________________________________________________________________==
 
 ==2. General metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-
+||*MLIM*||Maximun number of LOC detected for a method.||This measure indicates the maximun number of LOC detected for a method.||_N/A_||
 
 ==2. Class metrics==
 
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
+||*NOCM*||Number of class methods.||Total number of methods for a single class||N/A_||
 
 ==__________________________________________________________________________________________==
 =Ratio metrics=
