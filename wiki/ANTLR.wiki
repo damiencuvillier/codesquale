@@ -1,10 +1,16 @@
 #summary This page quickly describes the ANTLR specifications and usage in the code squale project
 #labels Phase-Requirements,Phase-Design
-= Introduction =
 
-ANTLR (Another Tool for Language Recognition) is a syntaxic and lexical analyser generator. 
+=== Introduction ====
 
-ANTLR knows how to build some recognition systems based on grammatical structure and then apply it on 3 types of entry:
+ANTLR (Another Tool for Language Recognition) is a syntaxical and lexical analyser generator. ANTLR is able to generate a "parsing system" designed specifically for a development language. In order to generate this "specific parsing system", ANTLR is based upon a grammar file which describes the specification of a development language.
+
+The output of ANTLR is Java generated classes able to parse a source file according to the grammar file provided initialy.
+
+
+== What does ANTLR generate? ==
+
+The "generated parsing system" 
 
   * lexer : A lexer (often called a scanner) breaks up an input stream of characters into vocabulary symbols for a parser, which applies a grammatical structure to that symbol stream
 
@@ -15,7 +21,7 @@ ANTLR knows how to build some recognition systems based on grammatical structure
 
 = Usage =
 
-== What does ANTLR generate? ==
+
 
 The first language to be implemented in code squale will be Java. So, we will explain what ANTLR generates with a Java grammar file. 
 ANTLR generates all the needed java files to provides an efficient parsing system :
