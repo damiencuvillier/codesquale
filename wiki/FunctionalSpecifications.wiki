@@ -46,4 +46,6 @@ The document SoftwareMetricsExplanation will be our reference. We aim to provide
 
 Besides, the architecture of this feature must be very modular. Thus, it will work by using a plugin system. Each metric will be a plugin.
 
+[http://codesquale.googlepages.com/MoulinettesProcessSADT.png]
+SADT Diagram
 
