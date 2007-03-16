@@ -2,7 +2,7 @@
 
 = Introduction =
 
-ANTLR (Another Tool for Language Recognition) is a syntaxic and lexical analyser generator. He provides some tools to generate code in Java, C++, C#, from grammatical descriptions.
+ANTLR (Another Tool for Language Recognition) is a syntaxic and lexical analyser generator. It provides some tools to generate code in Java, C++, C#, from grammatical descriptions.
 
 ANTLR knows how to build some recognition systems based on grammatical structure and then apply it on 3 types of entry:
 
@@ -13,9 +13,14 @@ ANTLR knows how to build some recognition systems based on grammatical structure
   * tree-parsers (tree-walkers) : A more powerful parsing strategy is to build an intermediate representation that holds all or most of the input symbols and has encoded the relationship between those tokens, in the structure of the data.
 
 
-= Details =
+= Usage =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== What does ANTLR generate? ==
+
+The first language to be implemented in code squale will be Java. So, we will explain what ANTLR generate with a Java grammar file. 
+ANTLR generates all the needed files to provides an efficient parsing system :
+
+ * JavaLexer.java : Defines the lexer, a Token.java inherited class 
+ * JavaRecognizer.java : Wich is the implementation for the parser
+ * JavaTokenTypes.java : An interface wich defines all the Java language Tokens
+
