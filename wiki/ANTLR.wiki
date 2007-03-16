@@ -17,8 +17,8 @@ ANTLR knows how to build some recognition systems based on grammatical structure
 == What does ANTLR generate? ==
 
 The first language to be implemented in code squale will be Java. So, we will explain what ANTLR generate with a Java grammar file. 
-ANTLR generates all the needed files to provides an efficient parsing system :
+ANTLR generates all the needed java files to provides an efficient parsing system :
 
- * JavaLexer.java : Defines the lexer, a Token.java inherited class 
- * JavaRecognizer.java : Wich is the implementation for the parser
- * JavaTokenTypes.java : An interface wich defines all the Java language Tokens
+ * JavaLexer : Defines the lexer, a Token.java inherited class 
+ * JavaRecognizer : Wich is the implementation for the parser
+ * JavaTokenTypes : An interface wich defines all the Java language Tokens
