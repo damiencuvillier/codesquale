@@ -1,5 +1,4 @@
-#summary One-sentence summary of this page.
-
+#summary This page quickly describes the ANTLR specifications and usage in the code squale project
 = Introduction =
 
 ANTLR (Another Tool for Language Recognition) is a syntaxic and lexical analyser generator. It provides some tools to generate code in Java, C++, C#, from grammatical descriptions.
