@@ -5,9 +5,7 @@
 ANTLR (Another Tool for Language Recognition) is a syntaxic and lexical analyser generator. He provides some tools to generate code in Java, C++, C#, from grammatical descriptions.
 
 ANTLR knows how to build some recognition systems based on grammatical structure and then apply it on 3 types of entry:
-  * lexer : A lexer (often called a scanner) breaks up an input stream of characters into 
-    vocabulary symbols for a parser, which applies a grammatical structure to that symbol 
-    stream
+  * lexer : A lexer (often called a scanner) breaks up an input stream of characters into vocabulary symbols for a parser, which applies a grammatical structure to that symbol stream
 
 = Details =
 
@@ -15,4 +13,3 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
-
