@@ -16,4 +16,4 @@ We use the fifth version of java.
 Endly, to build UML diagram, we use StarUML.
 To build general diagrams, we use Dia. 
 
-All these softwares are included in a VMWare
+All these softwares are included in a VMWare image based on Ubuntu (6.10) Linux Distribution. VMWare is hosted on Windows XP SP2.
