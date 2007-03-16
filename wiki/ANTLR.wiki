@@ -23,4 +23,3 @@ ANTLR generates all the needed files to provides an efficient parsing system :
  * JavaLexer.java : Defines the lexer, a Token.java inherited class 
  * JavaRecognizer.java : Wich is the implementation for the parser
  * JavaTokenTypes.java : An interface wich defines all the Java language Tokens
-
