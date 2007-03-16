@@ -1,2 +1,19 @@
 #summary Details about our environment development and tools
+#labels Tools
 
+To make easier contributions, here is the development team work environment.
+
+As the development in made with Java Language, we use Eclipse IDE with the following versions : 
+ * Eclipse 3.2 SDK
+ * Language pack
+ * EMF
+ * VE 1.2.3_jem
+ * GEF
+ * AntLR plugin
+
+We use the fifth version of java. 
+
+Endly, to build UML diagram, we use StarUML.
+To build general diagrams, we use Dia. 
+
+All these softwares are included in a VMWare
