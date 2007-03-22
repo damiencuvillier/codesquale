@@ -1,3 +1,7 @@
+header
+{
+	package com.codesquale.parser;
+}	
 /** Java 1.5 Recognizer
 /** Java 1.5 Recognizer
  *
