@@ -10,37 +10,7 @@ header
  */	
 class JavaTreeParser extends TreeParser;
 options{importVocab = Java;}
-{
-	//===Code duplication
-int statID = 0;
-FileObj file;
 
-public JavaTreeParser(FileObj file){
-	tokenNames = _tokenNames;
-	this.file = file;
-}
-
-//remove null elements
-public void refineArray(Vector<AST> v){
-    for (Enumeration<AST> e = v.elements() ; e.hasMoreElements() ;) {
-        AST t = e.nextElement();
-        if (t == null) {
-            v.removeElement(t);
-        }
-    }
-}
-public void reportError(RecognitionException ex) {
-     Token token = null;
-     if ( ex instanceof MismatchedTokenException ) {
-         token = ((CodeReviewAST)((MismatchedTokenException)ex).node).token;
-     }
-     else if ( ex instanceof NoViableAltException ) {
-         token = ((CodeReviewAST)((NoViableAltException)ex).node).token;
-     }
-     System.err.println("syntax error at "+token+" in tree: "+ex.toString());
-}
-	
-}
 compilationUnit
 	:	(packageDefinition)?
 		(importDefinition)*
