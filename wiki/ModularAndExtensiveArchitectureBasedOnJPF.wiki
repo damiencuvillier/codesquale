@@ -1,1 +1,1 @@
-#summary Description of the usage of JPF in Codesquale
+#summary Description of JPF and the use of it in codesquale.
