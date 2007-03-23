@@ -1,6 +1,31 @@
 #summary Description of JPF and the use of it in codesquale.
 
-====What is JPF===
+===What is JPF ?==
 JPF provides a runtime engine that dynamically discovers and loads "plug-ins". A plug-in is a structured component that describes itself to JPF using a "manifest". JPF maintains a registry of available plug-ins and the functions they provide (via extension points and extensions).
 
 One major goal of JPF is that the application (and its end-user) should not pay any memory or performance penalty for plug-ins that are installed, but not used. Plug-ins are added to the registry at application start-up or while the application is running but they are not loaded until they are called.
+
+
+==Modularity and extensivity==
+
+JPF provides codesquale the way to be modular and extensive.
+
+===Modularity in codesquale===
+Codesquale is divided into few main components : 
+
+* Component 1 : Parsing system 
+The component 1 is responsible to analyse files and produce logical representation of the source code (AST : abstract syntaxic tree).
+
+* Component 2 : DataCollector
+This component is in charge to collect general volumetric data by browsing the AST.
+
+* Component 3 : MetricsCalculator
+This component is able from the DataCollector output to calculate the metrics provided by codesquale.
+
+===Extensivity in codesquale===
+
+* Extensivity 1 : Support of multiple language
+By externalising the parsing system, codesquale is able to load at runtime the approriate parser from the user selected language type.
+
+* Extensivity 2 : Support of new metrics
+Codesquale supports the add of new metrics.
