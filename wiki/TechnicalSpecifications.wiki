@@ -1,2 +1,9 @@
 #summary Technical specifications of codeSquale
 
+== Codesquale is based on Open source Projects ==
+
+Because it is not necessary to re-invent the wheel, Codesquale team choose to base his software on some open source standard.
+
+* [http://www.antlr.org/ ANTLR]: provides Codesquale his performant parsing system. Moreover, the ANTLR parsing system is based on grammar files which will help codesquale to extend easily the code source language support in a near future.
+
+* [http://jpf.sourceforge.net/ JFP (Java Plugin Platform)] : provides the modularity and extensitivity to the Codesquale architecture. Moreover, it will help us to extend the functionnality of Codesquale and widely open it to community.
