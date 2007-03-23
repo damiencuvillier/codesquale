@@ -13,24 +13,24 @@ JPF provides codesquale the way to be modular and extensive.
 ===Modularity in codesquale===
 Codesquale is divided into few main components : 
 
-*Component 1 : Parsing system
+*Component 1 : ParsingSystem*
  
 The component 1 is responsible to analyse files and produce logical representation of the source code (AST : abstract syntaxic tree).
 
-*Component 2 : DataCollector
+*Component 2 : DataCollector*
 
 This component is in charge to collect general volumetric data by browsing the AST.
 
-*Component 3 : MetricsCalculator
+*Component 3 : MetricsCalculator*
 
 This component is able from the DataCollector output to calculate the metrics provided by codesquale.
 
 ===Extensivity in codesquale===
 
-*Extensivity 1 : Support of multiple language
+*Extensivity 1 : Support of multiple language*
 
 By externalising the parsing system, codesquale is able to load at runtime the approriate parser from the user desired language type.
 
-*Extensivity 2 : Support of new metrics
+*Extensivity 2 : Support of new metrics*
 
 Codesquale supports the add of new metrics.
