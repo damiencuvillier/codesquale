@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
+import com.codesquale.exceptions.NotDirectoryException;
+
 /**
  * Class for browsing a path
  *   - List files in a path and in subdirectories
