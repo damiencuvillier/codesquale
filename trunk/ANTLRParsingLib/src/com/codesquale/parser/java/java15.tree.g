@@ -1,9 +1,15 @@
+ header
+ {
+ 	package com.codesquale.parser.java;
+ }
 /** Java 1.5 AST Recognizer Grammar
  *
  * Author: (see java.g preamble)
  *
  * This grammar is in the PUBLIC DOMAIN
  */
+
+ 
 class JavaTreeParser extends TreeParser;
 
 options {

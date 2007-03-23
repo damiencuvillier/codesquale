@@ -1,3 +1,7 @@
+header
+ {
+ 	package com.codesquale.parser.java;
+ }
 /** Java 1.5 Recognizer
 /** Java 1.5 Recognizer
  *
@@ -173,7 +177,9 @@
  *
  * This grammar is in the PUBLIC DOMAIN
  */
+ 
 
+ 
 class JavaRecognizer extends Parser;
 options {
 	k = 2;							// two token lookahead
