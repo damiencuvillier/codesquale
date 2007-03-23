@@ -1,6 +1,6 @@
 #summary Technical specifications of codeSquale
 
-== Codesquale is based on Open source Projects ==
+=== Based on open source standard ===
 
 Because it is not necessary to re-invent the wheel, Codesquale team choose to base his software on some open source standard.
 
