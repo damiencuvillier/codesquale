@@ -33,14 +33,15 @@ public class AppMain {
 			myJavaLexer = new JavaLexer(sourceCodeStream);
 		do
 		{		
-			int i = 0;
 			token = myJavaLexer.nextToken();
-			i = token.getType();
+			
 			if( token.getType() == myJavaLexer.LITERAL_class)
 			{
 				class_cpt++;
 			}
+			
 			System.out.println(token);	
+			
 		}while (token.getType() != myJavaLexer.EOF);
 		
 		System.out.println("Nombre de classes du fichier:" + class_cpt);
