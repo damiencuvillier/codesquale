@@ -1,4 +1,4 @@
-#summary This page quickly describes the ANTLR specifications and usage in the code squale project
+#summary Description of ANTLR and the use of it in codesquale.
 
 == Introduction ===
 
