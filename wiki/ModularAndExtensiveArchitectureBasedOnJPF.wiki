@@ -1,1 +1,6 @@
 #summary Description of JPF and the use of it in codesquale.
+
+====What is JPF===
+JPF provides a runtime engine that dynamically discovers and loads "plug-ins". A plug-in is a structured component that describes itself to JPF using a "manifest". JPF maintains a registry of available plug-ins and the functions they provide (via extension points and extensions).
+
+One major goal of JPF is that the application (and its end-user) should not pay any memory or performance penalty for plug-ins that are installed, but not used. Plug-ins are added to the registry at application start-up or while the application is running but they are not loaded until they are called.
