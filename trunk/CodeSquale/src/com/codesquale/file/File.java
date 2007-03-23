@@ -2,11 +2,7 @@ package com.codesquale.file;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-/**
- * Representes a file
- * @author DCUVILLIER
- *
- */
+
 
 public class File {
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(File.class);
