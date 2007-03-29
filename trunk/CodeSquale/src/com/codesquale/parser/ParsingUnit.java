@@ -10,10 +10,15 @@ import com.codesquale.metrics.RawMetricsData;
 import com.codesquale.parser.java.JavaLexer;
 import com.codesquale.parser.java.JavaTokenTypes;
 
+/**
+ * Represents the subsystem in charge of parsing a single source file
+ * and provides the raw collected data.
+ * These data are necessary to calculte the final metrics.
+ * @author dwillier
+ */
 public class ParsingUnit {
 	
-	////////////////////////
-	// PARSING ATTRIBUTES //
+	
 	// Declaring the Lexer
 	JavaLexer myJavaLexer = null;
 	// Declaring a token unit
@@ -23,12 +28,13 @@ public class ParsingUnit {
 	// Raw metrics data
 	RawMetricsData sourceFileRawData = null;
 	
-	
-	
+	/**
+	 *  Parse a fileStream and calculates counters
+	 * @param codeSourceFileStream
+	 * @return returns a RawMetricsData class necessary to build the final metrics
+	 */
 	public RawMetricsData ParseCodeSourceStream(FileInputStream codeSourceFileStream)
 	{
-
-		
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
 		// Initializiong the metrics
@@ -36,11 +42,7 @@ public class ParsingUnit {
 
 		int previousLine = 0;
 		int tokenLine = 0;
-		// Creating a filter for the lexer
-		TokenStreamBasicFilter filter = new TokenStreamBasicFilter(myJavaLexer);
-		filter.discard(JavaTokenTypes.WS);
-		filter.discard(JavaTokenTypes.ANNOTATION);
-		
+
 		// Simple counting on the class number and method
 		do
 		{
@@ -50,12 +52,16 @@ public class ParsingUnit {
 				e.printStackTrace();
 			}
 
-			if(currentToken.getType()== JavaTokenTypes.LITERAL_class)
-			{
+			// Count the number of class
+			if(currentToken.getType() == JavaTokenTypes.LITERAL_class)
 				sourceFileRawData.IncrementClassCounter();
-			}
 			
-			// Retrieve the number of line
+			// Count the number of methods
+			if(currentToken.getType() == JavaTokenTypes.METHOD_CALL )
+				sourceFileRawData.IncrementMethodCounter();
+			
+			
+			// Count the total number of lines
 			tokenLine = currentToken.getLine();
 			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
 		    previousLine = tokenLine;
