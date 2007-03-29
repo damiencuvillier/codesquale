@@ -35,5 +35,7 @@ public class FileElement extends AbstractElement
 		}
 		return type;
 	}
-	
+	public String toString() {
+		return "FILE "+getName();
+	}
 }
