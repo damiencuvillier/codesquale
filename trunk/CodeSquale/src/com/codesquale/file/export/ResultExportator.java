@@ -1,10 +1,10 @@
 package com.codesquale.file.export;
 
-import com.codesquale.metrics.RawMetricsData;
+import com.codesquale.file.RepositoryBrowser;
 
 public class ResultExportator {
 	
-	public void ExportResult(RawMetricsData result, String fileName)
+	public void ExportResult(RepositoryBrowser project, String fileName)
 	{
 	}
 
