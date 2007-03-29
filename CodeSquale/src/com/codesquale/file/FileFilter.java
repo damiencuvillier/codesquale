@@ -28,10 +28,14 @@ public class FileFilter {
 	 * Constructors
 	 * @param fileExtensions
 	 */
+	public FileFilter(){
+		fileTypes = new Vector<Integer>();
+	}
 	public FileFilter(Vector<String> fileExtensions){
 		init(fileExtensions);
 	}
 	public FileFilter(String[] fileExtensions){
+		this();
 		Vector<String> liste =  new Vector<String>();
 		for(int i=0;i<fileExtensions.length;i++){
 			liste.add(fileExtensions[i]);
@@ -50,8 +54,6 @@ public class FileFilter {
 	public void init(Vector<String> fileExtensions){
 		logger.debug("Initialisation du Filter");
 		
-		// Initialization
-		Vector<Integer> fileTypes = new Vector<Integer>();
 		// Extensions iterator
 		for(String extension:fileExtensions){
 			// File type assignment
@@ -81,5 +83,8 @@ public class FileFilter {
 	 */
 	public Vector<Integer> getFileTypes() {
 		return fileTypes;
+	}
+	public void addFileType(int type){
+		fileTypes.add(type);
 	}
 }

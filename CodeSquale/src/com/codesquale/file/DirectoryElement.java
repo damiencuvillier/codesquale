@@ -23,34 +23,40 @@ public class DirectoryElement extends AbstractElement {
 	private Vector<DirectoryElement> directoriesList = null;
 	private Vector<FileElement> filesList = null;
 	
-	
+	private FileFilter filter = null;
 	/**
 	 * 
 	 * @param dir
 	 * @throws NotDirectoryException
 	 */
 	public DirectoryElement(java.io.File dir) throws NotDirectoryException {
+		this(dir, null);
+	}
+	public DirectoryElement(java.io.File dir, FileFilter filter) throws NotDirectoryException {
 		super(dir);
+		
 		if (!dir.isDirectory())
 			throw new NotDirectoryException(dir);
 		globalList = new TreeSet<AbstractElement>();
 		directoriesList = new Vector<DirectoryElement>();
 		filesList = new Vector<FileElement>();
+		this.filter=filter;
 		browseFiles(dir);
+		
+		
 	}
-
 	/**
 	 * Browses all files with the specified filter
 	 * 
 	 * @param dir
 	 */
-	private void browseFiles(java.io.File dir, FileFilter filter) {
+	private void browseFiles(java.io.File dir) {
 		File[] list = dir.listFiles();
 		for (int i = 0; i < list.length; i++) {
 			File file = list[i];
 			if (file.isDirectory())
 				try {
-					DirectoryElement directoryElement = new DirectoryElement(file);
+ 					DirectoryElement directoryElement = new DirectoryElement(file);
 					globalList.add(directoryElement);
 					directoriesList.add(directoryElement);
 				} catch (NotDirectoryException e) {
@@ -69,9 +75,6 @@ public class DirectoryElement extends AbstractElement {
 		}
 	}
 
-	private void browseFiles(java.io.File dir) {
-		browseFiles(dir, null);
-	}
 
 	public TreeSet<AbstractElement> getGlobalList() {
 		return globalList;
@@ -86,7 +89,22 @@ public class DirectoryElement extends AbstractElement {
 	}
 	
 	public String toString() {
-		String superMessage = "";
+		String superMessage = "DIR "+this.getName()+"\n";
+		for(DirectoryElement dir :this.getDirectoriesList()) superMessage+=dir.toString(1)+"\n";
+		for(FileElement file :this.getFilesList()) superMessage+=file.toString()+"\n";
 		return superMessage;
+	}
+	public String toString(int level){
+		String superMessage = "";
+		
+		superMessage += printLevel(level)+"DIR "+this.getName()+"\n";
+		for(DirectoryElement dir :this.getDirectoriesList()) superMessage+=dir.toString(level+1)+"\n";
+		for(FileElement file :this.getFilesList()) superMessage+=printLevel(level+1)+file.toString()+"\n";
+		return superMessage;
+	}
+	private String printLevel(int level){
+		String message = "";
+		for(int i =0;i<level;i++)message+="\t";
+		return message;
 	}
 }
