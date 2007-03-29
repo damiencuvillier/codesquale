@@ -9,96 +9,72 @@ import com.codesquale.parser.java.*;
 import antlr.*;
 import antlr.collections.AST;
 
+/**
+ * 
+ * @author dwillier
+ *
+ */
 public class AppMain {
 
-	
 	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws FileNotFoundException, TokenStreamException {
-
-		// Variables declaration
+	public static void main(String[] args)
+	{
+		/////////////////
+		// DECLARATION //
+		
+		////////////////////////
+		// PARSING ATTRIBUTES //
+		// Declaring the source file stream
 		FileInputStream sourceCodeStream=null;
+		// Declaring the Lexer
 		JavaLexer myJavaLexer = null;
-		JavaRecognizer myJavaParser = null; 
-		Token token = null;
+		// Declaring the Parser
+		JavaTreeParser treeParser=null;
+		// Declaring a token unit
+		Token currentToken = null;
 		
-		int class_cpt = 0;
-		int method_cpt = 0;
+		//////////////
+		// COUNTERS //
+		int classCounter = 0;
+		int methodCounter = 0;
 		
-		AST ast = null;
-		ASTFactory factory = null;
-		
-		JavaTreeParser treeParser = new JavaTreeParser();
 		
 		try 
 		{
+			// Opening the source file stream
 			sourceCodeStream = new FileInputStream(new File("U:\\sampleTest.java"));
-		}
-		catch (FileNotFoundException e)
+		} 
+		catch (FileNotFoundException e) 
 		{
 			e.printStackTrace();
-			throw e;
 		}
+		
 
-		try 
+		// Initializing the Lexer
+		myJavaLexer = new JavaLexer(sourceCodeStream);
+
+		// Creating a filter for the lexer
+		TokenStreamBasicFilter filter = new TokenStreamBasicFilter(myJavaLexer);
+		filter.discard(JavaTokenTypes.WS);
+		filter.discard(JavaTokenTypes.ANNOTATION);
+		
+		// Simple counting on the class number and method
+		do
 		{
-			myJavaLexer = new JavaLexer(sourceCodeStream);
+			try {
+				currentToken = myJavaLexer.nextToken();
+			} catch (TokenStreamException e) {
+				e.printStackTrace();
+			}
 			
-			// Creation du parser utilisant le scanner
-			myJavaParser = new JavaRecognizer(myJavaLexer);
-			// Et on parse
-			myJavaParser.compilationUnit();
+			if(currentToken.getType()== JavaTokenTypes.CLASS_DEF)
+			{
+				classCounter++;
+			}
 			
-			// Factory pour l'ast
-			factory = new ASTFactory();
 			
-			ast = factory.create();
-		
-			ast.setFirstChild(myJavaParser.getAST());
-						
-			// Creation de l'arbre logique
-			treeParser = new JavaTreeParser();
-			// On rempli
-			treeParser.compilationUnit(ast);
-			
-			ast.toStringList();
-			
-		} catch (RecognitionException e) {
-			// TODO Bloc catch auto-généré
-			e.printStackTrace();
-		}
-//		do
-//		{		
-//			token = myJavaLexer.nextToken();
-//			int i = token.getType();
-//			
-//			if( i == myJavaLexer.LITERAL_class)
-//			{
-//				class_cpt++;
-//			}
-//			else if(i == myJavaLexer.METHOD_CALL)
-//			{
-//				method_cpt++;
-//			}
-//				
-//			
-//			System.out.println(token);	
-//			
-//		}while (token.getType() != myJavaLexer.EOF);
-		
-//		System.out.println("Nombre de classes du fichier:" + class_cpt);
-//		System.out.println("Nombre de method de la classe:" + method_cpt);
-//		System.out.println("Nombre de ligne du fichier:" + token.getLine());	
-//			
-			
-//		} catch (TokenStreamException e) {
-//			e.printStackTrace();
-//			throw e;
-//		}					
-			
+		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
 	
-    		
-	
-    
 	
 	}
 
