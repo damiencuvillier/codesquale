@@ -5,9 +5,10 @@ import java.io.FileInputStream;
 import antlr.Token;
 import antlr.TokenStreamException;
 
-import com.codesquale.metrics.RawMetricsData;
-import com.codesquale.parser.java.JavaLexer;
-import com.codesquale.parser.java.JavaTokenTypes;
+import com.codesquale.file.*;
+import com.codesquale.metrics.*;
+import com.codesquale.parser.java.*;
+import com.codesquale.utils.*;
 
 /**
  * Represents the subsystem in charge of parsing a single source file
@@ -17,7 +18,6 @@ import com.codesquale.parser.java.JavaTokenTypes;
  */
 public class ParsingUnit {
 	
-	
 	// Declaring the Lexer
 	JavaLexer myJavaLexer = null;
 	// Declaring a token unit
@@ -26,6 +26,9 @@ public class ParsingUnit {
 	
 	// Raw metrics data
 	RawMetricsData sourceFileRawData = null;
+	
+//	 Enables the class to log errors
+	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(File.class);
 	
 	/**
 	 *  Parse a fileStream and calculates counters
@@ -49,6 +52,7 @@ public class ParsingUnit {
 				currentToken = myJavaLexer.nextToken();
 			} catch (TokenStreamException e) {
 				e.printStackTrace();
+				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
 			}
 
 			// Count the number of class
@@ -56,7 +60,7 @@ public class ParsingUnit {
 				sourceFileRawData.IncrementClassCounter();
 			
 			// Count the number of methods
-			if(currentToken.getType() == JavaTokenTypes.METHOD_CALL )
+			if(currentToken.getType() == JavaTokenTypes.METHOD_CALL)
 				sourceFileRawData.IncrementMethodCounter();
 			
 			
