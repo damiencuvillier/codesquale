@@ -2,6 +2,11 @@ package com.codesquale.view.console;
 
 import com.codesquale.metrics.RawMetricsData;
 
+/**
+ * Display on the console a formated view of the results
+ * @author dwillier
+ *
+ */
 public class ResultView {
 	
 	public void DisplayResults(RawMetricsData rawData)

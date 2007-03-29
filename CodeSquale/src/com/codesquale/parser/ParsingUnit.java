@@ -3,7 +3,6 @@ package com.codesquale.parser;
 import java.io.FileInputStream;
 
 import antlr.Token;
-import antlr.TokenStreamBasicFilter;
 import antlr.TokenStreamException;
 
 import com.codesquale.metrics.RawMetricsData;
