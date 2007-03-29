@@ -24,53 +24,61 @@ public class ParsingUnit {
 	
 	// Declaring the Lexer
 	JavaLexer myJavaLexer = null;
+	JavaLexer myLineLexer = null;
 	// Declaring a token unit
 	Token currentToken = null;
 	JavaRecognizer myJavaRecognizer = null;
-	JavaTreeParser myJavaTreeParser = null;
+
 	int TypeCount[] = new int[1]; 
 	// Raw metrics data
-	RawMetricsData sourceFileRawData = null;
+	RawMetricsData sourceFileRawData = new RawMetricsData();;
 	
 //	 Enables the class to log errors
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
 	
+	
+	
+	public void ParseLineNumber(FileInputStream codeSourceFileStream)
+	{
+		//	Initialise 
+		myLineLexer = new JavaLexer(codeSourceFileStream);
+		//	Initializiong the metrics
+		
+		
+		int previousLine = 0;
+		int tokenLine = 0;
+
+		// Simple counting on the class number and method
+		do
+		{
+			try {
+				currentToken = myLineLexer.nextToken();
+			} catch (TokenStreamException e) {
+				e.printStackTrace();
+				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
+			}
+
+			// Count the total number of lines in this file
+			tokenLine = currentToken.getLine();
+			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
+		    previousLine = tokenLine;
+			
+		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
+
+	}
 	/**
 	 *  Parse a fileStream and calculates counters
 	 * @param codeSourceFileStream
 	 * @return returns a RawMetricsData class necessary to build the final metrics
 	 */
-	public RawMetricsData ParseCodeSourceStream(FileInputStream codeSourceFileStream)
+	public void ParseCodeSourceStream(FileInputStream codeSourceFileStream)
 	{
+				
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
 		//	Initializing the parser
-		myJavaRecognizer = new JavaRecognizer(myJavaLexer);
+		myJavaRecognizer = new JavaRecognizer(myJavaLexer);	
 
-		// Initializiong the metrics
-		sourceFileRawData = new RawMetricsData();
-		
-		int previousLine = 0;
-		int tokenLine = 0;
-
-			
-		// Simple counting on the class number and method
-//		do
-//		{
-//			try {
-//				currentToken = myJavaLexer.nextToken();
-//			} catch (TokenStreamException e) {
-//				e.printStackTrace();
-//				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
-//			}
-//
-//			// Count the total number of lines in this file
-//			tokenLine = currentToken.getLine();
-//			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
-//		    previousLine = tokenLine;
-//			
-//		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
-		
 		// do AST Metrics
 		try {
 			myJavaRecognizer.compilationUnit();
@@ -80,11 +88,9 @@ public class ParsingUnit {
 			
 			t.setFirstChild(myJavaRecognizer.getAST());
 			
-
 			// Get Class_Def count
  			getTypeCount(t, JavaRecognizer.CLASS_DEF, TypeCount);
  			sourceFileRawData.SetClassCount(TypeCount[0]);
-
  			
 			// Get Method_Def count
  			TypeCount[0] = 0;
@@ -95,7 +101,6 @@ public class ParsingUnit {
  			TypeCount[0] = 0;
  			getTypeCount(t, JavaRecognizer.IMPORT, TypeCount);
  			sourceFileRawData.SetImportCount(TypeCount[0]);
-
 			
 		} catch (RecognitionException e1) {
 			// TODO Bloc catch auto-généré
@@ -103,12 +108,7 @@ public class ParsingUnit {
 		} catch (TokenStreamException e1) {
 			// TODO Bloc catch auto-généré
 			e1.printStackTrace();
-		}
-		
-		
-		
-		
-		return sourceFileRawData;
+		}	
 	}
 	/**
 	 * Find a child of the given AST that has the given type
@@ -159,6 +159,12 @@ public class ParsingUnit {
 		showTree(child, level+2);
 		AST next = t.getNextSibling();
 		showTree(next, level);
+	}
+	public RawMetricsData getSourceFileRawData() {
+		return sourceFileRawData;
+	}
+	public void setSourceFileRawData(RawMetricsData sourceFileRawData) {
+		this.sourceFileRawData = sourceFileRawData;
 	}
 
 
