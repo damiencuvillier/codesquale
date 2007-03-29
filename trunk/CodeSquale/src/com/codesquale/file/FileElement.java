@@ -1,35 +1,25 @@
 package com.codesquale.file;
 
+import java.io.File;
 
-
-public class FileElement extends AbstractElement {
+public class FileElement extends AbstractElement 
+{
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FileElement.class);
 	
-	
-
-	
-	private int linesCount = 0;
 	private int type = -1;
+	File file = null;
 	
-	
-	
-	java.io.File file = null;
-	
-	public FileElement(java.io.File file){
-		super(file);
-		this.file = file;
-		
+	public FileElement(File physicalFile)
+	{
+		super(physicalFile);
+		file = physicalFile;
 	}
-	/**
-	 * Initialize the counters
-	 */
 
-	
 	public int getType(){
 		if (type == -1){
 			String extension = getExtension();
 			if( extension.equals("java") ){
-				return JAVA_SOURCEFILE;
+				return FileFilter.JAVA_SOURCEFILE;
 			}
 		}
 		return type;
