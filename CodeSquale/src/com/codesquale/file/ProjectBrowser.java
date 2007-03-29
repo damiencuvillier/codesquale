@@ -1,12 +1,16 @@
 package com.codesquale.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.parser.ParsingUnit;
 
 /**
  * Class for browsing a path
@@ -19,7 +23,7 @@ public class ProjectBrowser {
 	
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
-	private File basePath = null;
+	private DirectoryElement basePath = null;
 	
 
 	/**
@@ -36,7 +40,7 @@ public class ProjectBrowser {
 	 * @param fileTypes : list of authorized file types (Constants are available in class File)
 	 * @throws NotDirectoryException 
 	 */
-	public ProjectBrowser(File path, FileFilter fileFilter) throws NotDirectoryException{
+	public ProjectBrowser(File path, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
 		if( ! path.isDirectory() ){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
@@ -45,9 +49,62 @@ public class ProjectBrowser {
 			throw new NotDirectoryException(path);
 		}
 		this.fileFilter = fileFilter;
-		basePath = path ;
-		DirectoryElement directory = new DirectoryElement(path);
+		basePath = new DirectoryElement(path,fileFilter);
+		
+		
+		/*
+		 * Initialize outputFile
+		 */
+		FileOutputStream outputFileStream = null;
+		try {
+			outputFileStream = new FileOutputStream(outputFile);
+		} catch (FileNotFoundException e) {
+			logger.fatal("Output file cannot be opened");
+		}
+		
+		/**
+		 * Browse javaFiles & get basic metrics
+		 */
+		logger.debug("Populate metrics");
+		populateMetrics();
+		
+		try {
+			outputFileStream.write(basePath.toString().getBytes());
+			outputFileStream.close();
+		} catch (IOException e) {
+			logger.fatal("IOEXCEPTION");
+		}
+		
 	}
+	/**
+	 * Get Metrics
+	 */
+	private void populateMetrics(){
+		
+		int fileCount = 0;
+		int classCount = 0;
+		int methodCount = 0;
+		int linesCount = 0;
+		int constructorCount = 0;
+		//FIXME a placer dans la deuxieme moulinette
+		ParsingUnit parsingUnit =null;
+		for(FileElement fileElement : basePath.getGlobalFileList()){
+			fileCount ++;
+			logger.debug("Parsing "+fileElement.getName());
+			try {
+				parsingUnit = new ParsingUnit();
+				parsingUnit.ParseCodeSourceStream(new FileInputStream(fileElement.getIOElement()));
+				fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
+				classCount+=fileElement.getMetricsData().GetClassCount();
+				methodCount += fileElement.getMetricsData().GetMethodCount();
+				linesCount += fileElement.getMetricsData().GetLineCount();
+				constructorCount+= fileElement.getMetricsData().GetConstructCounter();
+			} catch (FileNotFoundException e) {
+				logger.fatal("Opening File "+fileElement.getName()+" has failed");
+			}
+		}
+		System.out.println("Le projet contient "+fileCount+" fichiers, "+classCount+" classes, "+methodCount+" méthodes et "+linesCount+ " lignes et "+constructorCount+" constructeurs");
 	
+	}
 	
 }
