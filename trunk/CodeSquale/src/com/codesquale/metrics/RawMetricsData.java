@@ -11,6 +11,7 @@ public class RawMetricsData
 	// COUNTERS //
 	int classCounter = 0;
 	int methodCounter = 0;
+	int constructCounter = 0;
 	int lineCounter = 0;
 	int importCounter = 0;
 
@@ -23,9 +24,15 @@ public class RawMetricsData
 	public int GetMethodCount () {return methodCounter;}
 	public int GetLineCount(){return lineCounter;}
 	public int GetImportCount(){return importCounter;}
-	
+	public int GetConstructCounter() {
+		return constructCounter;
+	}
 	public void SetClassCount (int count) { classCounter = count;}
 	public void SetMethodCount (int count) {methodCounter = count;}
 	public void SetLineCount(int count){lineCounter = count;}
 	public void SetImportCount(int count){importCounter = count;}
+	public void SetConstructCounter(int constructCounter) {
+		this.constructCounter = constructCounter;
+	}
+
 }
