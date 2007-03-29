@@ -34,6 +34,8 @@ public class ParsingUnit {
 		// Initializiong the metrics
 		sourceFileRawData = new RawMetricsData();
 
+		int previousLine = 0;
+		int tokenLine = 0;
 		// Creating a filter for the lexer
 		TokenStreamBasicFilter filter = new TokenStreamBasicFilter(myJavaLexer);
 		filter.discard(JavaTokenTypes.WS);
@@ -47,11 +49,16 @@ public class ParsingUnit {
 			} catch (TokenStreamException e) {
 				e.printStackTrace();
 			}
-			
-			if(currentToken.getType()== JavaTokenTypes.CLASS_DEF)
+
+			if(currentToken.getType()== JavaTokenTypes.LITERAL_class)
 			{
 				sourceFileRawData.IncrementClassCounter();
 			}
+			
+			// Retrieve the number of line
+			tokenLine = currentToken.getLine();
+			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
+		    previousLine = tokenLine;
 			
 			
 		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
