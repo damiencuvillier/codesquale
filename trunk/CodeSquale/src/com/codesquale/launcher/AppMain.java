@@ -3,6 +3,7 @@ package com.codesquale.launcher;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import com.codesquale.metrics.RawMetricsData;
 import com.codesquale.parser.ParsingUnit;
@@ -23,7 +24,10 @@ public class AppMain {
 		try {
 			
 			sourceStream = new FileInputStream(new File("U:\\sampleTest.java"));
-		} catch (FileNotFoundException e) {
+
+			 
+		}	catch (IOException e) {
+			// TODO Bloc catch auto-généré
 			e.printStackTrace();
 		}
 		// Instantiates the class responsible to display the result
@@ -31,9 +35,20 @@ public class AppMain {
 		// Instiates the parsing unit
 		myParsingUnit = new ParsingUnit();
 		// Parses the source code
-		rawData = myParsingUnit.ParseCodeSourceStream(sourceStream);
 		
-		myResultView.DisplayResults(rawData);
+		
+		try {
+			myParsingUnit.ParseLineNumber(new FileInputStream(new File("U:\\sampleTest.java")));
+		} catch (FileNotFoundException e) {
+			// TODO Bloc catch auto-généré
+			e.printStackTrace();
+		}
+		
+	
+		myParsingUnit.ParseCodeSourceStream(sourceStream);
+		
+	
+		myResultView.DisplayResults(myParsingUnit.getSourceFileRawData());
 
 		
 	}
