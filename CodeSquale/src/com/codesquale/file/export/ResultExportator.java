@@ -1,10 +1,10 @@
 package com.codesquale.file.export;
 
-import com.codesquale.file.RepositoryBrowser;
+import com.codesquale.file.ProjectBrowser;;
 
 public class ResultExportator {
 	
-	public void ExportResult(RepositoryBrowser project, String fileName)
+	public void ExportResult(ProjectBrowser project, String fileName)
 	{
 	}
 
