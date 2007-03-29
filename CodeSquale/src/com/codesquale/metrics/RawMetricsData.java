@@ -18,7 +18,7 @@ public class RawMetricsData
 	public void IncrementLineCounter() {lineCounter++; }
 	
 	public int GetClassCount () {return classCounter;}
-	public int GetMethodcount () {return methodCounter;}
+	public int GetMethodCount () {return methodCounter;}
 	public int GetLine(){return lineCounter;}
 
 }
