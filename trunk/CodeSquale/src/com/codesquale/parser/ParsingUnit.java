@@ -2,8 +2,12 @@ package com.codesquale.parser;
 
 import java.io.FileInputStream;
 
+import antlr.ASTFactory;
+import antlr.CommonAST;
+import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
+import antlr.collections.AST;
 
 import com.codesquale.file.*;
 import com.codesquale.metrics.*;
@@ -22,13 +26,14 @@ public class ParsingUnit {
 	JavaLexer myJavaLexer = null;
 	// Declaring a token unit
 	Token currentToken = null;
-	
-	
+	JavaRecognizer myJavaRecognizer = null;
+	JavaTreeParser myJavaTreeParser = null;
+	int TypeCount[] = new int[1]; 
 	// Raw metrics data
 	RawMetricsData sourceFileRawData = null;
 	
 //	 Enables the class to log errors
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(File.class);
+	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
 	
 	/**
 	 *  Parse a fileStream and calculates counters
@@ -39,40 +44,123 @@ public class ParsingUnit {
 	{
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
+		//	Initializing the parser
+		myJavaRecognizer = new JavaRecognizer(myJavaLexer);
+
 		// Initializiong the metrics
 		sourceFileRawData = new RawMetricsData();
-
+		
 		int previousLine = 0;
 		int tokenLine = 0;
 
+			
 		// Simple counting on the class number and method
-		do
-		{
-			try {
-				currentToken = myJavaLexer.nextToken();
-			} catch (TokenStreamException e) {
-				e.printStackTrace();
-				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
-			}
+//		do
+//		{
+//			try {
+//				currentToken = myJavaLexer.nextToken();
+//			} catch (TokenStreamException e) {
+//				e.printStackTrace();
+//				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
+//			}
+//
+//			// Count the total number of lines in this file
+//			tokenLine = currentToken.getLine();
+//			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
+//		    previousLine = tokenLine;
+//			
+//		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
+		
+		// do AST Metrics
+		try {
+			myJavaRecognizer.compilationUnit();
+			
+			ASTFactory factory = new ASTFactory();
+			AST t = factory.create(0,"ROOT");
+			
+			t.setFirstChild(myJavaRecognizer.getAST());
+			
 
-			// Count the number of class
-			if(currentToken.getType() == JavaTokenTypes.LITERAL_class)
-				sourceFileRawData.IncrementClassCounter();
+			// Get Class_Def count
+ 			getTypeCount(t, JavaRecognizer.CLASS_DEF, TypeCount);
+ 			sourceFileRawData.SetClassCount(TypeCount[0]);
+
+ 			
+			// Get Method_Def count
+ 			TypeCount[0] = 0;
+ 			getTypeCount(t, JavaRecognizer.METHOD_DEF, TypeCount);
+ 			sourceFileRawData.SetMethodCount(TypeCount[0]);
+ 		
+			// Get Method_Def count
+ 			TypeCount[0] = 0;
+ 			getTypeCount(t, JavaRecognizer.IMPORT, TypeCount);
+ 			sourceFileRawData.SetImportCount(TypeCount[0]);
+
 			
-			// Count the number of methods
-			if(currentToken.getType() == JavaTokenTypes.METHOD_CALL)
-				sourceFileRawData.IncrementMethodCounter();
-			
-			
-			// Count the total number of lines
-			tokenLine = currentToken.getLine();
-			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
-		    previousLine = tokenLine;
-			
-			
-		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
+		} catch (RecognitionException e1) {
+			// TODO Bloc catch auto-généré
+			e1.printStackTrace();
+		} catch (TokenStreamException e1) {
+			// TODO Bloc catch auto-généré
+			e1.printStackTrace();
+		}
+		
+		
+		
 		
 		return sourceFileRawData;
 	}
+	/**
+	 * Find a child of the given AST that has the given type
+	 * @returns a child AST of the given type. If it can't find a child of the given type, return null.
+	 */
+	private AST getChild(AST ast, int childType) {
+		AST child = ast.getFirstChild();
+		while (child != null) {
+			if (child.getType() == childType) {
+				// debug.println("getChild: found:" + name(ast));
+				return child;
+			}
+			child = child.getNextSibling();
+		}
+		return null;
+	}
+	/**
+	 * Count the number of type occurence in the abstract tree
+	 * @param t the Abstract tree that contain the types
+	 * @param type the type you need to count
+	 * @param count in out parameter, give number of type occurence
+	 * 
+	 */
+	private void getTypeCount(AST t, int type, int count[]) {
+		if ( t==null ) return;
+		
+		if(t.getType() == type)
+			count[0]++;
+	
+		AST child = t.getFirstChild();
+		getTypeCount(child, type, count);
+		
+		AST next = t.getNextSibling();
+		getTypeCount(next, type, count);
+	
+	}
+	/**
+	 * 
+	 * @param t
+	 * @param level
+	 */
+	private  void showTree(AST t, int level) {
+		if ( t==null ) return;
+		
+		System.out.println("text:" + t.getText() + " type=" + t.getType());
+	
+		AST child = t.getFirstChild();
+		showTree(child, level+2);
+		AST next = t.getNextSibling();
+		showTree(next, level);
+	}
+
+
 
 }
