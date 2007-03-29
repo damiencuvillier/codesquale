@@ -101,6 +101,11 @@ public class ParsingUnit {
  			TypeCount[0] = 0;
  			getTypeCount(t, JavaRecognizer.IMPORT, TypeCount);
  			sourceFileRawData.SetImportCount(TypeCount[0]);
+ 			
+ 			// Get Construct_def count
+ 			TypeCount[0] = 0;
+ 			getTypeCount(t, JavaRecognizer.CTOR_DEF, TypeCount);
+ 			sourceFileRawData.SetConstructCounter(TypeCount[0]);
 			
 		} catch (RecognitionException e1) {
 			// TODO Bloc catch auto-généré
