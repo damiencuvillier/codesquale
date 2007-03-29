@@ -1,6 +1,6 @@
 package com.codesquale.parser;
 
-import com.codesquale.file.RepositoryBrowser;
+import com.codesquale.file.ProjectBrowser;
 
 
 /**
@@ -8,9 +8,9 @@ import com.codesquale.file.RepositoryBrowser;
  * Bind the first analysis results (RawMetricsData) to the source file.
  * @author dwillier
  * 
- */public class CodeSourceAnalysisProcessor {
+ */public class SourceAnalysisProcessor {
 	
-	public void Process(RepositoryBrowser projectToAnalyse)
+	public void Process(ProjectBrowser projectToAnalyse)
 	{
 	}
 }
