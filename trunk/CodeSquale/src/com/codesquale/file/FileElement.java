@@ -1,6 +1,11 @@
 package com.codesquale.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import com.codesquale.metrics.RawMetricsData;
+import com.codesquale.parser.ParsingUnit;
 
 public class FileElement extends AbstractElement 
 {
@@ -10,6 +15,11 @@ public class FileElement extends AbstractElement
 	private String extension;
 	File file = null;
 	
+	
+	/*
+	 * Metrics parameters
+	 */
+	RawMetricsData metricsData = null;
 	
 	public FileElement(File physicalFile)
 	{
@@ -36,6 +46,19 @@ public class FileElement extends AbstractElement
 		return type;
 	}
 	public String toString() {
-		return "FILE "+getName();
+		// FIXME à génériser car ici on part du principe qu'il s'agit de fichiers java uniquement
+		String message = "FILE "+getName()+"\tMétriques : Classe(s) :"+metricsData.GetClassCount();
+		message += " Lines : " + metricsData.GetLineCount()+ " Methods : "+metricsData.GetMethodCount();
+		return message;
+	}
+
+
+	public RawMetricsData getMetricsData() {
+		return metricsData;
+	}
+
+
+	public void setMetricsData(RawMetricsData metricsData) {
+		this.metricsData = metricsData;
 	}
 }
