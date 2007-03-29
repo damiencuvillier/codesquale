@@ -56,7 +56,7 @@ public class DirectoryElement extends AbstractElement {
 			File file = list[i];
 			if (file.isDirectory())
 				try {
- 					DirectoryElement directoryElement = new DirectoryElement(file);
+ 					DirectoryElement directoryElement = new DirectoryElement(file,filter);
 					globalList.add(directoryElement);
 					directoriesList.add(directoryElement);
 				} catch (NotDirectoryException e) {
@@ -74,8 +74,23 @@ public class DirectoryElement extends AbstractElement {
 
 		}
 	}
-
-
+	/**
+	 * Get files list included in directory AND subdirectory
+	 * @return
+	 */
+	public Vector<FileElement> getGlobalFileList(){
+		Vector<FileElement> liste = new Vector<FileElement>();
+		for (FileElement element:getFilesList()) liste.add(element);
+		for(DirectoryElement dir : getDirectoriesList()){
+			for(FileElement file: dir.getGlobalFileList()) liste.add(file);
+		}
+		return liste;
+	}
+	
+	/**
+	 * Getters
+	 * @return
+	 */
 	public TreeSet<AbstractElement> getGlobalList() {
 		return globalList;
 	}
@@ -83,11 +98,13 @@ public class DirectoryElement extends AbstractElement {
 	public Vector<DirectoryElement> getDirectoriesList() {
 		return directoriesList;
 	}
-
+	
 	public Vector<FileElement> getFilesList() {
 		return filesList;
 	}
-	
+	/**
+	 * Display Methods
+	 */
 	public String toString() {
 		String superMessage = "DIR "+this.getName()+"\n";
 		for(DirectoryElement dir :this.getDirectoriesList()) superMessage+=dir.toString(1)+"\n";
@@ -107,4 +124,5 @@ public class DirectoryElement extends AbstractElement {
 		for(int i =0;i<level;i++)message+="\t";
 		return message;
 	}
+	
 }
