@@ -12,16 +12,24 @@ public class FileFilter {
 	 * 
 	 * File Types
 	 */
-	public static final int JAVA_SOURCEFILE = 1; 
+	
+	public static final int JAVA_SOURCEFILE = 1;
+	public static final int XML_FILE = 2;
+	public static final int JAVA_BINARYFILE = 3; 
 	
 	
+	
+	/**
+	 * List of the enabled filetypes
+	 */
 	private Vector<Integer> fileTypes = null;
+	
+	/**
+	 * Constructors
+	 * @param fileExtensions
+	 */
 	public FileFilter(Vector<String> fileExtensions){
 		init(fileExtensions);
-	}
-	public FileFilter(Vector<Integer> fileTypes){
-		
-	
 	}
 	public FileFilter(String[] fileExtensions){
 		Vector<String> liste =  new Vector<String>();
@@ -30,11 +38,48 @@ public class FileFilter {
 		}
 		init(liste);
 	}
+	
+	
+	/**
+	 * Initialization
+	 * 
+	 * Convert extensions to types
+	 * 
+	 * @param fileExtensions
+	 */
 	public void init(Vector<String> fileExtensions){
-		Vector<Integer> fileTypes = new Vector<Integer>();
-		for(String extension:fileExtensions){
-			if( extension.equals("java"))fileTypes.add(JAVA_SOURCEFILE);
+		logger.debug("Initialisation du Filter");
 		
+		// Initialization
+		Vector<Integer> fileTypes = new Vector<Integer>();
+		// Extensions iterator
+		for(String extension:fileExtensions){
+			// File type assignment
+			fileTypes.add(getType(extension));
 		}
+	}
+	
+	public static int getType(String extension){
+		if( extension.equals("java")) return FileFilter.JAVA_SOURCEFILE;
+		if( extension.equals("class")) return FileFilter.JAVA_BINARYFILE;
+		if( extension.equals("xml")) return FileFilter.XML_FILE;
+		return -1;
+	}
+	
+	/**
+	 * Return true if the parameter is includes in
+	 * the allowed type file list
+	 * @param extension
+	 * @return
+	 */
+	public boolean isAllowed(String extension){
+		return fileTypes.contains(getType(extension));
+	}
+	/**
+	 * Getters
+	 * @return
+	 */
+	public Vector<Integer> getFileTypes() {
+		return fileTypes;
 	}
 }
