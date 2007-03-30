@@ -17,11 +17,14 @@ import com.codesquale.parser.ParsingUnit;
  * @author DCUVILLIER
  *
  */
-public class ProjectBrowser {
+public class ProjectBrowser 
+{
 	
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
 	private DirectoryElement basePath = null;
+	
+	private FileOutputStream outputFileStream = null;
 	
 	
 	/**
@@ -53,17 +56,26 @@ public class ProjectBrowser {
 		/*
 		 * Initialize outputFile
 		 */
-		FileOutputStream outputFileStream = null;
+		
 		try {
 			outputFileStream = new FileOutputStream(outputFile);
 		} catch (FileNotFoundException e) {
 			logger.fatal("Output file cannot be opened");
 		}
 		
+		
+		
+	}
+	
+	
+	
+	
+	public void ProcessAnalysis()
+	{
 		/**
 		 * Browse javaFiles & get basic metrics
 		 */
-		logger.debug("Populate metrics");
+		logger.debug("Processing analysis of the project source code...");
 		populateMetrics();
 		
 		try {
@@ -72,9 +84,7 @@ public class ProjectBrowser {
 		} catch (IOException e) {
 			logger.fatal("IOException at ctor() ProjectBrowser : " +e.getMessage());
 		}
-		
 	}
-	
 	
 	
 	/**
@@ -96,7 +106,7 @@ public class ProjectBrowser {
 		
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
-			
+			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
 			fileCount ++;

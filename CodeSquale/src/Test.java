@@ -35,7 +35,7 @@ public static void main(String[] args)
 			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 			logger.info("Browsing File...");
 			ProjectBrowser browser = new ProjectBrowser(new File(args[0]),new File(args[1]),filter);
-			
+			browser.ProcessAnalysis();
 			
 		} catch (NotDirectoryException e) {
 			logger.fatal("Param is not a valid directory");
