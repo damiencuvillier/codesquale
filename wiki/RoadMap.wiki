@@ -13,10 +13,30 @@ We want to use the RUP (Rational Unified Process) to simplify our project organi
 = RELEASE NOTES =
 ___________________________________________________________________________________________
 
-== V 0.1 - 2007-03-30 ==
+== V 0.1 [2007-03-30] ==
 
        ===What's new===
+First release of CodeSquale. It is an alpha version but produces few results.
+
+       ===Functionnalities===
+* Analyses a set of java source files
+* Counts some indicators and calculate one metric
+* Display process of analysis on the console
+* Export results into text files
+
+       ===What's calculated ?===
+Counters : 
+          - Lines
+          - Files
+          - Classes
+          - Methods
+          - Interfaces
+Metrics : 
+          - Average number of method by class
 
        ===Download, install and uninstall===
+This first release is not available for the moment because the CodeSquale team estimates that it was too little for the moment. But don't desperate, a new release is coming soon.
 
        ===Known issues===
+
+* The second parameter (result output file) must be a valid file name.
