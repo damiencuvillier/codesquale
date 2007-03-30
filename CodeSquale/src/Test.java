@@ -21,9 +21,7 @@ public static void main(String[] args)
 		logger.info("Opening Test...");
 
 		
-		args = new String[2];
-		args[0] = new String("U:\\");
-		args[1] = new String("Results.txt");
+	
 		
 		
 		if(args.length < 2){
