@@ -1,3 +1,5 @@
+package tests;
+
 
 import java.io.File;
 
@@ -19,11 +21,7 @@ public class Test
 public static void main(String[] args) 
 {
 		logger.info("Opening Test...");
-
-		
 	
-		
-		
 		if(args.length < 2){
 			System.err.println("Check your syntax. Right Syntax is : \n\t first arg: absolute path\n\t second arg : output file");
 			return;
