@@ -1,16 +1,13 @@
 package com.codesquale.file;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
-import com.codesquale.metrics.FileUnitRawMetrics;
 import com.codesquale.parser.ParsingUnit;
 
 /**
