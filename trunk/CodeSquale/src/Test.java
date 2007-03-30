@@ -1,12 +1,7 @@
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import com.codesquale.exceptions.NotDirectoryException;
-import com.codesquale.file.DirectoryElement;
-import com.codesquale.file.FileElement;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.ProjectBrowser;
 
@@ -17,11 +12,19 @@ import com.codesquale.file.ProjectBrowser;
  * @author DCUVILLIER
  *
  */
-public class Test {
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
-			.getLogger(Test.class);
-public static void main(String[] args) {
+public class Test 
+{
+	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Test.class);
+	
+public static void main(String[] args) 
+{
 		logger.info("Opening Test...");
+
+		
+		args = new String[2];
+		args[0] = new String("U:\\");
+		args[1] = new String("Results.txt");
+		
 		
 		if(args.length < 2){
 			System.err.println("Check your syntax. Right Syntax is : \n\t first arg: absolute path\n\t second arg : output file");

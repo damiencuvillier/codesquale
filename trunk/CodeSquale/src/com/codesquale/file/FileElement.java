@@ -1,11 +1,8 @@
 package com.codesquale.file;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import com.codesquale.metrics.RawMetricsData;
-import com.codesquale.parser.ParsingUnit;
+
 
 public class FileElement extends AbstractElement 
 {

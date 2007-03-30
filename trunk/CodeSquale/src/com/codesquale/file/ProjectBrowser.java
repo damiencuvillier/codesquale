@@ -72,10 +72,13 @@ public class ProjectBrowser {
 			outputFileStream.write(basePath.toString().getBytes());
 			outputFileStream.close();
 		} catch (IOException e) {
-			logger.fatal("IOEXCEPTION");
+			logger.fatal("IOException at ctor() ProjectBrowser : " +e.getMessage());
 		}
 		
 	}
+	
+	
+	
 	/**
 	 * Get Metrics
 	 */
@@ -90,26 +93,38 @@ public class ProjectBrowser {
 		
 		//FIXME a placer dans la deuxieme moulinette
 		ParsingUnit parsingUnit =null;
-		for(FileElement fileElement : basePath.getGlobalFileList()){
-			fileCount ++;
+		FileInputStream sourceStream = null;
+		
+		
+		
+		for(FileElement fileElement : basePath.getGlobalFileList())
+		{
+			
 			logger.debug("Parsing "+fileElement.getName());
-			try {
-				parsingUnit = new ParsingUnit();
+			
+			fileCount ++;
+			parsingUnit = new ParsingUnit();
+			
+			try 
+			{
+				sourceStream = new FileInputStream(fileElement.getIOElement());
+			} 
+			catch (FileNotFoundException e) 
+			{
+				logger.fatal("Opening File "+fileElement.getName()+" has failed");
+			}
 				
-				parsingUnit.ParseCodeSourceStream(new FileInputStream(fileElement.getIOElement()));
-				//parsingUnit.ParseLineNumber(new FileInputStream(fileElement.getIOElement()));
-				
-				fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
+
+			parsingUnit.DoParse(sourceStream);
+		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
 				
 				classCount+=fileElement.getMetricsData().GetClassCount();
 				methodCount += fileElement.getMetricsData().GetMethodCount();
 				linesCount += fileElement.getMetricsData().GetLineCount();
 				constructorCount+= fileElement.getMetricsData().GetConstructCounter();
-//				interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
+                interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
 				
-			} catch (FileNotFoundException e) {
-				logger.fatal("Opening File "+fileElement.getName()+" has failed");
-			}
+			
 		}
 		System.out.println("Le projet contient: ");
 		System.out.println(fileCount+" fichiers, ");
