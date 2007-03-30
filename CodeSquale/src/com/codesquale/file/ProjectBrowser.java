@@ -86,6 +86,8 @@ public class ProjectBrowser {
 		int methodCount = 0;
 		int linesCount = 0;
 		int constructorCount = 0;
+		int interfaceCount = 0;
+		
 		//FIXME a placer dans la deuxieme moulinette
 		ParsingUnit parsingUnit =null;
 		for(FileElement fileElement : basePath.getGlobalFileList()){
@@ -93,17 +95,29 @@ public class ProjectBrowser {
 			logger.debug("Parsing "+fileElement.getName());
 			try {
 				parsingUnit = new ParsingUnit();
+				
 				parsingUnit.ParseCodeSourceStream(new FileInputStream(fileElement.getIOElement()));
+				//parsingUnit.ParseLineNumber(new FileInputStream(fileElement.getIOElement()));
+				
 				fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
+				
 				classCount+=fileElement.getMetricsData().GetClassCount();
 				methodCount += fileElement.getMetricsData().GetMethodCount();
 				linesCount += fileElement.getMetricsData().GetLineCount();
 				constructorCount+= fileElement.getMetricsData().GetConstructCounter();
+//				interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
+				
 			} catch (FileNotFoundException e) {
 				logger.fatal("Opening File "+fileElement.getName()+" has failed");
 			}
 		}
-		System.out.println("Le projet contient "+fileCount+" fichiers, "+classCount+" classes, "+methodCount+" méthodes et "+linesCount+ " lignes et "+constructorCount+" constructeurs");
+		System.out.println("Le projet contient: ");
+		System.out.println(fileCount+" fichiers, ");
+		System.out.println(classCount+" classes, ");
+		System.out.println(methodCount+" méthodes, ");
+		System.out.println(linesCount+ " lignes, ");
+		System.out.println(constructorCount+" constructeurs, ");
+		System.out.println(interfaceCount+" interfaces, ");
 	
 	}
 	
