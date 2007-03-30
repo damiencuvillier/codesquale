@@ -16,6 +16,12 @@ public class FileUnitRawMetrics
 	int importCounter = 0;
 	int interfaceCounter = 0;
 
+	//////////////////
+	// Informations //
+	String parsedFile;
+	
+	public FileUnitRawMetrics(String parsedFile){ this.parsedFile = parsedFile; }
+	
 	public void IncrementClassCounter() {classCounter++;}
 	public void IncrementMethodCounter() {methodCounter++;}
 	public void IncrementLineCounter() {lineCounter++; }

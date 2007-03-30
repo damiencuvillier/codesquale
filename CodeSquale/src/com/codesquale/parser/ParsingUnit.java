@@ -33,7 +33,7 @@ public class ParsingUnit {
 	int TypeCount[] = new int[1]; 
 	
 	// Raw metrics data
-	FileUnitRawMetrics sourceFileRawData = new FileUnitRawMetrics();;
+	FileUnitRawMetrics sourceFileRawData =null;
 	
 	// Enables the class to log errors
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
@@ -126,6 +126,9 @@ public class ParsingUnit {
 	
 	public void DoParse(File codeSourceFile)
 	{
+		
+		sourceFileRawData = new FileUnitRawMetrics(codeSourceFile.getAbsolutePath());
+		
 	    FileInputStream duplicateSourceStream = null;
 	    FileInputStream codeSourceFileStream= null;
 		try {

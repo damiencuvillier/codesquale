@@ -2,7 +2,7 @@ package com.codesquale.file;
 
 public abstract class AbstractElement implements Comparable 
 {
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractElement.class);
+	//private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractElement.class);
 
 	/**
 	 * Simple File Name
