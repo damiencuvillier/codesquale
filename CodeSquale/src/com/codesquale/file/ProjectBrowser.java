@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.metrics.MetricsCalculator;
 import com.codesquale.metrics.ProjectUnitRatioMetrics;
 import com.codesquale.parser.ParsingUnit;
 
@@ -20,11 +21,11 @@ import com.codesquale.parser.ParsingUnit;
  */
 public class ProjectBrowser 
 {
+	private ProjectUnitRatioMetrics projectGlobalMetrics = null;
 	
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
 	private DirectoryElement basePath = null;
-	
 	private FileOutputStream outputFileStream = null;
 	
 	
@@ -88,26 +89,23 @@ public class ProjectBrowser
 	
 	
 
-	private void populateMetrics(){
-		
-		int fileCount = 0;
-		int classCount = 0;
-		int methodCount = 0;
-		int linesCount = 0;
-		int constructorCount = 0;
-		int interfaceCount = 0;
-		
-		//FIXME a placer dans la deuxieme moulinette
+	private void populateMetrics()
+	{
+		projectGlobalMetrics = new ProjectUnitRatioMetrics();
 		ParsingUnit parsingUnit =null;
 		
 		
 		
+		int classCount=0;
+		int methodCount=0;
+		int linesCount=0;
+		int interfaceCount=0;
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
-			fileCount ++;
+			projectGlobalMetrics.IncrementFileCounter();
 			parsingUnit = new ParsingUnit();
 			
 			
@@ -119,27 +117,32 @@ public class ProjectBrowser
 				classCount+=fileElement.getMetricsData().GetClassCount();
 				methodCount += fileElement.getMetricsData().GetMethodCount();
 				linesCount += fileElement.getMetricsData().GetLineCount();
-				constructorCount+= fileElement.getMetricsData().GetConstructCounter();
                 interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
 
 		}
 		
-		ProjectUnitRatioMetrics ratioMetrics = new ProjectUnitRatioMetrics();
+
+		projectGlobalMetrics.SetClassCount(classCount);
+		projectGlobalMetrics.SetMethodCount(methodCount);
+		projectGlobalMetrics.SetlinesCount(linesCount);
+		projectGlobalMetrics.SetInterfaceCounter(interfaceCount);
 		
-		ratioMetrics.setRatioMethodByClass(classCount, methodCount);
 		
 		
 		
-		System.out.println("Project Raw Data Metrics : ");
-		System.out.println(fileCount+" files, ");
-		System.out.println(classCount+" classes, ");
-		System.out.println(methodCount+" methodes, ");
-		System.out.println(linesCount+ " lines, ");
-		System.out.println(constructorCount+" constructors, ");
+		System.out.println("Project global Metrics : ");
+		System.out.println(projectGlobalMetrics.GetFileCounter()+" files, ");
+		System.out.println(projectGlobalMetrics.GetClassCount()+" classes, ");
+		System.out.println(projectGlobalMetrics.GetMethodCount()+" methodes, ");
+		System.out.println(projectGlobalMetrics.GetLineCount()+ " lines, ");
+
 		System.out.println(interfaceCount+" interfaces, ");
 		
-		System.out.println("Project Ration Data Metrics : ");
-		System.out.println("\tAverage number of methods by class: "+ ratioMetrics.getRatioMethodByClass());
+		System.out.println("Project Ratio Metrics : ");
+		System.out.println("\tAverage number of methods by class: " + 
+				Float.toString(MetricsCalculator.CalculateRatioMethodByClass
+				(projectGlobalMetrics.GetClassCount(),
+				 projectGlobalMetrics.GetMethodCount())));
 		
 		
 	

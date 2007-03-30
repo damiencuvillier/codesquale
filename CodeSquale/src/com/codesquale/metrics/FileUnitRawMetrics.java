@@ -41,7 +41,7 @@ public class FileUnitRawMetrics
 	public void SetLineCount(int count){this.lineCounter = count;}
 	public void SetImportCount(int count){this.importCounter = count;}
 	public void SetConstructCounter(int constructCounter) {	this.constructCounter = constructCounter;}
-	public void SetInterfaceCounter(int interfaceCounter) {this.interfaceCounter = interfaceCounter;	}
+	public void SetInterfaceCounter(int interfaceCounter) {this.interfaceCounter = interfaceCounter;}
 
 
 }
