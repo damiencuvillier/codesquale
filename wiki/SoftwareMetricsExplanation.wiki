@@ -24,7 +24,7 @@
 
 ==3. Method metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NOME*||Number of methods.||Total number  of methods in the project.||_N/A_||
+||*NOME*||Number of methods.||Total number  of methods in the project (without counting the class constructors).|| Yes ||
 ||*NONM*||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
 ||*NOPM*||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
 ||*NPRM*||Number of *_private_* methods.||Count all the *_private_* methods.||_N/A_||
@@ -61,9 +61,8 @@
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
 ||*NOCM*||Number of class methods.||This measure indicates the number of methods that have been explicitly defined in a class.It does not include the methods inherited from a super class.||N/A_||
 ||*RROC*||Reuse ratio of a class.||The reuse ratio is given by : U = Number of superclasses/Total number of classes.||N/A_||
-||*RSOC*||Specialization ratio of a class.||This ratio measures the extent to which a superclass has captured abstraction.The specialization ratio is given as : S = Number of
-subclasses/Number of superclasses.||N/A_||
-
+||*RSOC*||Specialization ratio of a class. || This ratio measures the extent to which a superclass has captured abstraction. The specialization ratio is given as : S = Number of
+subclasses/Number of superclasses. ||N/A_||
 
 ==__________________________________________________________________________________________==
 =Ratio metrics=
