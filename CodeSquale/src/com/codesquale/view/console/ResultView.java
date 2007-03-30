@@ -1,6 +1,6 @@
 package com.codesquale.view.console;
 
-import com.codesquale.metrics.RawMetricsData;
+import com.codesquale.metrics.FileUnitRawMetrics;
 
 /**
  * Display on the console a formated view of the results
@@ -9,7 +9,7 @@ import com.codesquale.metrics.RawMetricsData;
  */
 public class ResultView {
 	
-	public void DisplayResults(RawMetricsData rawData)
+	public void DisplayResults(FileUnitRawMetrics rawData)
 	{
 		System.out.println("* Number of lines: "+rawData.GetLineCount());
 		System.out.println("* Number of class: "+rawData.GetClassCount());

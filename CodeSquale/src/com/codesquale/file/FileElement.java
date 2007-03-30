@@ -1,7 +1,7 @@
 package com.codesquale.file;
 
 import java.io.File;
-import com.codesquale.metrics.RawMetricsData;
+import com.codesquale.metrics.FileUnitRawMetrics;
 
 
 public class FileElement extends AbstractElement 
@@ -16,7 +16,7 @@ public class FileElement extends AbstractElement
 	/*
 	 * Metrics parameters
 	 */
-	RawMetricsData metricsData = null;
+	FileUnitRawMetrics metricsData = null;
 	
 	public FileElement(File physicalFile)
 	{
@@ -50,12 +50,12 @@ public class FileElement extends AbstractElement
 	}
 
 
-	public RawMetricsData getMetricsData() {
+	public FileUnitRawMetrics getMetricsData() {
 		return metricsData;
 	}
 
 
-	public void setMetricsData(RawMetricsData metricsData) {
+	public void setMetricsData(FileUnitRawMetrics metricsData) {
 		this.metricsData = metricsData;
 	}
 }

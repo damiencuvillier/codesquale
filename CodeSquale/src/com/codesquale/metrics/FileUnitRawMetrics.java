@@ -5,7 +5,7 @@ package com.codesquale.metrics;
  * Represent the raw data collected by the parsing unit class
  * @author dwillier
  */
-public class RawMetricsData 
+public class FileUnitRawMetrics 
 {
 	//////////////
 	// COUNTERS //
