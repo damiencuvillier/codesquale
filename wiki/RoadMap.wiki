@@ -10,13 +10,14 @@ We want to use the RUP (Rational Unified Process) to simplify our project organi
 
  * 2007-03-30 : First Binary ==> Count numbers of classes, files and lines
 
-== V 0.1 - 2007-03-30 ==
+= RELEASE NOTES =
+
+   == V 0.1 - 2007-03-30 ==
 
        ===What's new===
 
        ===Download, install and uninstall===
 
        ===Known issues===
-
 
 
