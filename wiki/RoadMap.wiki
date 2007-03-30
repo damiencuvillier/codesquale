@@ -11,18 +11,17 @@ We want to use the RUP (Rational Unified Process) to simplify our project organi
  * 2007-03-30 : First Binary ==> Count numbers of classes, files and lines
 
 = RELEASE NOTES =
-___________________________________________________________________________________________
 
 == V 0.1 [2007-03-30] ==
 
        ===What's new===
 First release of CodeSquale. It is an alpha version but produces few results.
 
-       ===Functionnalities===
-* Analyses a set of java source files
-* Counts some indicators and calculate one metric
-* Display process of analysis on the console
-* Export results into text files
+       ===Functionnalities=== 
+ * Analyses a set of java source files 
+ * Counts some indicators and calculate one metric 
+ * Display process of analysis on the console 
+ * Export results into text files
 
        ===What's calculated ?===
 Counters : 
@@ -40,3 +39,5 @@ This first release is not available for the moment because the CodeSquale team e
        ===Known issues===
 
 * The second parameter (result output file) must be a valid file name.
+
+
