@@ -44,8 +44,8 @@ public class FileElement extends AbstractElement
 	}
 	public String toString() {
 		// FIXME à génériser car ici on part du principe qu'il s'agit de fichiers java uniquement
-		String message = "FILE "+getName()+"\tMétriques : Classe(s) :"+metricsData.GetClassCount();
-		message += " Lines : " + metricsData.GetLineCount()+ " Methods : "+metricsData.GetMethodCount();
+		String message = "FILE "+getName()+"\tMétriques : Classe(s) :"+metricsData.GetClassCount()+" Interface(s) : "+metricsData.GetInterfaceCounter()+ " Methods : "+metricsData.GetMethodCount();
+		message += "Lines : " + metricsData.GetLineCount();
 		return message;
 	}
 
