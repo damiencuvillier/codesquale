@@ -31,11 +31,11 @@ public class RawMetricsData
 	public int GetInterfaceCounter() {return interfaceCounter;}
 	
 	public void SetClassCount (int count) { classCounter = count;}
-	public void SetMethodCount (int count) {methodCounter = count;}
-	public void SetLineCount(int count){lineCounter = count;}
-	public void SetImportCount(int count){importCounter = count;}
-	public void SetConstructCounter(int constructCounter) {	constructCounter = constructCounter;}
-	public void SetInterfaceCounter(int interfaceCounter) {interfaceCounter = interfaceCounter;	}
+	public void SetMethodCount (int count) { methodCounter = count;}
+	public void SetLineCount(int count){this.lineCounter = count;}
+	public void SetImportCount(int count){this.importCounter = count;}
+	public void SetConstructCounter(int constructCounter) {	this.constructCounter = constructCounter;}
+	public void SetInterfaceCounter(int interfaceCounter) {this.interfaceCounter = interfaceCounter;	}
 
 
 }

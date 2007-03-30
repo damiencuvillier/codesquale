@@ -3,16 +3,15 @@ package com.codesquale.parser;
 import java.io.FileInputStream;
 
 import antlr.ASTFactory;
-import antlr.CommonAST;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
 
-import com.codesquale.file.*;
 import com.codesquale.metrics.*;
 import com.codesquale.parser.java.*;
 import com.codesquale.utils.*;
+
 
 /**
  * Represents the subsystem in charge of parsing a single source file
@@ -30,21 +29,23 @@ public class ParsingUnit {
 	JavaRecognizer myJavaRecognizer = null;
 
 	int TypeCount[] = new int[1]; 
+	
 	// Raw metrics data
 	RawMetricsData sourceFileRawData = new RawMetricsData();;
 	
-//	 Enables the class to log errors
+	// Enables the class to log errors
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
 	
 	
-	
-	public void ParseLineNumber(FileInputStream codeSourceFileStream)
+	/**
+	 * Counts the number of line in the source file stream
+	 * @param codeSourceFileStream
+	 */
+	private void ParseLineNumber(FileInputStream codeSourceFileStream)
 	{
 		//	Initialise 
 		myLineLexer = new JavaLexer(codeSourceFileStream);
 		//	Initializiong the metrics
-		
-		
 		int previousLine = 0;
 		int tokenLine = 0;
 
@@ -66,12 +67,13 @@ public class ParsingUnit {
 		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
 
 	}
+	
 	/**
 	 *  Parse a fileStream and calculates counters
 	 * @param codeSourceFileStream
 	 * @return returns a RawMetricsData class necessary to build the final metrics
 	 */
-	public void ParseCodeSourceStream(FileInputStream codeSourceFileStream)
+	private void ParseCodeSourceStream(FileInputStream codeSourceFileStream)
 	{
 				
 		// Initializing the Lexer
@@ -84,31 +86,31 @@ public class ParsingUnit {
 			myJavaRecognizer.compilationUnit();
 			
 			ASTFactory factory = new ASTFactory();
-			AST t = factory.create(0,"ROOT");
+			AST abstractTree = factory.create(0,"ROOT");
 			
-			t.setFirstChild(myJavaRecognizer.getAST());
+			abstractTree.setFirstChild(myJavaRecognizer.getAST());
 			
 			// Get Class_Def count
- 			getTypeCount(t, JavaRecognizer.CLASS_DEF, TypeCount);
+ 			getTypeCount(abstractTree, JavaRecognizer.CLASS_DEF, TypeCount);
  			sourceFileRawData.SetClassCount(TypeCount[0]);
  			
 			// Get Method_Def count
  			TypeCount[0] = 0;
- 			getTypeCount(t, JavaRecognizer.METHOD_DEF, TypeCount);
+ 			getTypeCount(abstractTree, JavaRecognizer.METHOD_DEF, TypeCount);
  			sourceFileRawData.SetMethodCount(TypeCount[0]);
  		
 			// Get Method_Def count
  			TypeCount[0] = 0;
- 			getTypeCount(t, JavaRecognizer.IMPORT, TypeCount);
+ 			getTypeCount(abstractTree, JavaRecognizer.IMPORT, TypeCount);
  			sourceFileRawData.SetImportCount(TypeCount[0]);
  			
  			// Get Construct_def count
  			TypeCount[0] = 0;
- 			getTypeCount(t, JavaRecognizer.CTOR_DEF, TypeCount);
+ 			getTypeCount(abstractTree, JavaRecognizer.CTOR_DEF, TypeCount);
  			sourceFileRawData.SetConstructCounter(TypeCount[0]);
  			
  			TypeCount[0]=0;
- 			getTypeCount(t,JavaRecognizer.INTERFACE_DEF,TypeCount);
+ 			getTypeCount(abstractTree,JavaRecognizer.INTERFACE_DEF,TypeCount);
  			sourceFileRawData.SetInterfaceCounter(TypeCount[0]);
 			
 		} catch (RecognitionException e1) {
@@ -119,21 +121,15 @@ public class ParsingUnit {
 			e1.printStackTrace();
 		}	
 	}
-	/**
-	 * Find a child of the given AST that has the given type
-	 * @returns a child AST of the given type. If it can't find a child of the given type, return null.
-	 */
-	private AST getChild(AST ast, int childType) {
-		AST child = ast.getFirstChild();
-		while (child != null) {
-			if (child.getType() == childType) {
-				// debug.println("getChild: found:" + name(ast));
-				return child;
-			}
-			child = child.getNextSibling();
-		}
-		return null;
+
+	
+	public void DoParse(FileInputStream codeSourceFileStream)
+	{
+		ParseLineNumber(codeSourceFileStream);
+		ParseCodeSourceStream(codeSourceFileStream);
 	}
+	
+	
 	/**
 	 * Count the number of type occurence in the abstract tree
 	 * @param t the Abstract tree that contain the types
@@ -154,11 +150,17 @@ public class ParsingUnit {
 		getTypeCount(next, type, count);
 	
 	}
+	
+	
+	
+	
+
+	
 	/**
-	 * 
 	 * @param t
 	 * @param level
 	 */
+	/*
 	private  void showTree(AST t, int level) {
 		if ( t==null ) return;
 		
@@ -169,6 +171,27 @@ public class ParsingUnit {
 		AST next = t.getNextSibling();
 		showTree(next, level);
 	}
+	*/
+	
+	/**
+	 * Find a child of the given AST that has the given type
+	 * @returns a child AST of the given type. If it can't find a child of the given type, return null.
+	 */
+	/*
+	private AST getChild(AST ast, int childType) {
+		AST child = ast.getFirstChild();
+		while (child != null) {
+			if (child.getType() == childType) {
+				// debug.println("getChild: found:" + name(ast));
+				return child;
+			}
+			child = child.getNextSibling();
+		}
+		return null;
+	}
+	*/
+	
+	
 	public RawMetricsData getSourceFileRawData() {
 		return sourceFileRawData;
 	}

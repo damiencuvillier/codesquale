@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="libs/antlr.jar" sourcepath="U:/Java - J2EE/Workspace/CodeSquale/libs/antlr.jar"/>
-	<classpathentry kind="lib" path="libs/com.codesquale.parser.java.jar" sourcepath="libs/com.codesquale.parser.java.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/log4j-1.2.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/antlr.jar" sourcepath="U:/Java - J2EE/Workspace/CodeSquale/libs/antlr.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/com.codesquale.parser.java.jar" sourcepath="libs/com.codesquale.parser.java.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
