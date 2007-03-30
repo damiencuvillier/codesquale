@@ -57,7 +57,6 @@ public class ProjectBrowser
 		/*
 		 * Initialize outputFile
 		 */
-		
 		try {
 			outputFileStream = new FileOutputStream(outputFile);
 		} catch (FileNotFoundException e) {
@@ -88,9 +87,7 @@ public class ProjectBrowser
 	}
 	
 	
-	/**
-	 * Get Metrics
-	 */
+
 	private void populateMetrics(){
 		
 		int fileCount = 0;
