@@ -33,7 +33,7 @@ public class ParsingUnit {
 	int TypeCount[] = new int[1]; 
 	
 	// Raw metrics data
-	RawMetricsData sourceFileRawData = new RawMetricsData();;
+	FileUnitRawMetrics sourceFileRawData = new FileUnitRawMetrics();;
 	
 	// Enables the class to log errors
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
@@ -204,10 +204,10 @@ public class ParsingUnit {
 	*/
 	
 	
-	public RawMetricsData getSourceFileRawData() {
+	public FileUnitRawMetrics getSourceFileRawData() {
 		return sourceFileRawData;
 	}
-	public void setSourceFileRawData(RawMetricsData sourceFileRawData) {
+	public void setSourceFileRawData(FileUnitRawMetrics sourceFileRawData) {
 		this.sourceFileRawData = sourceFileRawData;
 	}
 

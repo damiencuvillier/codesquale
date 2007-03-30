@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.metrics.FileUnitRawMetrics;
 import com.codesquale.parser.ParsingUnit;
 
 /**
@@ -24,6 +25,8 @@ public class ProjectBrowser {
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
 	private DirectoryElement basePath = null;
+	
+	private FileUnitRawMetrics projectRawMetrics = new FileUnitRawMetrics();
 	
 
 	/**
@@ -116,9 +119,16 @@ public class ProjectBrowser {
 				linesCount += fileElement.getMetricsData().GetLineCount();
 				constructorCount+= fileElement.getMetricsData().GetConstructCounter();
                 interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
-				
-			
+
 		}
+		
+		
+		projectRawMetrics.SetClassCount(classCount);
+		projectRawMetrics.SetMethodCount(methodCount);
+		projectRawMetrics.SetInterfaceCounter(interfaceCount);
+
+		
+		
 		System.out.println("Le projet contient: ");
 		System.out.println(fileCount+" fichiers, ");
 		System.out.println(classCount+" classes, ");
