@@ -105,17 +105,10 @@ public class ProjectBrowser {
 			fileCount ++;
 			parsingUnit = new ParsingUnit();
 			
-			try 
-			{
-				sourceStream = new FileInputStream(fileElement.getIOElement());
-			} 
-			catch (FileNotFoundException e) 
-			{
-				logger.fatal("Opening File "+fileElement.getName()+" has failed");
-			}
-				
+			
 
-			parsingUnit.DoParse(sourceStream);
+			parsingUnit.DoParse(fileElement.getIOElement());
+			
 		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
 				
 				classCount+=fileElement.getMetricsData().GetClassCount();
