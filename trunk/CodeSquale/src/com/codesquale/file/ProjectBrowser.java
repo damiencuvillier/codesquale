@@ -26,15 +26,13 @@ public class ProjectBrowser {
 	
 	private DirectoryElement basePath = null;
 	
-	private FileUnitRawMetrics projectRawMetrics = new FileUnitRawMetrics();
 	
-
 	/**
 	 * Filter enables to filter file types
 	 */
-	private FileFilter fileFilter = null;
+	//private FileFilter fileFilter = null;
 	
-	private TreeSet<AbstractElement> mainTree = new TreeSet<AbstractElement>();
+	//private TreeSet<AbstractElement> mainTree = new TreeSet<AbstractElement>();
 	
 	/**
 	 * Constructor
@@ -51,7 +49,7 @@ public class ProjectBrowser {
 			logger.fatal("Specified path is not a directory");
 			throw new NotDirectoryException(path);
 		}
-		this.fileFilter = fileFilter;
+		//this.fileFilter = fileFilter;
 		basePath = new DirectoryElement(path,fileFilter);
 		
 		
@@ -96,7 +94,6 @@ public class ProjectBrowser {
 		
 		//FIXME a placer dans la deuxieme moulinette
 		ParsingUnit parsingUnit =null;
-		FileInputStream sourceStream = null;
 		
 		
 		
@@ -121,12 +118,6 @@ public class ProjectBrowser {
                 interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
 
 		}
-		
-		
-		projectRawMetrics.SetClassCount(classCount);
-		projectRawMetrics.SetMethodCount(methodCount);
-		projectRawMetrics.SetInterfaceCounter(interfaceCount);
-
 		
 		
 		System.out.println("Le projet contient: ");

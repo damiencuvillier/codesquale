@@ -6,7 +6,7 @@ import com.codesquale.metrics.FileUnitRawMetrics;
 
 public class FileElement extends AbstractElement 
 {
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FileElement.class);
+	//private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FileElement.class);
 	
 	private int type = -1;
 	private String extension;
