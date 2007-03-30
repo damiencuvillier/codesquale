@@ -1,6 +1,8 @@
 package com.codesquale.parser;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import antlr.ASTFactory;
 import antlr.RecognitionException;
@@ -75,7 +77,6 @@ public class ParsingUnit {
 	 */
 	private void ParseCodeSourceStream(FileInputStream codeSourceFileStream)
 	{
-				
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
 		//	Initializing the parser
@@ -123,10 +124,21 @@ public class ParsingUnit {
 	}
 
 	
-	public void DoParse(FileInputStream codeSourceFileStream)
+	public void DoParse(File codeSourceFile)
 	{
-		ParseLineNumber(codeSourceFileStream);
+	    FileInputStream duplicateSourceStream = null;
+	    FileInputStream codeSourceFileStream= null;
+		try {
+			duplicateSourceStream = new FileInputStream(codeSourceFile);
+			codeSourceFileStream = new FileInputStream(codeSourceFile);
+		} catch (FileNotFoundException e) {
+		
+			e.printStackTrace();
+		}
+	    
 		ParseCodeSourceStream(codeSourceFileStream);
+	    ParseLineNumber(duplicateSourceStream);
+		
 	}
 	
 	
