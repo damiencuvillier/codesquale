@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.metrics.ProjectUnitRatioMetrics;
 import com.codesquale.parser.ParsingUnit;
 
 /**
@@ -126,14 +127,24 @@ public class ProjectBrowser
 
 		}
 		
+		ProjectUnitRatioMetrics ratioMetrics = new ProjectUnitRatioMetrics();
 		
-		System.out.println("Le projet contient: ");
-		System.out.println(fileCount+" fichiers, ");
+		ratioMetrics.setRatioMethodByClass(classCount, methodCount);
+		
+		
+		
+		System.out.println("Project Raw Data Metrics : ");
+		System.out.println(fileCount+" files, ");
 		System.out.println(classCount+" classes, ");
-		System.out.println(methodCount+" méthodes, ");
-		System.out.println(linesCount+ " lignes, ");
-		System.out.println(constructorCount+" constructeurs, ");
+		System.out.println(methodCount+" methodes, ");
+		System.out.println(linesCount+ " lines, ");
+		System.out.println(constructorCount+" constructors, ");
 		System.out.println(interfaceCount+" interfaces, ");
+		
+		System.out.println("Project Ration Data Metrics : ");
+		System.out.println("\tAverage number of methods by class: "+ ratioMetrics.getRatioMethodByClass());
+		
+		
 	
 	}
 	
