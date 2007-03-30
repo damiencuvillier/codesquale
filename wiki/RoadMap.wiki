@@ -25,13 +25,13 @@ First release of CodeSquale. It is an alpha version but produces few results.
 
        ===What's calculated ?===
 Counters : 
-          - Lines
-          - Files
-          - Classes
-          - Methods
-          - Interfaces
+ * Lines
+ * Files
+ * Classes
+ * Methods
+ * Interfaces
 Metrics : 
-          - Average number of method by class
+ * Average number of method by class
 
        ===Download, install and uninstall===
 This first release is not available for the moment because the CodeSquale team estimates that it was too little for the moment. But don't desperate, a new release is coming soon.
@@ -39,5 +39,4 @@ This first release is not available for the moment because the CodeSquale team e
        ===Known issues===
 
 * The second parameter (result output file) must be a valid file name.
-
 
