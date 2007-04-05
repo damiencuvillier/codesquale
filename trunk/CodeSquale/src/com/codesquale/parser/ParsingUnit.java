@@ -12,7 +12,7 @@ import antlr.collections.AST;
 
 import com.codesquale.metrics.*;
 import com.codesquale.parser.java.*;
-import com.codesquale.utils.*;
+import com.codesquale.utils.Utilities;
 
 
 /**
@@ -81,6 +81,9 @@ public class ParsingUnit {
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
 		//	Initializing the parser
 		myJavaRecognizer = new JavaRecognizer(myJavaLexer);	
+		// Initializiong the metrics
+		sourceFileRawData = new FileUnitRawMetrics();
+		
 
 		// do AST Metrics
 		try {
@@ -126,7 +129,6 @@ public class ParsingUnit {
 	
 	public void DoParse(File codeSourceFile)
 	{
-		
 		sourceFileRawData = new FileUnitRawMetrics(codeSourceFile.getAbsolutePath());
 		
 	    FileInputStream duplicateSourceStream = null;
@@ -144,6 +146,24 @@ public class ParsingUnit {
 		
 	}
 	
+	
+	/**
+	 * Find a child of the given AST that has the given type
+	 * @returns a child AST of the given type. If it can't find a child of the given type, return null.
+	 */
+	/*
+	private AST getChild(AST ast, int childType) {
+		AST child = ast.getFirstChild();
+		while (child != null) {
+			if (child.getType() == childType) {
+				// debug.println("getChild: found:" + name(ast));
+				return child;
+			}
+			child = child.getNextSibling();
+		}
+		return null;
+	}
+	*/
 	
 	/**
 	 * Count the number of type occurence in the abstract tree
@@ -186,7 +206,10 @@ public class ParsingUnit {
 		AST next = t.getNextSibling();
 		showTree(next, level);
 	}
+
 	*/
+
+
 	
 	/**
 	 * Find a child of the given AST that has the given type
@@ -210,10 +233,10 @@ public class ParsingUnit {
 	public FileUnitRawMetrics getSourceFileRawData() {
 		return sourceFileRawData;
 	}
-	public void setSourceFileRawData(FileUnitRawMetrics sourceFileRawData) {
+	public void setSourceFileRawData(FileUnitRawMetrics sourceFileRawData) 
+	{
 		this.sourceFileRawData = sourceFileRawData;
 	}
-
 
 
 }

@@ -22,6 +22,9 @@ public class FileUnitRawMetrics
 	
 	public FileUnitRawMetrics(String parsedFile){ this.parsedFile = parsedFile; }
 	
+	public FileUnitRawMetrics() {
+	}
+
 	public void IncrementClassCounter() {classCounter++;}
 	public void IncrementMethodCounter() {methodCounter++;}
 	public void IncrementLineCounter() {lineCounter++; }
