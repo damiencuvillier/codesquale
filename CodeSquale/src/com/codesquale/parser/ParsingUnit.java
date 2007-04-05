@@ -3,13 +3,20 @@ package com.codesquale.parser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import antlr.ASTFactory;
+import antlr.CommonAST;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
 
+import com.codesquale.file.DirectoryElement;
 import com.codesquale.metrics.*;
 import com.codesquale.parser.java.*;
 import com.codesquale.utils.Utilities;
@@ -22,14 +29,13 @@ import com.codesquale.utils.Utilities;
  * @author dwillier
  */
 public class ParsingUnit {
-	
 	// Declaring the Lexer
 	JavaLexer myJavaLexer = null;
 	JavaLexer myLineLexer = null;
 	// Declaring a token unit
 	Token currentToken = null;
 	JavaRecognizer myJavaRecognizer = null;
-
+	CommonAST abstractTree = null;
 	int TypeCount[] = new int[1]; 
 	
 	// Raw metrics data
@@ -90,7 +96,7 @@ public class ParsingUnit {
 			myJavaRecognizer.compilationUnit();
 			
 			ASTFactory factory = new ASTFactory();
-			AST abstractTree = factory.create(0,"ROOT");
+			abstractTree = (CommonAST)factory.create(0,"ROOT");
 			
 			abstractTree.setFirstChild(myJavaRecognizer.getAST());
 			
@@ -124,6 +130,28 @@ public class ParsingUnit {
 		}	
 	}
 
+	
+	/**
+	 * Save the abstract syntaxic tree to XML file structure
+	 * @param fileName 
+	 */
+	public Writer ASTToXML(String fileName)
+	{
+		try {
+			
+			Writer output = new OutputStreamWriter(new FileOutputStream(fileName));
+			abstractTree.xmlSerialize(output);
+			output.flush();
+			
+			return output;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.fatal(Utilities.GetCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
+		}
+		
+		return null;
+	}
 	
 	public void DoParse(File codeSourceFile)
 	{

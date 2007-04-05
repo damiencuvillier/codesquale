@@ -28,6 +28,8 @@ public class ProjectBrowser
 	
 	private DirectoryElement basePath = null;
 	private FileOutputStream outputFileStream = null;
+	// TODO Implement constant manager with XML file
+	private String XMLoutputPath = "U:\\temp\\output";
 	
 	
 	/**
@@ -71,8 +73,6 @@ public class ProjectBrowser
 	}
 	
 	
-	
-	
 	public void ProcessAnalysis()
 	{
 		/**
@@ -90,13 +90,11 @@ public class ProjectBrowser
 	}
 	
 	
-
+	
 	private void populateMetrics()
 	{
 		projectGlobalMetrics = new ProjectUnitRatioMetrics();
-		ParsingUnit parsingUnit =null;
-		
-		
+		ParsingUnit parsingUnit = null;
 		
 		int classCount=0;
 		int methodCount=0;
@@ -104,15 +102,17 @@ public class ProjectBrowser
 		int interfaceCount=0;
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
+			String fileName = fileElement.getName().substring(0, fileElement.getName().length() - fileElement.getExtension().length());
+			
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
+			
 			projectGlobalMetrics.incrementFileCounter();
 			parsingUnit = new ParsingUnit();
-			
-			
 
 			parsingUnit.DoParse(fileElement.getIOElement());
+			parsingUnit.ASTToXML(XMLoutputPath+"\\"+fileName + "xml");
 			
 		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
 				
