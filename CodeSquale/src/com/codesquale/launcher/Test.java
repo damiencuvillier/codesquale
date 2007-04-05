@@ -6,6 +6,7 @@ import java.io.File;
 import com.codesquale.exceptions.NotDirectoryException;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.ProjectBrowser;
+import com.codesquale.utils.Messages;
 
 /**
  * Test Class for project
@@ -20,25 +21,25 @@ public class Test
 	
 public static void main(String[] args) 
 {
-		logger.info("Opening Test...");
+		logger.info(Messages.getString("LIB_BEGIN_TEST")); //$NON-NLS-1$
 	
 		if(args.length < 2){
-			System.err.println("Check your syntax. Right Syntax is : \n\t first arg: absolute path\n\t second arg : output file");
+			System.err.println(Messages.getString("ERR_ARGS_SYNTAX")); //$NON-NLS-1$
 			return;
 		}
 		try 
 		{
-			logger.info("File Filter init");
+			logger.info(Messages.getString("LIB_FILTER_INIT")); //$NON-NLS-1$
 			FileFilter filter = new FileFilter();
 			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
-			logger.info("Browsing File...");
+			logger.info(Messages.getString("LIB_BROWSING_DIR")); //$NON-NLS-1$
 			ProjectBrowser browser = new ProjectBrowser(new File(args[0]),new File(args[1]),filter);
 			browser.ProcessAnalysis();
 			
 		} catch (NotDirectoryException e) {
-			logger.fatal("Param is not a valid directory");
+			logger.fatal(Messages.getString("ERR_INVALID_DIR")); //$NON-NLS-1$
 		}
-		logger.info("Done...");
-		logger.info("Results written in "+args[1]);
+		logger.info(Messages.getString("LIB_JOB_DONE")); //$NON-NLS-1$
+		logger.info(Messages.getString("LIB_RESULTS_OUTPUT_PATH")+args[1]); //$NON-NLS-1$
 	}
 }
