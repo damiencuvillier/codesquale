@@ -118,10 +118,8 @@ public class ParsingUnit {
  			sourceFileRawData.SetInterfaceCounter(TypeCount[0]);
 			
 		} catch (RecognitionException e1) {
-			// TODO Bloc catch auto-généré
 			e1.printStackTrace();
 		} catch (TokenStreamException e1) {
-			// TODO Bloc catch auto-généré
 			e1.printStackTrace();
 		}	
 	}
