@@ -107,7 +107,7 @@ public class ProjectBrowser
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
-			projectGlobalMetrics.IncrementFileCounter();
+			projectGlobalMetrics.incrementFileCounter();
 			parsingUnit = new ParsingUnit();
 			
 			
@@ -124,27 +124,24 @@ public class ProjectBrowser
 		}
 		
 
-		projectGlobalMetrics.SetClassCount(classCount);
-		projectGlobalMetrics.SetMethodCount(methodCount);
-		projectGlobalMetrics.SetlinesCount(linesCount);
-		projectGlobalMetrics.SetInterfaceCounter(interfaceCount);
-		
-		
-		
+		projectGlobalMetrics.setClassCount(classCount);
+		projectGlobalMetrics.setMethodCount(methodCount);
+		projectGlobalMetrics.setlinesCount(linesCount);
+		projectGlobalMetrics.setInterfaceCounter(interfaceCount);
 		
 		System.out.println("Project global Metrics : ");
-		System.out.println(projectGlobalMetrics.GetFileCounter()+" files, ");
-		System.out.println(projectGlobalMetrics.GetClassCount()+" classes, ");
-		System.out.println(projectGlobalMetrics.GetMethodCount()+" methodes, ");
-		System.out.println(projectGlobalMetrics.GetLineCount()+ " lines, ");
+		System.out.println(projectGlobalMetrics.getFileCounter()+" files, ");
+		System.out.println(projectGlobalMetrics.getClassCount()+" classes, ");
+		System.out.println(projectGlobalMetrics.getMethodCount()+" methodes, ");
+		System.out.println(projectGlobalMetrics.getLineCount()+ " lines, ");
 
 		System.out.println(interfaceCount+" interfaces, ");
 		
 		System.out.println("Project Ratio Metrics : ");
 		System.out.println("\tAverage number of methods by class: " + 
 				Float.toString(MetricsCalculator.CalculateRatioMethodByClass
-				(projectGlobalMetrics.GetClassCount(),
-				 projectGlobalMetrics.GetMethodCount())));
+				(projectGlobalMetrics.getClassCount(),
+				 projectGlobalMetrics.getMethodCount())));
 		
 		
 	
