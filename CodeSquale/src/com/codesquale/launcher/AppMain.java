@@ -15,7 +15,7 @@ public class AppMain {
 		ParsingUnit myParsingUnit = null;
 		ResultView myResultView = null;
 		
-		source = new File("U:\\sampleTest.java");
+		source = new File("ClassMoney.javatest");
 		
 		
 		// Instantiates the class responsible to display the result

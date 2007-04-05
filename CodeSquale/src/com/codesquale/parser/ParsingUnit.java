@@ -137,7 +137,6 @@ public class ParsingUnit {
 			duplicateSourceStream = new FileInputStream(codeSourceFile);
 			codeSourceFileStream = new FileInputStream(codeSourceFile);
 		} catch (FileNotFoundException e) {
-		
 			e.printStackTrace();
 		}
 	    
