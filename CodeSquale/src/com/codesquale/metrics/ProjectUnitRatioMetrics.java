@@ -2,6 +2,9 @@ package com.codesquale.metrics;
 
 public class ProjectUnitRatioMetrics
 {
+	
+	FileUnitRawMetrics projectRawMetrics;
+	
 	int fileCount = 0;
 	int classCount = 0;
 	int methodCount = 0;
@@ -9,24 +12,27 @@ public class ProjectUnitRatioMetrics
 	int interfaceCount = 0;
 
 
-	public void IncrementClassCounter() {classCount++;}
-	public void IncrementMethodCounter() {methodCount++;}
-	public void IncrementLineCounter() {linesCount++; }
-	public void IncrementInterfaceCounter() {interfaceCount++; }
-	public void IncrementFileCounter() {fileCount++; }
+	public void incrementClassCounter() {classCount++;}
+	public void incrementMethodCounter() {methodCount++;}
+	public void incrementLineCounter() {linesCount++; }
+	public void incrementInterfaceCounter() {interfaceCount++; }
+	public void incrementFileCounter() {fileCount++; }
 	
 	
-	public int GetClassCount () {return classCount;}
-	public int GetMethodCount () {return methodCount;}
-	public int GetLineCount(){return linesCount;}
-	public int GetInterfaceCounter() {return interfaceCount;}
-	public int GetFileCounter() {return fileCount;}
+	public int getClassCount () {return classCount;}
+	public int getMethodCount () {return methodCount;}
+	public int getLineCount(){return linesCount;}
+	public int getInterfaceCounter() {return interfaceCount;}
+	public int getFileCounter() {return fileCount;}
+	public FileUnitRawMetrics getProjectRawMetrics() {return projectRawMetrics;}
 	
-	public void SetClassCount (int count) { classCount = count;}
-	public void SetMethodCount (int count) { methodCount = count;}
-	public void SetlinesCount(int count){this.linesCount = count;}
-	public void SetInterfaceCounter(int interfaceCounter) {this.interfaceCount = interfaceCounter;}
-	public void SetFileCounter(int fileCounter) {this.fileCount = fileCounter;}
+	public void setClassCount (int count) { this.classCount = count;}
+	public void setMethodCount (int count) { this.methodCount = count;}
+	public void setlinesCount(int count){this.linesCount = count;}
+	public void setInterfaceCounter(int interfaceCounter) {this.interfaceCount = interfaceCounter;}
+	public void setFileCounter(int fileCounter) {this.fileCount = fileCounter;}
+	public void setProjectRawMetrics(FileUnitRawMetrics projectRawMetrics) {this.projectRawMetrics = projectRawMetrics;
+	}
 	
 	
 }
