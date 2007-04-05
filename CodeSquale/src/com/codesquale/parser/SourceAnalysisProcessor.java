@@ -8,7 +8,8 @@ import com.codesquale.file.ProjectBrowser;
  * Bind the first analysis results (RawMetricsData) to the source file.
  * @author dwillier
  * 
- */public class SourceAnalysisProcessor {
+ */
+public class SourceAnalysisProcessor {
 	
 	public void Process(ProjectBrowser projectToAnalyse)
 	{
