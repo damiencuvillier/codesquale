@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 import org.apache.log4j.Logger;
 
 import com.codesquale.exceptions.NotDirectoryException;
@@ -63,6 +64,7 @@ public class ProjectBrowser
 		} catch (FileNotFoundException e) {
 			logger.fatal("Output file cannot be opened");
 		}
+		
 		
 		
 		
