@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
@@ -16,7 +15,6 @@ import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
 
-import com.codesquale.file.DirectoryElement;
 import com.codesquale.metrics.*;
 import com.codesquale.parser.java.*;
 import com.codesquale.utils.Utilities;
