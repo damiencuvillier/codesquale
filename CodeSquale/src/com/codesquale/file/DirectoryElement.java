@@ -106,17 +106,19 @@ public class DirectoryElement extends AbstractElement {
 	 * Display Methods
 	 */
 	public String toString() {
-		String superMessage = "DIR "+this.getName()+"\n";
+		String superMessage = "<DIR value=\""+this.getName()+"\">\n";
 		for(DirectoryElement dir :this.getDirectoriesList()) superMessage+=dir.toString(1)+"\n";
 		for(FileElement file :this.getFilesList()) superMessage+=file.toString()+"\n";
+		superMessage += "</DIR>";
 		return superMessage;
 	}
 	public String toString(int level){
 		String superMessage = "";
 		
-		superMessage += printLevel(level)+"DIR "+this.getName()+"\n";
+		superMessage += printLevel(level)+"<DIR value=\""+this.getName()+"\">\n";
 		for(DirectoryElement dir :this.getDirectoriesList()) superMessage+=dir.toString(level+1)+"\n";
 		for(FileElement file :this.getFilesList()) superMessage+=printLevel(level+1)+file.toString()+"\n";
+		superMessage  += printLevel(level)+"</DIR>";
 		return superMessage;
 	}
 	private String printLevel(int level){

@@ -133,13 +133,13 @@ public class ParsingUnit {
 	 * Save the abstract syntaxic tree to XML file structure
 	 * @param fileName 
 	 */
-	public Writer ASTToXML(String fileName)
+	public FileOutputStream ASTToXML(String fileName)
 	{
 		try {
-			
-			Writer output = new OutputStreamWriter(new FileOutputStream(fileName));
-			abstractTree.xmlSerialize(output);
-			output.flush();
+			FileOutputStream output = new FileOutputStream(fileName);
+			Writer writer = new OutputStreamWriter(output);
+			abstractTree.xmlSerialize(writer);
+			writer.flush();
 			
 			return output;
 			

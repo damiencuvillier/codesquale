@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 
 import org.apache.log4j.Logger;
@@ -79,7 +80,8 @@ public class ProjectBrowser
 		 * Browse javaFiles & get basic metrics
 		 */
 		logger.debug("Processing analysis of the project source code...");
-		populateMetrics();
+		// Create the project file description		
+		populateProjectDescription();
 		
 		try {
 			outputFileStream.write(basePath.toString().getBytes());
@@ -91,7 +93,7 @@ public class ProjectBrowser
 	
 	
 	
-	private void populateMetrics()
+	private void populateProjectDescription()
 	{
 		projectGlobalMetrics = new ProjectUnitRatioMetrics();
 		ParsingUnit parsingUnit = null;
@@ -100,48 +102,57 @@ public class ProjectBrowser
 		int methodCount=0;
 		int linesCount=0;
 		int interfaceCount=0;
+		
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
+			// XML description file path
 			String fileName = fileElement.getName().substring(0, fileElement.getName().length() - fileElement.getExtension().length());
+			String absolutePath =XMLoutputPath+"\\"+fileName + "xml";
+			
+			// set the XML filname path to the fileElement
+			fileElement.setXmlDesc(absolutePath);
 			
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
-			
 			projectGlobalMetrics.incrementFileCounter();
 			parsingUnit = new ParsingUnit();
-
-			parsingUnit.DoParse(fileElement.getIOElement());
-			parsingUnit.ASTToXML(XMLoutputPath+"\\"+fileName + "xml");
 			
-		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
-				
-				classCount+=fileElement.getMetricsData().GetClassCount();
-				methodCount += fileElement.getMetricsData().GetMethodCount();
-				linesCount += fileElement.getMetricsData().GetLineCount();
-                interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
-
+			parsingUnit.DoParse(fileElement.getIOElement());
+			
+			// Get the AST XML of the source file
+			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
+			
+			// TODO Build the XML AST project file
+									
+//		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
+//				
+//				classCount+=fileElement.getMetricsData().GetClassCount();
+//				methodCount += fileElement.getMetricsData().GetMethodCount();
+//				linesCount += fileElement.getMetricsData().GetLineCount();
+//                interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
+             
 		}
 		
 
-		projectGlobalMetrics.setClassCount(classCount);
-		projectGlobalMetrics.setMethodCount(methodCount);
-		projectGlobalMetrics.setlinesCount(linesCount);
-		projectGlobalMetrics.setInterfaceCounter(interfaceCount);
-		
-		System.out.println("Project global Metrics : ");
-		System.out.println(projectGlobalMetrics.getFileCounter()+" files, ");
-		System.out.println(projectGlobalMetrics.getClassCount()+" classes, ");
-		System.out.println(projectGlobalMetrics.getMethodCount()+" methodes, ");
-		System.out.println(projectGlobalMetrics.getLineCount()+ " lines, ");
-
-		System.out.println(interfaceCount+" interfaces, ");
-		
-		System.out.println("Project Ratio Metrics : ");
-		System.out.println("\tAverage number of methods by class: " + 
-				Float.toString(MetricsCalculator.CalculateRatioMethodByClass
-				(projectGlobalMetrics.getClassCount(),
-				 projectGlobalMetrics.getMethodCount())));
+//		projectGlobalMetrics.setClassCount(classCount);
+//		projectGlobalMetrics.setMethodCount(methodCount);
+//		projectGlobalMetrics.setlinesCount(linesCount);
+//		projectGlobalMetrics.setInterfaceCounter(interfaceCount);
+//		
+//		System.out.println("Project global Metrics : ");
+//		System.out.println(projectGlobalMetrics.getFileCounter()+" files, ");
+//		System.out.println(projectGlobalMetrics.getClassCount()+" classes, ");
+//		System.out.println(projectGlobalMetrics.getMethodCount()+" methodes, ");
+//		System.out.println(projectGlobalMetrics.getLineCount()+ " lines, ");
+//
+//		System.out.println(interfaceCount+" interfaces, ");
+//		
+//		System.out.println("Project Ratio Metrics : ");
+//		System.out.println("\tAverage number of methods by class: " + 
+//				Float.toString(MetricsCalculator.CalculateRatioMethodByClass
+//				(projectGlobalMetrics.getClassCount(),
+//				 projectGlobalMetrics.getMethodCount())));
 		
 		
 	
