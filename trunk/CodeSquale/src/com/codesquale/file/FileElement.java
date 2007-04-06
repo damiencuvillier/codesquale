@@ -10,6 +10,7 @@ public class FileElement extends AbstractElement
 	
 	private int type = -1;
 	private String extension;
+	private String xmlDesc;
 	File file = null;
 	
 	
@@ -44,8 +45,7 @@ public class FileElement extends AbstractElement
 	}
 	public String toString() {
 		// FIXME à génériser car ici on part du principe qu'il s'agit de fichiers java uniquement
-		String message = "FILE "+getName()+"\tMétriques : Classe(s) :"+metricsData.GetClassCount()+" Interface(s) : "+metricsData.GetInterfaceCounter()+ " Methods : "+metricsData.GetMethodCount();
-		message += "Lines : " + metricsData.GetLineCount();
+		String message = "<FILE name=\""+getName()+"\" xmlDesc=\""+ getXmlDesc() +"\" />";
 		return message;
 	}
 
@@ -57,5 +57,15 @@ public class FileElement extends AbstractElement
 
 	public void setMetricsData(FileUnitRawMetrics metricsData) {
 		this.metricsData = metricsData;
+	}
+
+
+	public String getXmlDesc() {
+		return xmlDesc;
+	}
+
+
+	public void setXmlDesc(String xmlDesc) {
+		this.xmlDesc = xmlDesc;
 	}
 }
