@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.ProcessingInstruction;
 
 import com.codesquale.exceptions.NotDirectoryException;
 import com.codesquale.metrics.MetricsCalculator;
@@ -46,7 +48,7 @@ public class ProjectBrowser
 	private DirectoryElement basePath = null;
 	private FileOutputStream outputFileStream = null;
 	// TODO Implement constant manager with XML file
-	private String XMLoutputPath = "U:\\temp\\output";
+	private String XMLoutputPath = "output";
 	// Represent the projet XML file
 	private Document doc = null;
 	
@@ -87,32 +89,45 @@ public class ProjectBrowser
 	
 	}
 	
+	/**
+	 * Create the XML stream based on project hierarchie
+	 * @param element
+	 * @param repository
+	 */
 	private void ProcessXMLTransform(Node element, Vector<DirectoryElement> repository)
 	{
 		  for(DirectoryElement dir: repository)
 		    {
 		    	Node node = element.appendChild(doc.createElement("directory"));
-		    	((Element)node).setAttribute("path", dir.getName());
+		    	((Element)node).appendChild(doc.createTextNode(dir.getAbsolutePath()));
 		    	
 		    	for(FileElement file: dir.getFilesList())
 		    	{
 		    		Node child = node.appendChild(doc.createElement("file"));
-		    		((Element)child).setAttribute("xlink:type", "locator");
-		    		((Element)child).setAttribute("xlink:href", file.getXmlDesc());
-		    		((Element)child).setAttribute("xlink:show", "embed");
-		    		((Element)child).setAttribute("name", file.getName());
+		
+		    		((Element)child).appendChild(doc.createTextNode(file.getName()));
+		    		
+		    		Node desc = child.appendChild(doc.createElement("description"));
+
+		    		((Element)desc).setAttribute("xlink:type", "simple");
+		    		((Element)desc).setAttribute("xlink:title", file.getName());
+		    		((Element)desc).setAttribute("xlink:href", file.getXmlDesc());
+		    		((Element)desc).setAttribute("xlink:show", "new");
+		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
+		    		
+		    		((Element)desc).appendChild(doc.createTextNode(" -> file description"));
 		    		
 		    	}
 		    	ProcessXMLTransform(node, dir.getDirectoriesList());
 		    }
 	}
-	
+	/**
+	 * Create a XML file that represent 
+	 * project directories, files and XML description link 
+	 */
 	public void ProcessDescription()
 	{
-		/**
-		 * Create a XML file that represent 
-		 * project directories, files and XML description link 
-		 */
+	
 		logger.debug("Processing project description in"+ outputFileStream.toString() + "...");
 		try {
 			
@@ -124,39 +139,44 @@ public class ProjectBrowser
 		
 		    //Create blank DOM Document
 		    doc = parser.newDocument();
+		    // Include a stylesheet
+		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"example.css\" type=\"text/css\"");
+		    doc.appendChild(pi);
 		    
 		    // Insert the root element node
 		    Element element = doc.createElement("root");
 		    element.setAttribute("path", basePath.getName());
-		    element.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-		    element.setAttribute("xlink:type", "extended");
-		    
+		    element.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+		    	    
+		    // proceed XML transformation
 		    ProcessXMLTransform(doc.appendChild(element), basePath.getDirectoriesList());
 		    
-		    //	Write it out again
+		    //	write it out 
 		    TransformerFactory xformFactory  = TransformerFactory.newInstance();
-		    Transformer idTransform;
-				
-		    idTransform = xformFactory.newTransformer();
+		    Transformer idTransform = xformFactory.newTransformer();
 		
+		    idTransform.setOutputProperty(OutputKeys.METHOD, "xml"); 
+		    idTransform.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1"); 
+		    idTransform.setOutputProperty(OutputKeys.INDENT, "yes"); 
+		    idTransform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no"); 
+		    
 		    Source input = new DOMSource(doc);
 		    Result output = new StreamResult(outputFileStream);
 			idTransform.transform(input, output);
 			
-		    
-			//	outputFileStream.write(basePath.toString().getBytes());
-			//	outputFileStream.close();
 		} catch (ParserConfigurationException e) {
 			logger.fatal("IOException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
 		} catch (TransformerException e) {
 			logger.fatal("TransformerException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
 		}
 	}
+	
+	/**
+	 * Browse javaFiles & get basic metrics
+	 */
 	public void ProcessAnalysis()
 	{
-		/**
-		 * Browse javaFiles & get basic metrics
-		 */
+	
 		logger.debug("Processing project analysis...");
 		// Create the project file description		
 		projectGlobalMetrics = new ProjectUnitRatioMetrics();
