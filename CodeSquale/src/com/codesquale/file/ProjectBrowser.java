@@ -115,7 +115,7 @@ public class ProjectBrowser
 		    		((Element)desc).setAttribute("xlink:show", "new");
 		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
 		    		
-		    		((Element)desc).appendChild(doc.createTextNode(" -> file description"));
+		    		((Element)desc).appendChild(doc.createTextNode(" file description"));
 		    		
 		    	}
 		    	ProcessXMLTransform(node, dir.getDirectoriesList());
@@ -140,7 +140,7 @@ public class ProjectBrowser
 		    //Create blank DOM Document
 		    doc = parser.newDocument();
 		    // Include a stylesheet
-		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"example.css\" type=\"text/css\"");
+		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
 		    doc.appendChild(pi);
 		    
 		    // Insert the root element node
@@ -185,7 +185,10 @@ public class ProjectBrowser
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
 			// XML description file path
-			String fileName = fileElement.getName().substring(0, fileElement.getName().length() - fileElement.getExtension().length());
+			String fileName = fileElement.getAbsolutePath().substring(basePath.getAbsolutePath().length()+1);
+			fileName = fileName.substring(0, fileName.length() - fileElement.getExtension().length());
+			fileName = fileName.replace('\\', '.');
+			
 			String absolutePath =XMLoutputPath+"\\"+fileName + "xml";
 			
 			// set the XML filname path to the fileElement
