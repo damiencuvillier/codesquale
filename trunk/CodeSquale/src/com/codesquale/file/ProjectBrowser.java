@@ -5,9 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Vector;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.codesquale.exceptions.NotDirectoryException;
 import com.codesquale.metrics.MetricsCalculator;
@@ -31,7 +47,8 @@ public class ProjectBrowser
 	private FileOutputStream outputFileStream = null;
 	// TODO Implement constant manager with XML file
 	private String XMLoutputPath = "U:\\temp\\output";
-	
+	// Represent the projet XML file
+	private Document doc = null;
 	
 	/**
 	 * Filter enables to filter file types
@@ -67,41 +84,83 @@ public class ProjectBrowser
 		} catch (FileNotFoundException e) {
 			logger.fatal("Output file cannot be opened");
 		}
-		
-		
-		
-		
+	
 	}
 	
+	private void ProcessXMLTransform(Node element, Vector<DirectoryElement> repository)
+	{
+		  for(DirectoryElement dir: repository)
+		    {
+		    	Node node = element.appendChild(doc.createElement("directory"));
+		    	((Element)node).setAttribute("path", dir.getName());
+		    	
+		    	for(FileElement file: dir.getFilesList())
+		    	{
+		    		Node child = node.appendChild(doc.createElement("file"));
+		    		((Element)child).setAttribute("xlink:type", "locator");
+		    		((Element)child).setAttribute("xlink:href", file.getXmlDesc());
+		    		((Element)child).setAttribute("xlink:show", "embed");
+		    		((Element)child).setAttribute("name", file.getName());
+		    		
+		    	}
+		    	ProcessXMLTransform(node, dir.getDirectoriesList());
+		    }
+	}
 	
+	public void ProcessDescription()
+	{
+		/**
+		 * Create a XML file that represent 
+		 * project directories, files and XML description link 
+		 */
+		logger.debug("Processing project description in"+ outputFileStream.toString() + "...");
+		try {
+			
+		    //Create instance of DocumentBuilderFactory
+		    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		    //Get the DocumentBuilder
+		    DocumentBuilder parser;
+			parser = factory.newDocumentBuilder();
+		
+		    //Create blank DOM Document
+		    doc = parser.newDocument();
+		    
+		    // Insert the root element node
+		    Element element = doc.createElement("root");
+		    element.setAttribute("path", basePath.getName());
+		    element.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+		    element.setAttribute("xlink:type", "extended");
+		    
+		    ProcessXMLTransform(doc.appendChild(element), basePath.getDirectoriesList());
+		    
+		    //	Write it out again
+		    TransformerFactory xformFactory  = TransformerFactory.newInstance();
+		    Transformer idTransform;
+				
+		    idTransform = xformFactory.newTransformer();
+		
+		    Source input = new DOMSource(doc);
+		    Result output = new StreamResult(outputFileStream);
+			idTransform.transform(input, output);
+			
+		    
+			//	outputFileStream.write(basePath.toString().getBytes());
+			//	outputFileStream.close();
+		} catch (ParserConfigurationException e) {
+			logger.fatal("IOException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
+		} catch (TransformerException e) {
+			logger.fatal("TransformerException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
+		}
+	}
 	public void ProcessAnalysis()
 	{
 		/**
 		 * Browse javaFiles & get basic metrics
 		 */
-		logger.debug("Processing analysis of the project source code...");
+		logger.debug("Processing project analysis...");
 		// Create the project file description		
-		populateProjectDescription();
-		
-		try {
-			outputFileStream.write(basePath.toString().getBytes());
-			outputFileStream.close();
-		} catch (IOException e) {
-			logger.fatal("IOException at ctor() ProjectBrowser : " +e.getMessage());
-		}
-	}
-	
-	
-	
-	private void populateProjectDescription()
-	{
 		projectGlobalMetrics = new ProjectUnitRatioMetrics();
 		ParsingUnit parsingUnit = null;
-		
-		int classCount=0;
-		int methodCount=0;
-		int linesCount=0;
-		int interfaceCount=0;
 		
 		for(FileElement fileElement : basePath.getGlobalFileList())
 		{
@@ -122,6 +181,15 @@ public class ProjectBrowser
 			
 			// Get the AST XML of the source file
 			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
+		
+		}
+	}
+	
+	
+	
+	private void populateProjectDescription()
+	{
+	
 			
 			// TODO Build the XML AST project file
 									
@@ -132,7 +200,7 @@ public class ProjectBrowser
 //				linesCount += fileElement.getMetricsData().GetLineCount();
 //                interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
              
-		}
+	
 		
 
 //		projectGlobalMetrics.setClassCount(classCount);
