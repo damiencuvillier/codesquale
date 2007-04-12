@@ -35,6 +35,7 @@ public static void main(String[] args)
 			logger.info(Messages.getString("LIB_BROWSING_DIR")); //$NON-NLS-1$
 			ProjectBrowser browser = new ProjectBrowser(new File(args[0]),new File(args[1]),filter);
 			browser.ProcessAnalysis();
+			browser.ProcessDescription();
 			
 		} catch (NotDirectoryException e) {
 			logger.fatal(Messages.getString("ERR_INVALID_DIR")); //$NON-NLS-1$

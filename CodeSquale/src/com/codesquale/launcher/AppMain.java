@@ -27,6 +27,7 @@ public class AppMain {
 		// Display results
 		myResultView.DisplayResults(myParsingUnit.getSourceFileRawData());
 
+		myParsingUnit.ASTToXML("sampleAST.xml");
 		
 	}
 
