@@ -4,10 +4,10 @@
 ==__________________________________________________________________________________________==
 
 ==1. General metrics==
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
-||*NPAC*||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
-||*NFIL*||Number of source files.||The total number of sources files included in the project.||_N/A_||
-||*NINT*||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_N/A_||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+||*NPAC*|| Packages ||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
+||*NFIL*|| Files ||Number of source files.||The total number of sources files included in the project.||_N/A_||
+||*NINT*|| Interfaces ||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_N/A_||
 
 ==2. Class metrics==
 || *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
@@ -74,4 +74,3 @@
 ||*RCPD*||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
 ||*RELM*||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
 ||*RMBC*||Average number of methods by class.||This measure provides the average quantity of methods by class.||N/A_||
-
