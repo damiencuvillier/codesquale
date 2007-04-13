@@ -1,5 +1,5 @@
 #summary Roadmap of the project
-#labels al,Phase-Requirements,Phase-Design
+#labels Phase-Requirements,Phase-Design
 == Some words about the project leading method ==
 The project is organized by using short time iteration. Thus, the development team will be able to provide often some binaries. Each iteration will be focused on particular objectives. 
 
