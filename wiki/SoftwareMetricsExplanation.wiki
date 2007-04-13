@@ -75,8 +75,8 @@
 ||*RCPD*|| ||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
 ||*RELM*|| ||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
 ||*RMBC*|| ||Average number of methods by class.||This measure provides the average quantity of methods by class.||N/A_||
-||*AIDR*|| | Average Inheritance Depth.||The inheritance structure can be measured in terms of depth of class within its hierarchy. The AIDR is given as : AIDR = Sum of  depth of each class / Number of classes. ||N/A_||
-||*CHDR*|| | Class Hierarchy Depth.||In object oreientedf design, the application domain is modeled as a hierarchy of classes. This measure indicates the maximun depth of any class in the project. ||N/A_||
+||*AIDR*|| Average Inheritance Depth.||The inheritance structure can be measured in terms of depth of class within its hierarchy. The AIDR is given as : AIDR = Sum of  depth of each class / Number of classes. ||N/A_||
+||*CHDR*|| Class Hierarchy Depth.||In object oreientedf design, the application domain is modeled as a hierarchy of classes. This measure indicates the maximun depth of any class in the project. ||N/A_||
 ||**|| | ||||N/A_||
 
 ==__________________________________________________________________________________________==
