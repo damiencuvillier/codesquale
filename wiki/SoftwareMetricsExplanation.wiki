@@ -11,16 +11,16 @@
 
 ==2. Class metrics==
 || *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NTLA*|| ||Number of classes.||Total number of classes.||_N/A_||
-||*NPCL*|| ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
-||*NFCL*|| ||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
-||*NACL*|| ||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
-||*NCCL*|| ||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
-||*NLCL*|| ||Number of *_local class*_.||Total number of *_local class_* (suffixed by the keyword *_private_* or not suffixed by keyword).||_N/A_||
+||*NTLA*|| Classes ||Number of classes.||Total number of classes.||_N/A_||
+||*NPCL*|| Public Classes ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
+||*NFCL*|| Final Classes ||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
+||*NACL*|| Ac ||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
+||*NCCL*|| Cc ||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
+||*NLCL*|| NLC ||Number of *_local class*_.||Total number of *_local class_* (suffixed by the keyword *_private_* or not suffixed by keyword).||_N/A_||
 ||*NLSC*|| ||Number of *_local and static class*_.||Total number of *_local_ and static class* (suffixed by the keyword *_private static_* or *_static_*).||_N/A_||
-||*NNCL*|| ||Number of *_nested class_*.||Total number  of *_nested class_* (all classes nested by another class).||N/A_||
+||*NNCL*|| Nested Classes ||Number of *_nested class_*.||Total number  of *_nested class_* (all classes nested by another class).||N/A_||
 ||*NTCL*|| ||Number of *_child class*_.||Total number  of *_child class_* (all classes which derived directly from another class).||_N/A_||
-||*NCII*|| ||Number of class implementing at least one interface.||This measure provides a count of the total number classes implementing an interface or more.||_N/A_||
+||*NCII*|| Interfaces implemented ||Number of class implementing at least one interface.||This measure provides a count of the total number classes implementing an interface or more.||_N/A_||
 
 ==3. Method metrics==
 || *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
@@ -32,17 +32,17 @@
 
 ==4. Line of source code metrics==
 || *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NSTA*|| ||Number of statement||Total number of statements in the project.||N/A_||
-||*ELOC*|| ||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
-||*PLOC*|| ||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
-||*TOLI*|| ||Number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
-||*COLI*|| ||Number of commented lines.||Count only commented lines.||_N/A_||
-||*BLLI*|| ||Number of blank lines.||Count only blank lines.||_N/A_||
+||*NSTA*|| Statements ||Number of statement||Total number of statements in the project.||N/A_||
+||*ELOC*|| eLOC ||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
+||*PLOC*|| pLOC ||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
+||*TOLI*|| Top Lines ||Number of line of source code without any exception.||Count all lines of code contained in the project without any exception.||_N/A_||
+||*COLI*|| Cmt Lines ||Number of commented lines.||Count only commented lines.||_N/A_||
+||*BLLI*|| Blnk Lines ||Number of blank lines.||Count only blank lines.||_N/A_||
 
 
 ==5. Variable and attribute metrics==
 || *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NOAT*|| ||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
+||*NOAT*|| NOA ||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
 ||*NOPA*|| ||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_N/A_||
 ||*NPRA*|| ||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
 ||*NMSV*|| ||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
