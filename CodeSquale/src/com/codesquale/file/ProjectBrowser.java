@@ -105,7 +105,7 @@ public class ProjectBrowser
 		    	{
 		    		Node child = node.appendChild(doc.createElement("file"));
 		
-		    		((Element)child).appendChild(doc.createTextNode(file.getName()));
+		    		((Element)child).appendChild(doc.createTextNode(file.getName().substring(0,file.getName().length() - (file.getExtension().length()+1))));
 		    		
 		    		Node desc = child.appendChild(doc.createElement("description"));
 
@@ -115,7 +115,7 @@ public class ProjectBrowser
 		    		((Element)desc).setAttribute("xlink:show", "new");
 		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
 		    		
-		    		((Element)desc).appendChild(doc.createTextNode(" file description"));
+		    		((Element)desc).appendChild(doc.createTextNode("description"));
 		    		
 		    	}
 		    	ProcessXMLTransform(node, dir.getDirectoriesList());
@@ -212,9 +212,6 @@ public class ProjectBrowser
 	
 	private void populateProjectDescription()
 	{
-	
-			
-			// TODO Build the XML AST project file
 									
 //		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
 //				
