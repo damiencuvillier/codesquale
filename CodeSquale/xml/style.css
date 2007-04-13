@@ -1,0 +1,25 @@
+{
+display : block ;
+} 
+
+root{ 
+margin: 8px;
+font-family: arial;
+color: black;
+}
+directory { 
+display: block;
+margin: 8px;
+font-family: arial;
+color: black;
+}
+file{
+display: block;
+color: black;
+
+}
+description{
+color: red;
+display: block;
+cursor: pointer;
+}
