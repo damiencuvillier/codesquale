@@ -23,7 +23,7 @@
 ||*NCII*|| ||Number of class implementing at least one interface.||This measure provides a count of the total number classes implementing an interface or more.||_N/A_||
 
 ==3. Method metrics==
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOME*||Number of methods.||Total number  of methods in the project (without counting the class constructors).|| Yes ||
 ||*NONM*||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
 ||*NOPM*||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
@@ -31,7 +31,7 @@
 ||*NORM*||Number of remote methods.||A remote method call is defined as an invocation of a method that is not declared in any of: the class itself; a class or interface that the class extends or implements; a class or method that extends the class.||_N/A_||
 
 ==4. Line of source code metrics==
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NSTA*||Number of statement||Total number of statements in the project.||N/A_||
 ||*ELOC*||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
 ||*PLOC*||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
@@ -41,7 +41,7 @@
 
 
 ==5. Variable and attribute metrics==
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOAT*||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
 ||*NOPA*||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_N/A_||
 ||*NPRA*||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
@@ -52,12 +52,12 @@
 ==__________________________________________________________________________________________==
 
 ==2. General metrics==
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* ||| *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*MLIM*||Maximun number of LOC detected for a method.||This measure indicates the maximun number of LOC detected for a method.||_N/A_||
 
 ==2. Class metrics==
 
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*NOII*||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
 ||*NOCM*||Number of class methods.||This measure indicates the number of methods that have been explicitly defined in a class.It does not include the methods inherited from a super class.||N/A_||
 ||*RROC*||Reuse ratio of a class.||The reuse ratio is given by  U = Number of superclasses/Total number of classes.||N/A_||
@@ -69,7 +69,7 @@
 =Ratio metrics=
 ==__________________________________________________________________________________________==
 
-|| *Abbreviation* || *Details* || *Description* || *Feature supported by CodeSquale * ||
+|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CodeSquale * ||
 ||*RSPD*||Percentage of blank line and space compared to the total of LOC.||The space percentage is given by the formula : Space percentage = Total number of characters / Total number of blank characters.||_N/A_||
 ||*RCPD*||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
 ||*RELM*||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
