@@ -1,16 +1,17 @@
 #summary Explanation about software metrics used in CodeSquale
+#labels l
 ==__________________________________________________________________________________________==
 =Counting metrics=
 ==__________________________________________________________________________________________==
 
 ==1. General metrics==
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NPAC*|| Packages ||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
 ||*NFIL*|| Files ||Number of source files.||The total number of sources files included in the project.||_N/A_||
 ||*NINT*|| Interfaces ||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_N/A_||
 
 ==2. Class metrics==
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NTLA*|| Classes ||Number of classes.||Total number of classes.||_N/A_||
 ||*NPCL*|| Public Classes ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
 ||*NFCL*|| Final Classes ||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
@@ -23,15 +24,15 @@
 ||*NCII*|| Interfaces implemented ||Number of class implementing at least one interface.||This measure provides a count of the total number classes implementing an interface or more.||_N/A_||
 
 ==3. Method metrics==
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NOME*|| ||Number of methods.||Total number  of methods in the project (without counting the class constructors).|| Yes ||
-||*NONM*|| ||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
-||*NOPM*|| ||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
-||*NPRM*|| ||Number of *_private_* methods.||Count all the *_private_* methods.||_N/A_||
-||*NORM*|| ||Number of remote methods.||A remote method call is defined as an invocation of a method that is not declared in any of: the class itself; a class or interface that the class extends or implements; a class or method that extends the class.||_N/A_||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+||*NOME*|| Methods ||Number of methods.||Total number  of methods in the project (without counting the class constructors).|| Yes ||
+||*NONM*|| Native Methods ||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
+||*NOPM*|| Public Methods ||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
+||*NPRM*||  ||Number of *_private_* methods.||Count all the *_private_* methods.||_N/A_||
+||*NORM*|| NRM ||Number of remote methods.||A remote method call is defined as an invocation of a method that is not declared in any of: the class itself; a class or interface that the class extends or implements; a class or method that extends the class.||_N/A_||
 
 ==4. Line of source code metrics==
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NSTA*|| Statements ||Number of statement||Total number of statements in the project.||N/A_||
 ||*ELOC*|| eLOC ||Number of efferent lines of source code.||Count all line of source code except blank and commented lines.||_N/A_||
 ||*PLOC*|| pLOC ||Number of physical line of code.||Count all line of source code except blank lines.||N/A_||
@@ -41,7 +42,7 @@
 
 
 ==5. Variable and attribute metrics==
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NOAT*|| NOA ||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
 ||*NOPA*|| ||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_N/A_||
 ||*NPRA*|| ||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
@@ -52,7 +53,7 @@
 ==__________________________________________________________________________________________==
 
 ==2. General metrics==
-|| *CS Abbr.* || *ISO Abbr.* ||| *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* ||| *Details* || *Description* || *Feature supported by CS* ||
 ||*MLIM*|| ||Maximun number of LOC detected for a method.||This measure indicates the maximun number of LOC detected for a method.||_N/A_||
 
 ==2. Class metrics==
@@ -69,8 +70,22 @@
 =Ratio metrics=
 ==__________________________________________________________________________________________==
 
-|| *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*RSPD*|| ||Percentage of blank line and space compared to the total of LOC.||The space percentage is given by the formula : Space percentage = Total number of characters / Total number of blank characters.||_N/A_||
 ||*RCPD*|| ||Percentage of comment compared to the total of LOC.||The comment density is given by the formula: Comment density = Number of comment lines / Total number of lines.||N/A_||
 ||*RELM*|| ||Average number of ELOC by method.||This measure provides the average quantity of ELOC(see _4.Line of source code metrics_) by method.||N/A_||
 ||*RMBC*|| ||Average number of methods by class.||This measure provides the average quantity of methods by class.||N/A_||
+||*AIDR*|| | Average Inheritance Depth.||The inheritance structure can be measured in terms of depth of class within its hierarchy. The AIDR is given as : AIDR = Sum of  depth of each class / Number of classes. ||N/A_||
+||*CHDR*|| | Class Hierarchy Depth.||In object oreientedf design, the application domain is modeled as a hierarchy of classes. This measure indicates the maximun depth of any class in the project. ||N/A_||
+||**|| | ||||N/A_||
+
+==__________________________________________________________________________________________==
+=ISO9196 Based metrics =
+==__________________________________________________________________________________________==
+
+
+|| *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
+||*CCIM*|| V(G) ||Cyclomatic complexity.||Number of paths tought a method. The higher the number, the more testing effort will be required to cover all paths. A method with no conditional struct will have a CCIR of 1.||_N/A_||
+||*RFCM*|| RFC ||Response For Class.||This measure captures the size of the response set of a class. The response set of a class consists of a all the methods called by local methods. RFC is the sum of the number of local methods and the number of methods called by local methods.||_N/A_||
+||*LCOM*|| LCOM ||Lack of cohesion of methods.||The cohesion of a class is characterized by how closely the local methods are related to the local instances variables of a class. LCOM is defined as the number of disjoint(that is non intersecting) set of local methods.||_N/A_||
+||*LCOM_CK*|| LCOM_CK ||Lack of cohesion of methods (Chidamber-Kemerer).||C&K defines the LCOM as a count of the number of method pairs whose similarity is not zero. For a perfectly cohesive class the value of LCOM_CK is 0, and for a totally non cohesive class the LCOM_CK value equals (n(n-1))/2 where n represents the total number of methods present in class.||_N/A_||
