@@ -56,6 +56,7 @@ import javax.swing.filechooser.*;
  * @version 1.9 04/23/99
  * @author Jeff Dinkins
  */
+
 public class CSFilter extends FileFilter {
 
     private static String TYPE_UNKNOWN = "Type Unknown";
