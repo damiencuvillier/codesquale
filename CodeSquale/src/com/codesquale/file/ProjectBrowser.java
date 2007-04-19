@@ -48,7 +48,7 @@ public class ProjectBrowser
 	private DirectoryElement basePath = null;
 	private FileOutputStream outputFileStream = null;
 	// TODO Implement constant manager with XML file
-	private String XMLoutputPath = "output";
+	private String XMLoutputPath = "in/output";
 	// Represent the projet XML file
 	private Document doc = null;
 	
