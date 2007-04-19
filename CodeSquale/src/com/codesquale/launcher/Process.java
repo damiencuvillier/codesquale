@@ -17,21 +17,27 @@ import com.codesquale.file.ProjectBrowser;
  */
 
 
-public class Process {
+public class Process extends Thread{
 	
 	private File source, target;
 	
 	private  org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Process.class);
 
 	public Process(File source, File target){
-
+		setSource(source);
+		setTarget(target);
+	}
+	
+	public void run(){
+		String XMLtarget = target.getAbsolutePath()+"\\codesquale.xml";
+		
 		try {
-
+			File XMLFile = new File(XMLtarget);
 			logger.info("File Filter init");
 			FileFilter filter = new FileFilter();
 			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 			logger.info("Browsing File...");
-			ProjectBrowser browser = new ProjectBrowser(source, target, filter);
+			ProjectBrowser browser = new ProjectBrowser(source, XMLFile, filter);
 			browser.ProcessAnalysis();
 			browser.ProcessDescription();
 
@@ -39,7 +45,7 @@ public class Process {
 			logger.info("Param is not a valid directory");
 		}
 		logger.info("Done...");
-		logger.info("Results written in " + target.getAbsolutePath());
+		logger.info("Results written in " + XMLtarget );
 		
 		
 	}
