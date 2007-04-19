@@ -33,9 +33,12 @@ import org.apache.log4j.WriterAppender;
 public class Console extends JFrame {
 	
 	private JTextField sourceFolder;
-	private JTextField targetFile;
+	private JTextField targetFolder;
 	private JTextArea consoleOut;
 	private JList level;
+	private JButton submit;
+	private JButton folder ;
+	private JButton file ;
 	private Logger root;
 
 	// Retrieve logger log4j in log4j.XML
@@ -62,14 +65,15 @@ public class Console extends JFrame {
 		scrConsole.setSize(250, 500);
 
 		sourceFolder 	= new JTextField();
-		targetFile 		= new JTextField();
+		targetFolder 	= new JTextField();
 		consoleOut 		= new JTextArea();
-		JButton folder 	= new JButton("Choose the folder source");
-		JButton file 	= new JButton("Choose the xml file ");
-		JButton submit 	= new JButton("Run");
+		folder 	= new JButton("Choose the folder source");
+		file 	= new JButton("Choose the destination folder ");
+		submit 	= new JButton("Run");
+		submit.setEnabled(false);
 		JScrollPane areaScrollPane = new JScrollPane(consoleOut);		
 		
-		String[] dataLevel = {"Info", "Warning","Debug", "Error", "Fatal"};
+		String[] dataLevel = {"Debug", "Info", "Warning", "Error", "Fatal"};
 		level		= new JList(dataLevel);
 		level.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
 		level.setSelectedIndex(0);
@@ -85,20 +89,25 @@ public class Console extends JFrame {
 		WriterAppender appender = new WriterAppender(new SimpleLayout(), os);
 		appender.setName("consoleSwing");
 		appender.setImmediateFlush(true);
-		root.addAppender(appender); 
+		root.addAppender(appender);
+		root.setPriority(Priority.DEBUG);
 		
 		
 	// Listener for the source folder button	
 		folder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				sourceFolder.setText(new FolderChooser().getFolder());
+				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
+					submit.setEnabled(true);
 			}
 		});
 		
 	// Listener for the destination file button	
 		file.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				targetFile.setText(new FileChooser().getFile());
+				targetFolder.setText(new FolderChooser().getFolder());
+				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
+					submit.setEnabled(true);
 			}
 		});
 
@@ -107,9 +116,9 @@ public class Console extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Raccord de méthode auto-généré
 				switch(level.getSelectedIndex()){
-					case 0 : root.setPriority(Priority.INFO); break;
-					case 1 : root.setPriority(Priority.WARN); break;
-					case 2 : root.setPriority(Priority.DEBUG); break;
+					case 0 : root.setPriority(Priority.DEBUG); break;
+					case 1 : root.setPriority(Priority.INFO); break;
+					case 2 : root.setPriority(Priority.WARN); break;
 					case 3 : root.setPriority(Priority.ERROR); break;
 					case 4 : root.setPriority(Priority.FATAL); break;
 					default: root.setPriority(Priority.INFO); break;
@@ -121,8 +130,9 @@ public class Console extends JFrame {
 	// Listener for the run process button
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFile.getText()));
-				
+				com.codesquale.launcher.Process p =new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFolder.getText()));
+				p.start();
+				submit.setEnabled(false);
 
 			}
 		});
@@ -131,7 +141,7 @@ public class Console extends JFrame {
 		param.add(folder);
 		param.add(sourceFolder);
 		param.add(file);
-		param.add(targetFile);
+		param.add(targetFolder);
 		param.add(new JLabel("Log level :"));
 		param.add(levelScrollPane);
 		param.add(new JLabel("Launch process :"));
@@ -154,12 +164,12 @@ public class Console extends JFrame {
 		this.sourceFolder = sourceFolder;
 	}
 
-	public JTextField getTargetFile() {
-		return targetFile;
+	public JTextField getTargetFolder() {
+		return targetFolder;
 	}
 
-	public void setTargetFile(JTextField targetFile) {
-		this.targetFile = targetFile;
+	public void setTargetFolder(JTextField targetFile) {
+		this.targetFolder = targetFile;
 	}
 
 }
