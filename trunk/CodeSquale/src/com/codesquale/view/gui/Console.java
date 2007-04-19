@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.PrintStream;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,8 +37,9 @@ public class Console extends JFrame {
 	
 	private JTextField sourceFolder;
 	private JTextField targetFolder;
+	private JTextField XMLFile;
 	private JTextArea consoleOut;
-	private JList level;
+	private JComboBox level;
 	private JButton submit;
 	private JButton cancel;
 	
@@ -61,7 +63,7 @@ public class Console extends JFrame {
 		setSize(500, 500);
 		setLayout(new GridLayout(2, 1));
 		JPanel param = new JPanel();
-		param.setLayout(new GridLayout(5, 2));
+		param.setLayout(new GridLayout(6, 2));
 		param.setSize(150, 500);
 		
 	// SWING Console pannel	
@@ -71,18 +73,18 @@ public class Console extends JFrame {
 
 		sourceFolder 	= new JTextField();
 		targetFolder 	= new JTextField();
+		XMLFile			= new JTextField("codesquale.xml");
 		consoleOut 		= new JTextArea();
-		folder 	= new JButton("Choose the folder source");
-		file 	= new JButton("Choose the destination folder ");
-		submit 	= new JButton("Run");
-		cancel = new JButton("Cancel");
+		folder 			= new JButton("Choose the folder source");
+		file 			= new JButton("Choose the destination folder ");
+		submit 			= new JButton("Run");
+		cancel 			= new JButton("Cancel");
 		
 		submit.setEnabled(false);
 		JScrollPane areaScrollPane = new JScrollPane(consoleOut);		
 		
 		String[] dataLevel = {"Debug", "Info", "Warning", "Error", "Fatal"};
-		level		= new JList(dataLevel);
-		level.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
+		level		= new JComboBox(dataLevel);
 		level.setSelectedIndex(0);
 		JScrollPane levelScrollPane = new JScrollPane(level);
 		
@@ -119,10 +121,9 @@ public class Console extends JFrame {
 			}
 		});
 
-		level.addListSelectionListener(new ListSelectionListener(){
+		level.addActionListener(new ActionListener(){
 
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Raccord de méthode auto-généré
+			public void actionPerformed(ActionEvent e) {
 				switch(level.getSelectedIndex()){
 					case 0 : root.setPriority(Priority.DEBUG); break;
 					case 1 : root.setPriority(Priority.INFO); break;
@@ -132,14 +133,19 @@ public class Console extends JFrame {
 					default: root.setPriority(Priority.INFO); break;
 				}
 			}
+
 			
 		});
 		
 	// Listener for the run process button
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(!XMLFile.getText().contains(".xml"))
+					XMLFile.setText(XMLFile.getText()+ ".xml") ;
+					
 				consoleOut.setText("");
-				process =new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFolder.getText()));		
+				process = new com.codesquale.launcher.Process(new File(sourceFolder.getText()),
+						new File(targetFolder.getText()), new File(XMLFile.getText()));		
 				process.start();
 				submit.setEnabled(false);
 
@@ -166,6 +172,8 @@ public class Console extends JFrame {
 		param.add(sourceFolder);
 		param.add(file);
 		param.add(targetFolder);
+		param.add(new JLabel("XML file name :"));
+		param.add(XMLFile);
 		param.add(new JLabel("Log level :"));
 		param.add(levelScrollPane);
 		param.add(new JLabel("Launch process :"));
