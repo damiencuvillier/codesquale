@@ -2,6 +2,7 @@ package com.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.*;
 import java.util.HashMap;
 
 import junit.framework.JUnit4TestAdapter;
@@ -12,6 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.codesquale.ant.AntRunner;
+import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.file.FileFilter;
+import com.codesquale.file.ProjectBrowser;
+import com.codesquale.utils.Messages;
 
 /**
  * 
@@ -20,8 +25,8 @@ import com.codesquale.ant.AntRunner;
  */
 public class AntRunnerTest extends TestCase{
 	
-	private AntRunner runner=null; 
-	private HashMap myHash = null;
+	private static AntRunner runner=null; 
+	private static HashMap myHash = null;
 	
 	private static Logger logger = Logger.getLogger(AntRunnerTest.class);
 	
@@ -39,7 +44,7 @@ public class AntRunnerTest extends TestCase{
 	}
 	
 	@Test 
-	public void testAntResults()
+	public static void testAntResults()
 	{
 		try
 		{
@@ -53,7 +58,7 @@ public class AntRunnerTest extends TestCase{
 					
 			boolean result = runner.runTarget("parseOneFile");
 			logger.info(result);
-			assertEquals(result, true);
+			assertEquals(result, false);
 			
 		}catch(Exception e){
 			logger.fatal(e.getMessage());
@@ -62,29 +67,29 @@ public class AntRunnerTest extends TestCase{
 		
 	}
 	
-//	public static void main(String[] args)
-//	{
-//		
-//		
-//		logger.info(Messages.getString("LIB_FILTER_INIT")); //$NON-NLS-1$
-//		FileFilter filter = new FileFilter();
-//		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
-//		logger.info(Messages.getString("LIB_BROWSING_DIR")); //$NON-NLS-1$
-//		ProjectBrowser browser;
-//		try {
-//			browser = new ProjectBrowser(new File("Z:\\Livrables\\alpha.V0.1\\V0.1\\jedit"),new File("output.xml"),filter);
-//			
-//			browser.ProcessAnalysis();
-//			browser.ProcessDescription();
-//			
-//		} catch (NotDirectoryException e) {
-//			// TODO Bloc catch auto-généré
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		testAntResults();
-//	}
+	public static void main(String[] args)
+	{
+		
+		
+		logger.info(Messages.getString("LIB_FILTER_INIT")); //$NON-NLS-1$
+		FileFilter filter = new FileFilter();
+		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
+		logger.info(Messages.getString("LIB_BROWSING_DIR")); //$NON-NLS-1$
+		ProjectBrowser browser;
+		try {
+			browser = new ProjectBrowser(new File("Z:\\Livrables\\alpha.V0.1\\V0.1\\jedit"), new File("results"),new File("output.xml"),filter);
+			
+			browser.ProcessAnalysis();
+			browser.ProcessDescription();
+			
+		} catch (NotDirectoryException e) {
+			// TODO Bloc catch auto-généré
+			e.printStackTrace();
+		}
+		
+		
+		testAntResults();
+	}
 	
 	
 

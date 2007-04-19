@@ -48,7 +48,7 @@ public class ProjectBrowser
 	private DirectoryElement basePath = null;
 	private FileOutputStream outputFileStream = null;
 	// TODO Implement constant manager with XML file
-	private String XMLoutputPath = "in\\output";
+	private String XMLoutputPath = "";
 	// Represent the projet XML file
 	private Document doc = null;
 	
@@ -99,23 +99,23 @@ public class ProjectBrowser
 		  for(DirectoryElement dir: repository)
 		    {
 		    	Node node = element.appendChild(doc.createElement("directory"));
+		    	((Element)node).setAttribute("value", dir.getName());
 		    	((Element)node).appendChild(doc.createTextNode(dir.getName()));
 		    	
 		    	for(FileElement file: dir.getFilesList())
 		    	{
 		    		Node child = node.appendChild(doc.createElement("file"));
-		
-		    		((Element)child).appendChild(doc.createTextNode(file.getName().substring(0,file.getName().length() - (file.getExtension().length()+1))));
-		    		
-		    		Node desc = child.appendChild(doc.createElement("description"));
+		    		((Element)child).setAttribute("value", file.getName());
+		    		//((Element)child).appendChild(doc.createTextNode(file.getName().substring(0,file.getName().length() - (file.getExtension().length()+1))));
+		    		((Element)child).setAttribute("href", file.getXmlDesc());
 
-		    		((Element)desc).setAttribute("xlink:type", "simple");
-		    		((Element)desc).setAttribute("xlink:title", file.getName());
-		    		((Element)desc).setAttribute("xlink:href", file.getXmlDesc());
-		    		((Element)desc).setAttribute("xlink:show", "new");
-		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
-		    		
-		    		((Element)desc).appendChild(doc.createTextNode("description"));
+//		    		((Element)desc).setAttribute("xlink:type", "simple");
+//		    		((Element)desc).setAttribute("xlink:title", file.getName());
+//		    		((Element)desc).setAttribute("xlink:href", file.getXmlDesc());
+//		    		((Element)desc).setAttribute("xlink:show", "new");
+//		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
+		    	
+		    		//((Element)desc).appendChild(doc.createTextNode("description"));
 		    		
 		    	}
 		    	ProcessXMLTransform(node, dir.getDirectoriesList());
@@ -146,7 +146,7 @@ public class ProjectBrowser
 		    // Insert the root element node
 		    Element element = doc.createElement("root");
 		    element.setAttribute("path", basePath.getAbsolutePath());
-		    element.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+		    element.setAttribute("xmlns:xi","http://www.w3.org/2001/XInclude");
 		    	    
 		    // proceed XML transformation
 		    ProcessXMLTransform(doc.appendChild(element), basePath.getDirectoriesList());

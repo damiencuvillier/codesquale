@@ -18,10 +18,10 @@
 	
 	<target name="parseOneFile" depends="init" 
 		description="Parsing test">
-		<delete file="results/REResults.xml" />
-		<xslt basedir="xml" 
-			in="in/output/gnu.regexp.RE.xml"
-			out="results/REResults.xml"
+		<delete file="results/gnu.regexp.REResults.xml" />
+		<xslt basedir="." 
+			in="in/output/xmlOutput/gnu.regexp.RE.xml"
+			out="results/gnu.regexp.REResults.xml"
 			extension="xml" 
 			description="Parse un fichier"
 			style="XSLT StyleSheets/Java/file.xslt"
@@ -50,7 +50,8 @@
 				/>
 		 	
 
-	</target>-->
+	</target>
+
 	 <target name="validResultsFiles">
 		<xmlvalidate>
 	        <fileset dir="results" includes="*.xml"/>
@@ -59,7 +60,7 @@
 	        <attribute name="http://xml.org/sax/features/namespaces" value="true"/>
 	     </xmlvalidate>
 	</target>
-	<!--
+
 	<target name="browseFile">
 		<fileset dir="test" >
 			
