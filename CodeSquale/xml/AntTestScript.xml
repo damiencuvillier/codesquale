@@ -1,0 +1,83 @@
+<!-- Parsing tasks -->
+
+<!--
+	Ressources : 
+	http://ant.apache.org/manual/CoreTasks/style.html
+-->
+<project name="CodeSquale Tests" default="parseProjectFile" basedir="..">
+	<description>
+		Tests Scripts
+		
+		For developers only
+	</description>
+	<property name="testDir" value="z:/tmp/generated/" />
+	
+	<property name="Source" value="${testDir}src/" />
+	<property name="AntLRXMLdir" value="${testDir}XMLAntlr/" />
+	<property name="CodeSqualeXMLdir" value="${testDir}CodeSqualeXML/" />
+	<property name="MetricsDir" value="${testDir}metricsXML/" />
+	
+	<property name="XSDdir" value="xml/XSD Schemas/" />
+	<property name="XSLTdir" value="xml/XSLT StyleSheets/Java/" />
+	 
+	
+	<target name="init">
+		<echo message="********************************" />
+		<echo message="******** CodeSquale ***********" />
+		<echo message="********************************" />		
+		<!-- Environment initialization -->
+		<echo message="Create Results dir" level="info" />
+		
+		<mkdir dir="${CodeSqualeXMLdir}" />
+		<!--<mkdir dir="${AntLRXMLdir}" />		-->
+		<mkdir dir="${MetricsDir}" />		
+		
+	</target>
+					
+	
+
+	<target name="parseProjectFile" depends="init" 
+			description="Parsing Project File">
+		<echo message="Parse Project File" />
+		
+		
+		<!-- XSD Schemas files copy -->
+		<echo message="XSD SCHEMA COPYING..." />
+		<copy todir="${CodeSqualeXMLdir}">
+			<fileset dir="${XSDdir}" > 
+				<include name="**/*.xsd"/>
+			</fileset>
+		</copy>
+		
+		
+		<echo message="Project exploring ... " />
+		<xslt basedir="." processor="trax" 
+			in="${AntLRXMLdir}AntlrProjectOutput.xml"
+			out="${CodeSqualeXMLdir}project.xml"
+			extension="xml" 
+			description="Project File parsing"
+			style="${XSLTdir}project.xslt"
+			>
+			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
+		</xslt>
+		<!-- Directory Parsing -->
+		<echo message="Directories Exploring ..." />
+		<xslt basedir="." processor="trax" 
+			in="${AntLRXMLdir}AntlrProjectOutput.xml"
+			out="${CodeSqualeXMLdir}directories.xml"
+			extension="xml" 
+			description="Directory files parsing"
+			style="${XSLTdir}directory.xslt"
+			>
+			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
+		</xslt>
+		<!-- Delete Temporary File -->
+		<delete file="${CodeSqualeXMLdir}directories.xml"/>
+		
+		
+	</target>
+	
+	
+
+
+</project>
