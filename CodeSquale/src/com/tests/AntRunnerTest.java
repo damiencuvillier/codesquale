@@ -44,21 +44,16 @@ public class AntRunnerTest extends TestCase{
 		try
 		{
 			runner.init("AntScript.xml", "xml");
-			System.out.println("Init");
 			
-			myHash.put("event", "results");
+			myHash.put("event", "parseOneFile");
 			myHash.put("subject", "Results Target");
 			myHash.put("message", "Testing Results ant target");
 			
 			runner.setProperties(myHash, false);
-			System.out.println("Properties");
-			
-			
-			boolean result = runner.runTarget("results");
-			System.out.println("Run");
-			
+					
+			boolean result = runner.runTarget("parseOneFile");
+			logger.info(result);
 			assertEquals(result, true);
-
 			
 		}catch(Exception e){
 			logger.fatal(e.getMessage());
