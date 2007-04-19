@@ -37,7 +37,7 @@ public class Process extends Thread{
 			FileFilter filter = new FileFilter();
 			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 			logger.info("Browsing File...");
-			ProjectBrowser browser = new ProjectBrowser(source, XMLFile, filter);
+			ProjectBrowser browser = new ProjectBrowser(source,target, XMLFile, filter);
 			browser.ProcessAnalysis();
 			browser.ProcessDescription();
 

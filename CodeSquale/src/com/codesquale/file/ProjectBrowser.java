@@ -62,21 +62,21 @@ public class ProjectBrowser
 	/**
 	 * Constructor
 	 * 
-	 * @param path : Directory where source code is located
+	 * @param InputPath : Directory where source code is located
 	 * @param fileTypes : list of authorized file types (Constants are available in class File)
 	 * @throws NotDirectoryException 
 	 */
-	public ProjectBrowser(File path, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
-		if( ! path.isDirectory() ){
+	public ProjectBrowser(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
+		if( ! InputPath.isDirectory() ){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
 			 * */
 			logger.fatal("Specified path is not a directory");
-			throw new NotDirectoryException(path);
+			throw new NotDirectoryException(InputPath);
 		}
 		//this.fileFilter = fileFilter;
-		basePath = new DirectoryElement(path,fileFilter);
-		
+		basePath = new DirectoryElement(InputPath,fileFilter);
+		XMLoutputPath = outputPath.getAbsolutePath()+ "\\xmlOutput";
 		
 		/*
 		 * Initialize outputFile
