@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Utilities {
 	
-	public static String GetCurrentTime()
+	public static String getCurrentTime()
 	{
 		GregorianCalendar cal = new GregorianCalendar();
 		int sec = cal.get(Calendar.SECOND);
