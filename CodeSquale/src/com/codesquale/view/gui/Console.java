@@ -39,9 +39,12 @@ public class Console extends JFrame {
 	private JTextArea consoleOut;
 	private JList level;
 	private JButton submit;
+	private JButton cancel;
+	
 	private JButton folder ;
 	private JButton file ;
 	private Logger root;
+	private com.codesquale.launcher.Process process ;
 
 	// Retrieve logger log4j in log4j.XML
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Console.class);
@@ -72,6 +75,8 @@ public class Console extends JFrame {
 		folder 	= new JButton("Choose the folder source");
 		file 	= new JButton("Choose the destination folder ");
 		submit 	= new JButton("Run");
+		cancel = new JButton("Cancel");
+		
 		submit.setEnabled(false);
 		JScrollPane areaScrollPane = new JScrollPane(consoleOut);		
 		
@@ -101,6 +106,7 @@ public class Console extends JFrame {
 				sourceFolder.setText(new FolderChooser().getFolder());
 				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
 					submit.setEnabled(true);
+				
 			}
 		});
 		
@@ -132,12 +138,28 @@ public class Console extends JFrame {
 	// Listener for the run process button
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				com.codesquale.launcher.Process p =new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFolder.getText()));
-				p.start();
+				consoleOut.setText("");
+				process =new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFolder.getText()));		
+				process.start();
 				submit.setEnabled(false);
 
 			}
 		});
+		
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				submit.setEnabled(false);
+				if(process != null){
+					if(process.isAlive()) process.stop();
+				}
+				sourceFolder.setText("");
+				targetFolder.setText("");
+				
+				
+
+			}
+		});
+
 
 	// GUI parameters
 		param.add(folder);
@@ -149,6 +171,7 @@ public class Console extends JFrame {
 		param.add(new JLabel("Launch process :"));
 		param.add(submit);
 		param.add(new JLabel("Console :"));
+		param.add(cancel);
 		
 		add(param);
 		scrConsole.add(areaScrollPane);
@@ -156,6 +179,11 @@ public class Console extends JFrame {
 		
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
+				
+				if(process != null){
+					if(process.isAlive()) process.stop();
+				}
+				
 				dispose();
 				System.exit(0);
 			}
