@@ -19,15 +19,17 @@
 	<target name="parseOneFile" depends="init" 
 		description="Parsing test">
 		<delete file="results/REResults.xml" />
-		<xslt basedir="src" 
-			in="in/output/RE.xml"
+		<xslt basedir="xml" 
+			in="in/output/gnu.regexp.RE.xml"
 			out="results/REResults.xml"
 			extension="xml" 
 			description="Parse un fichier"
 			style="XSLT StyleSheets/Java/file.xslt"
 			/>
 	</target>
-	<target name="parseProjectFile" depends="init" 
+	
+	
+	<!-- target name="parseProjectFile" depends="init" 
 			description="Parsing Project File">
 			<taskdef name="saxon-xslt" 
 					         classname="net.sf.saxon.ant.AntTransform" />
@@ -39,17 +41,17 @@
 			            out="results/project.xml">
 			  <param name="destination" expression="output"/>
 			</saxon-xslt>  
-			<!--<xslt basedir="src" 
+			<xslt basedir="src" 
 				in="in/output.xml"
 				out="results/project.xml"
 				extension="xml" 
 				description="Parse un fichier de description de projet"
 				style="XSLT StyleSheets/Java/project.xslt"
-				/>-->
+				/>
 		 	
 
-	</target>
-	<target name="validResultsFiles">
+	</target>-->
+	<!-- <target name="validResultsFiles">
 		<xmlvalidate>
 	        <fileset dir="results" includes="*.xml"/>
 	        <attribute name="http://xml.org/sax/features/validation" value="true"/>
@@ -71,6 +73,6 @@
 			destdir="results"
 			style="src/XSLT StyleSheets/Java/file.xslt"
 			/>
-	</target>
+	</target>-->
 
 </project>
