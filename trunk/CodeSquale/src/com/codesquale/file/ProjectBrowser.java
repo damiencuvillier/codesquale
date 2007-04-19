@@ -99,7 +99,7 @@ public class ProjectBrowser
 		  for(DirectoryElement dir: repository)
 		    {
 		    	Node node = element.appendChild(doc.createElement("directory"));
-		    	((Element)node).appendChild(doc.createTextNode(dir.getAbsolutePath()));
+		    	((Element)node).appendChild(doc.createTextNode(dir.getName()));
 		    	
 		    	for(FileElement file: dir.getFilesList())
 		    	{
@@ -145,7 +145,7 @@ public class ProjectBrowser
 		    
 		    // Insert the root element node
 		    Element element = doc.createElement("root");
-		    element.setAttribute("path", basePath.getName());
+		    element.setAttribute("path", basePath.getAbsolutePath());
 		    element.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
 		    	    
 		    // proceed XML transformation
