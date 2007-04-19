@@ -33,7 +33,7 @@ public static void main(String[] args)
 			FileFilter filter = new FileFilter();
 			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 			logger.info(Messages.getString("LIB_BROWSING_DIR")); //$NON-NLS-1$
-			ProjectBrowser browser = new ProjectBrowser(new File(args[0]),new File("in/out"),new File(args[1]),filter);
+			ProjectBrowser browser = new ProjectBrowser(new File(args[0]),new File("in\\output"),new File(args[1]),filter);
 			browser.ProcessAnalysis();
 			browser.ProcessDescription();
 			
