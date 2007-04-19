@@ -15,7 +15,7 @@ public class FolderChooser {
 		if(retour == JFileChooser.APPROVE_OPTION) {
 			this.folder = choix.getSelectedFile().getAbsolutePath();
 		} else {
-			this.folder = "You must choose a folder!"; 
+			this.folder = ""; 
 		}
 	}
 
