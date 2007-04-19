@@ -51,7 +51,7 @@
 		 	
 
 	</target>-->
-	<!-- <target name="validResultsFiles">
+	 <target name="validResultsFiles">
 		<xmlvalidate>
 	        <fileset dir="results" includes="*.xml"/>
 	        <attribute name="http://xml.org/sax/features/validation" value="true"/>
@@ -59,6 +59,7 @@
 	        <attribute name="http://xml.org/sax/features/namespaces" value="true"/>
 	     </xmlvalidate>
 	</target>
+	<!--
 	<target name="browseFile">
 		<fileset dir="test" >
 			
