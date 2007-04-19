@@ -1,7 +1,6 @@
 package com.codesquale.view.gui;
 
 
-
 public class Launcher {
 
 	/**

@@ -41,20 +41,6 @@ import javax.swing.filechooser.*;
  * A convenience implementation of FileFilter that filters out
  * all files except for those type extensions that it knows about.
  *
- * Extensions are of the type ".foo", which is typically found on
- * Windows and Unix boxes, but not on Macinthosh. Case is ignored.
- *
- * Example - create a new filter that filerts out all files
- * but gif and jpg image files:
- *
- *     JFileChooser chooser = new JFileChooser();
- *     ExampleFileFilter filter = new ExampleFileFilter(
- *                   new String{"gif", "jpg"}, "JPEG & GIF Images")
- *     chooser.addChoosableFileFilter(filter);
- *     chooser.showOpenDialog(this);
- *
- * @version 1.9 04/23/99
- * @author Jeff Dinkins
  */
 
 public class CSFilter extends FileFilter {
@@ -125,6 +111,8 @@ public class CSFilter extends FileFilter {
      *
      * @see #addExtension
      */
+    
+    
     public CSFilter(String[] filters, String description) {
 		this();
 		for (int i = 0; i < filters.length; i++) {
@@ -143,6 +131,7 @@ public class CSFilter extends FileFilter {
      * @see #getExtension
      * @see FileFilter#accepts
      */
+    
     public boolean accept(File f) {
     	if(f != null) {
     		if(f.isDirectory()) {
