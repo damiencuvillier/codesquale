@@ -18,7 +18,7 @@
 	
 	<target name="parseOneFile" depends="init" 
 		description="Parsing test">
-		<delete file="results/gnu.regexp.REResults.xml" />
+			<delete file="results/gnu.regexp.REResults.xml" />
 		<xslt basedir="." 
 			in="in/output/xmlOutput/gnu.regexp.RE.xml"
 			out="results/gnu.regexp.REResults.xml"
@@ -50,8 +50,7 @@
 				/>
 		 	
 
-	</target>
-
+	</target>-->
 	 <target name="validResultsFiles">
 		<xmlvalidate>
 	        <fileset dir="results" includes="*.xml"/>
@@ -60,7 +59,7 @@
 	        <attribute name="http://xml.org/sax/features/namespaces" value="true"/>
 	     </xmlvalidate>
 	</target>
-
+	<!--
 	<target name="browseFile">
 		<fileset dir="test" >
 			
@@ -75,6 +74,16 @@
 			destdir="results"
 			style="src/XSLT StyleSheets/Java/file.xslt"
 			/>
-	</target>-->
+	</target>
+	-->
+	
+	
+    <target name="querytest" description="Run the transformation">
+    	<property name="fileName" value="xml/XQuery/DirectoryFile.xquery"/>
+        <java jar="libs/kawa-1.9.1.jar" fork="true">
+        	<arg value="--xquery"/>
+        	<arg value="${fileName}"/>
+        </java>
+    </target>
 
 </project>
