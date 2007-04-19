@@ -14,24 +14,29 @@ import java.io.PrintStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 
-import com.codesquale.exceptions.NotDirectoryException;
-import com.codesquale.file.FileFilter;
-import com.codesquale.file.ProjectBrowser;
 
 public class Console extends JFrame {
 	
 	private JTextField sourceFolder;
 	private JTextField targetFile;
 	private JTextArea consoleOut;
+	private JList level;
+	private Logger root;
 
 	// Retrieve logger log4j in log4j.XML
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Console.class);
@@ -48,8 +53,9 @@ public class Console extends JFrame {
 		setSize(500, 500);
 		setLayout(new GridLayout(2, 1));
 		JPanel param = new JPanel();
-		param.setLayout(new GridLayout(3, 2));
-		param.setSize(250, 500);
+		param.setLayout(new GridLayout(5, 2));
+		param.setSize(150, 500);
+		
 	// SWING Console pannel	
 		JPanel scrConsole = new JPanel();
 		scrConsole.setLayout(new GridLayout(1,1));
@@ -61,7 +67,13 @@ public class Console extends JFrame {
 		JButton folder 	= new JButton("Choose the folder source");
 		JButton file 	= new JButton("Choose the xml file ");
 		JButton submit 	= new JButton("Run");
-		JScrollPane areaScrollPane = new JScrollPane(consoleOut); 
+		JScrollPane areaScrollPane = new JScrollPane(consoleOut);		
+		
+		String[] dataLevel = {"Info", "Warning","Debug", "Error", "Fatal"};
+		level		= new JList(dataLevel);
+		level.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
+		level.setSelectedIndex(0);
+		JScrollPane levelScrollPane = new JScrollPane(level);
 		
 	// Setting to put log4j in a JTextArea	
 		
@@ -69,7 +81,7 @@ public class Console extends JFrame {
 		System.setOut(new PrintStream(os));
 		System.setErr(new PrintStream(os));
 
-		Logger root = Logger.getRootLogger();
+		root = Logger.getRootLogger();
 		WriterAppender appender = new WriterAppender(new SimpleLayout(), os);
 		appender.setName("consoleSwing");
 		appender.setImmediateFlush(true);
@@ -90,26 +102,27 @@ public class Console extends JFrame {
 			}
 		});
 
+		level.addListSelectionListener(new ListSelectionListener(){
+
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Raccord de méthode auto-généré
+				switch(level.getSelectedIndex()){
+					case 0 : root.setPriority(Priority.INFO); break;
+					case 1 : root.setPriority(Priority.WARN); break;
+					case 2 : root.setPriority(Priority.DEBUG); break;
+					case 3 : root.setPriority(Priority.ERROR); break;
+					case 4 : root.setPriority(Priority.FATAL); break;
+					default: root.setPriority(Priority.INFO); break;
+				}
+			}
+			
+		});
+		
 	// Listener for the run process button
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-
-					logger.info("File Filter init");
-					FileFilter filter = new FileFilter();
-					filter.addFileType(FileFilter.JAVA_SOURCEFILE);
-					logger.info("Browsing File...");
-					ProjectBrowser browser = new ProjectBrowser(new File(
-							sourceFolder.getText()), new File(targetFile
-							.getText()), filter);
-					browser.ProcessAnalysis();
-					browser.ProcessDescription();
-
-				} catch (NotDirectoryException e) {
-					logger.info("Param is not a valid directory");
-				}
-				logger.info("Done...");
-				logger.info("Results written in " + targetFile.getText());
+				new com.codesquale.launcher.Process(new File(sourceFolder.getText()),new File(targetFile.getText()));
+				
 
 			}
 		});
@@ -119,7 +132,12 @@ public class Console extends JFrame {
 		param.add(sourceFolder);
 		param.add(file);
 		param.add(targetFile);
+		param.add(new JLabel("Log level :"));
+		param.add(levelScrollPane);
+		param.add(new JLabel("Launch process :"));
 		param.add(submit);
+		param.add(new JLabel("Console :"));
+		
 		add(param);
 		scrConsole.add(areaScrollPane);
 		add(scrConsole);
