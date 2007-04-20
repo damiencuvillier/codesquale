@@ -31,22 +31,26 @@ declare function local:build-result-page($classes, $globalClassCount, $globalMet
 	</resultFile>
 };
 
-(: Loading the document :)
-let $doc := doc("xml/models/DirectoryFile_Sample.xml")
 
-(: Preparing the counter :)
-let $classCount := count($doc//directory/fileSet/file/classSet/class)
-let $methodCount := count($doc//directory/fileSet/file/classSet/class/methodSet/method)
-let $attributeCount := count($doc//directory/fileSet/file/classSet/class/attributeSet/attribute)
-let $interfaceCount := count($doc//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
-
-(: Selecting all classes :)
-let $classes := $doc//directory/fileSet/file/classSet/class
+declare function local:getResultsFromFile($filePath)
+{
+	(: Loading the document :)
+	let $doc := doc($filePath)
 	
-return 
-	local:build-result-page($classes, $classCount, $methodCount, $attributeCount, $interfaceCount)
+	(: Preparing the counter :)
+	let $classCount := count($doc//directory/fileSet/file/classSet/class)
+	let $methodCount := count($doc//directory/fileSet/file/classSet/class/methodSet/method)
+	let $attributeCount := count($doc//directory/fileSet/file/classSet/class/attributeSet/attribute)
+	let $interfaceCount := count($doc//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
+	
+	(: Selecting all classes :)
+	let $classes := $doc//directory/fileSet/file/classSet/class
+	
+	
+	return 
+		local:build-result-page($classes, $classCount, $methodCount, $attributeCount, $interfaceCount)
 
-
+};
 
 
 
