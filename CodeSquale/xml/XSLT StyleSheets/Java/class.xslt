@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+
+<!-- 
+CodeSquale 
+2007, April
+
+Damien Cuvillier
+
+XSLT StyleSheet
+
+Antlr to CodeSquale XML transforming
+-->
 <!-- Transforming class scoped description -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	version="1.0">
