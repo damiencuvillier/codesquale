@@ -62,7 +62,7 @@ public class ParsingUnit {
 				currentToken = myLineLexer.nextToken();
 			} catch (TokenStreamException e) {
 				e.printStackTrace();
-				logger.fatal(Utilities.GetCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
+				logger.fatal(Utilities.getCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
 			}
 
 			// Count the total number of lines in this file
@@ -145,7 +145,7 @@ public class ParsingUnit {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.fatal(Utilities.GetCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
+			logger.fatal(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
 		}
 		
 		return null;
