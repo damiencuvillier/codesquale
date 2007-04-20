@@ -1,0 +1,1 @@
+java -cp .;CodeSquale.jar;lib/ant-trax.jar;lib/ant-xalan.jar;lib/ant-xslp.jar;CodeSquale-gui.jar;lib/log4j-1.2.14.jar;lib/ant.jar;lib/antlr.jar;lib/junit-4.3.jar;lib/com.codesquale.parser.java.jar;lib/xalan.jar;lib/xercesImpl.jar;lib/xml-apis.jar;lib/xsltc.jar;lib/serializer.jar;lib/ant-launcher.jar com.codesquale.view.gui.Launcher
