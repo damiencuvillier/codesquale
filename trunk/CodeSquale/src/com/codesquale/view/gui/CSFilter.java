@@ -69,6 +69,7 @@ public class CSFilter extends FileFilter {
      *
      * @see #addExtension
      */
+    
     public CSFilter(String extension) {
     	this(extension,null);
     }
@@ -163,6 +164,35 @@ public class CSFilter extends FileFilter {
     }
 
     /**
+	 * Returns the human readable description of this filter. For
+	 * CS: "JPEG and GIF Image Files (*.jpg, *.gif)"
+	 *
+	 * @see setDescription
+	 * @see setExtensionListInDescription
+	 * @see isExtensionListInDescription
+	 * @see FileFilter#getDescription
+	 */
+	public String getDescription() {
+	if(fullDescription == null) {
+	    if(description == null || isExtensionListInDescription()) {
+		fullDescription = description==null ? "(" : description + " (";
+		// build the description from the extension list
+		Enumeration extensions = filters.keys();
+		if(extensions != null) {
+		    fullDescription += "." + (String) extensions.nextElement();
+		    while (extensions.hasMoreElements()) {
+			fullDescription += ", " + (String) extensions.nextElement();
+		    }
+		}
+		fullDescription += ")";
+	    } else {
+		fullDescription = description;
+	    }
+	}
+	return fullDescription;
+	}
+
+	/**
      * Adds a filetype "dot" extension to filter against.
      *
      * For CS: the following code will create a filter that filters
@@ -182,35 +212,6 @@ public class CSFilter extends FileFilter {
 	fullDescription = null;
     }
 
-
-    /**
-     * Returns the human readable description of this filter. For
-     * CS: "JPEG and GIF Image Files (*.jpg, *.gif)"
-     *
-     * @see setDescription
-     * @see setExtensionListInDescription
-     * @see isExtensionListInDescription
-     * @see FileFilter#getDescription
-     */
-    public String getDescription() {
-	if(fullDescription == null) {
-	    if(description == null || isExtensionListInDescription()) {
- 		fullDescription = description==null ? "(" : description + " (";
-		// build the description from the extension list
-		Enumeration extensions = filters.keys();
-		if(extensions != null) {
-		    fullDescription += "." + (String) extensions.nextElement();
-		    while (extensions.hasMoreElements()) {
-			fullDescription += ", " + (String) extensions.nextElement();
-		    }
-		}
-		fullDescription += ")";
-	    } else {
-		fullDescription = description;
-	    }
-	}
-	return fullDescription;
-    }
 
     /**
      * Sets the human readable description of this filter. For
