@@ -1,0 +1,84 @@
+<!-- Parsing tasks -->
+
+<!--
+	Ressources : 
+	http://ant.apache.org/manual/CoreTasks/style.html
+-->
+<project name="CodeSquale BuildFile" default="build" basedir="..">
+	<description>
+		Build File
+		
+		Build dist directory
+	</description>
+	<target name="build">
+		<delete dir="tmp" />
+		<mkdir dir="tmp" />
+		<mkdir dir="tmp/xml" />
+		<copy todir="tmp/xml/" >
+			<fileset dir="xml">
+				<include name="X*/**"/>
+				
+				<include name="style.css"/>				
+			</fileset>
+		</copy>
+		<copy todir="tmp">
+			<fileset dir="xml">
+					<include name="AntScript.xml"/>
+			</fileset>
+		</copy>
+		
+		<mkdir dir="tmp/lib/" />
+		
+		<copy toDir="tmp/lib">
+			<fileset dir="libs">
+				<include name="*.jar" />
+				
+			</fileset>
+			<fileset dir="libs/antAdditionnalLibs">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy toDir="tmp/">
+			<fileset dir="jars">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy toDir="tmp">
+			<fileset dir="src">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+		
+		<zip file="CodeSquale.zip">
+			<fileset dir="tmp">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="dist">
+				<include name="**/*.bat" />
+			</fileset>
+		</zip>
+		<delete dir="tmp" />
+	</target>
+	
+	
+	
+	<target name="buildJar">
+		<mkdir dir="jars"/>
+		<jar destFile="jars/CodeSquale.jar" basedir="bin"
+			includes="com/codesquale/**"
+			excludes="com/codesquale/view/**"
+			/>
+		<jar destFile="jars/CodeSquale-gui.jar" basedir="bin"
+			includes="com/codesquale/view/**"
+			>
+			<manifest>
+				<attribute name="Main-Class" value="com.codesquale.view.gui.Launcher"/>
+			</manifest>
+		</jar>
+		
+	</target>
+</project>
+
+
+
+	
