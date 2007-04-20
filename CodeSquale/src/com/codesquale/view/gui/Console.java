@@ -2,13 +2,17 @@ package com.codesquale.view.gui;
 
 /**
  * GUI to get the source folder and the destination's XML file
- * and run the CodeSquale process
+ * and run the CodeSquale process : CLASS Process
  * @author rbittel
  */
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -18,14 +22,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -34,7 +36,7 @@ import org.apache.log4j.WriterAppender;
 
 
 public class Console extends JFrame {
-	
+	// TODO Make a progress bar
 	private JTextField sourceFolder;
 	private JTextField targetFolder;
 	private JTextField XMLFile;
@@ -58,12 +60,12 @@ public class Console extends JFrame {
 	
 	public Console() {
 
-	// Initialisation of swing componement	
+	// Initialisation of swing componements	
 		setTitle("Console");
 		setSize(500, 500);
 		setLayout(new GridLayout(2, 1));
 		JPanel param = new JPanel();
-		param.setLayout(new GridLayout(6, 2));
+		param.setLayout(new GridLayout(5, 2));
 		param.setSize(150, 500);
 		
 	// SWING Console pannel	
@@ -88,12 +90,15 @@ public class Console extends JFrame {
 		level.setSelectedIndex(0);
 		JScrollPane levelScrollPane = new JScrollPane(level);
 		
-	// Setting to put log4j in a JTextArea	
+	// Setting standard out to a JTextArea	
 		
 		CSOut os = new CSOut(consoleOut);
 		System.setOut(new PrintStream(os));
 		System.setErr(new PrintStream(os));
-
+		
+		
+	// Setting to put log4j in a JTextArea	
+		
 		root = Logger.getRootLogger();
 		WriterAppender appender = new WriterAppender(new SimpleLayout(), os);
 		appender.setName("consoleSwing");
@@ -112,15 +117,38 @@ public class Console extends JFrame {
 			}
 		});
 		
+		
 	// Listener for the destination file button	
 		file.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				targetFolder.setText(new FolderChooser().getFolder());
 				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
 					submit.setEnabled(true);
+				
 			}
 		});
+		
+		sourceFolder.addActionListener(new ActionListener(){
 
+			public void actionPerformed(ActionEvent e) {
+				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
+					submit.setEnabled(true);
+			}
+			
+		});
+		
+		targetFolder.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
+					submit.setEnabled(true);
+			}
+			
+		});
+		
+		
+
+	// Listener for the level choice
 		level.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +165,7 @@ public class Console extends JFrame {
 			
 		});
 		
-	// Listener for the run process button
+	// Listener to launch process
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!XMLFile.getText().contains(".xml"))
@@ -152,6 +180,8 @@ public class Console extends JFrame {
 			}
 		});
 		
+		
+	// Listener to the cancel button
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				submit.setEnabled(false);
@@ -160,8 +190,6 @@ public class Console extends JFrame {
 				}
 				sourceFolder.setText("");
 				targetFolder.setText("");
-				
-				
 
 			}
 		});
@@ -172,8 +200,11 @@ public class Console extends JFrame {
 		param.add(sourceFolder);
 		param.add(file);
 		param.add(targetFolder);
-		param.add(new JLabel("XML file name :"));
-		param.add(XMLFile);
+		
+//		
+//		param.add(new JLabel("XML file name :"));
+//		param.add(XMLFile);
+		
 		param.add(new JLabel("Log level :"));
 		param.add(levelScrollPane);
 		param.add(new JLabel("Launch process :"));
@@ -199,23 +230,7 @@ public class Console extends JFrame {
 		
 		setVisible(false);
 		setVisible(true);
-
-	}
-
-	public JTextField getSourceFolder() {
-		return sourceFolder;
-	}
-
-	public void setSourceFolder(JTextField sourceFolder) {
-		this.sourceFolder = sourceFolder;
-	}
-
-	public JTextField getTargetFolder() {
-		return targetFolder;
-	}
-
-	public void setTargetFolder(JTextField targetFile) {
-		this.targetFolder = targetFile;
+		
 	}
 
 }

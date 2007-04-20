@@ -4,6 +4,13 @@ package com.codesquale.view.gui;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+/**
+ * Create a FileChooser with a *.xml filter
+ * @param file contain the file selected
+ * @author RBITTEL
+ *
+ */
+
 public class FileChooser {
 	private String file;
 	
@@ -29,8 +36,7 @@ public class FileChooser {
 	    	file = "";   
 	    }
 	    
-	}
-//	
+	}	
 
 	public String getFile() {
 		return file;
