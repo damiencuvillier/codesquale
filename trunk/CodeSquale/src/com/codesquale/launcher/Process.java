@@ -1,10 +1,9 @@
 package com.codesquale.launcher;
 
 import java.io.File;
+import java.util.HashMap;
 
-import com.codesquale.exceptions.NotDirectoryException;
-import com.codesquale.file.FileFilter;
-import com.codesquale.file.ProjectBrowser;
+import com.codesquale.ant.AntRunner;
 
 /**
  * 
@@ -32,21 +31,38 @@ public class Process extends Thread{
 	
 	public void run(){
 		
-		try {
-			logger.info("File Filter init");
-			FileFilter filter = new FileFilter();
-			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
-			logger.info("Browsing File...");
-			ProjectBrowser browser = new ProjectBrowser(source,target, XMLFile, filter);
-			browser.ProcessAnalysis();
-			browser.ProcessDescription();
-
-		} catch (NotDirectoryException e) {
-			logger.info("Param is not a valid directory");
+//		try {
+//			logger.info("File Filter init");
+//			FileFilter filter = new FileFilter();
+//			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
+//			logger.info("Browsing File...");
+//			ProjectBrowser browser = new ProjectBrowser(source,target, XMLFile, filter);
+//			browser.ProcessAnalysis();
+//			browser.ProcessDescription();
+//
+//		} catch (NotDirectoryException e) {
+//			logger.info("Param is not a valid directory");
+//		}
+//		logger.info("Done...");
+//		logger.info("Results written in " + XMLFile.getAbsolutePath() );
+		try
+		{
+			HashMap myHash = new HashMap();
+			AntRunner.getInstance().init("AntScript.xml", "");
+			
+			myHash.put("OutputDir", target.getAbsolutePath());
+			myHash.put("SourceDir",source.getAbsolutePath());
+			
+			myHash.put("message", "Testing Results ant target");
+			
+			AntRunner.getInstance().setProperties(myHash, false);
+					
+			AntRunner.getInstance().runTarget("CodeSqualeMetricsProcess");
+			
+		}catch(Exception e){
+			
+			logger.fatal(e.getMessage());
 		}
-		logger.info("Done...");
-		logger.info("Results written in " + XMLFile.getAbsolutePath() );
-		
 		
 	}
 
