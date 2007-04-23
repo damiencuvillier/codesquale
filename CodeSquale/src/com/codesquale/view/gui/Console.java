@@ -9,10 +9,6 @@ package com.codesquale.view.gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -26,8 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -39,7 +33,6 @@ public class Console extends JFrame {
 	// TODO Make a progress bar
 	private JTextField sourceFolder;
 	private JTextField targetFolder;
-	private JTextField XMLFile;
 	private JTextArea consoleOut;
 	private JComboBox level;
 	private JButton submit;
@@ -75,7 +68,7 @@ public class Console extends JFrame {
 
 		sourceFolder 	= new JTextField();
 		targetFolder 	= new JTextField();
-		XMLFile			= new JTextField("codesquale.xml");
+//		XMLFile			= new JTextField("codesquale.xml");
 		consoleOut 		= new JTextArea();
 		folder 			= new JButton("Choose the folder source");
 		file 			= new JButton("Choose the destination folder ");
@@ -168,12 +161,10 @@ public class Console extends JFrame {
 	// Listener to launch process
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!XMLFile.getText().contains(".xml"))
-					XMLFile.setText(XMLFile.getText()+ ".xml") ;
 					
 				consoleOut.setText("");
 				process = new com.codesquale.launcher.Process(new File(sourceFolder.getText()),
-						new File(targetFolder.getText()), new File(XMLFile.getText()));		
+						new File(targetFolder.getText()));		
 				process.start();
 				submit.setEnabled(false);
 
@@ -225,6 +216,7 @@ public class Console extends JFrame {
 				
 				dispose();
 				System.exit(0);
+				
 			}
 		});
 		
