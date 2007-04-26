@@ -1,9 +1,14 @@
 package com.codesquale.ant;
 
-import org.apache.tools.ant.*;
+import java.io.File;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import java.io.*;
-import java.util.*;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.listener.Log4jListener;
 
 /**
  * 
@@ -140,7 +145,8 @@ public class AntRunner
         if (project == null) throw new Exception("No target can be launched " +
         										 "because the project has not been initialized. " +
         										 "Please call the 'init' method first !");
-
+        project.addBuildListener(new Log4jListener());
+        
         // If no target is specified, run the default one.
         if (_target == null) _target = project.getDefaultTarget();
 
