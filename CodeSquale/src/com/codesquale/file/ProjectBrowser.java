@@ -51,7 +51,8 @@ public class ProjectBrowser
 	private String XMLoutputPath = "";
 	// Represent the projet XML file
 	private Document doc = null;
-	
+	// File Name
+	private String filename = null;
 	/**
 	 * Filter enables to filter file types
 	 */
@@ -77,7 +78,7 @@ public class ProjectBrowser
 		//this.fileFilter = fileFilter;
 		basePath = new DirectoryElement(InputPath,fileFilter);
 		XMLoutputPath = outputPath.getAbsolutePath()+ "\\xmlOutput";
-		
+		filename = outputFile.getName();
 		/*
 		 * Initialize outputFile
 		 */
@@ -128,7 +129,7 @@ public class ProjectBrowser
 	public void ProcessDescription()
 	{
 	
-		logger.debug("Processing project description in"+ outputFileStream.toString() + "...");
+		logger.debug("Processing project description in "+ filename + "...");
 		try {
 			
 		    //Create instance of DocumentBuilderFactory

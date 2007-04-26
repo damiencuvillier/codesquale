@@ -59,11 +59,8 @@ public class Process extends Thread{
 			
 			myHash.put("OutputDir", target.getAbsolutePath());
 			myHash.put("SourceDir",source.getAbsolutePath());
-			
-			myHash.put("message", "Testing Results ant target");
-			
-			AntRunner.getInstance().setProperties(myHash, false);
-					
+			AntRunner.getInstance().setProperties(myHash, true);
+
 			AntRunner.getInstance().runTarget("CodeSqualeMetricsProcess");
 			
 		}catch(Exception e){
