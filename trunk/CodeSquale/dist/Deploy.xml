@@ -1,4 +1,4 @@
-<project name="CodeSquale BuildFile" default="build" basedir="..">
+ <project name="CodeSquale BuildFile" default="build" basedir="..">
 	<description>
 		Build File
 		
@@ -6,6 +6,7 @@
 	</description>
 	
 	<property name="tmpDir" value="tmp" />
+ 	<property name="testDir" value="D:\Profiles\DCUVILLIER\Bureau\CodeSquale" />
 	
 	<!-- Distributable Zip Building -->
 	<target name="build" depends="buildJar">
@@ -44,6 +45,8 @@
 				<include name="*.xml" />
 			</fileset>
 		</copy>
+		<!-- JavaExe files -->
+		<unzip src="dist/javaexe.zip" dest="${tmpDir}" />
 		<!-- Zip File Creating -->
 		<zip file="CodeSquale.zip">
 			<fileset dir="${tmpDir}">
@@ -77,6 +80,12 @@
 		</jar>
 		
 	</target>
+ 	<!-- Helps for test the application -->
+ 	<target name="DeployOnTestDirAndTest" depends="build">
+ 		<unzip src="CodeSquale.zip" dest="${testDir}" />
+ 		<exec dir="${testDir}" executable="launch.bat" />
+ 		
+ 	</target>
 </project>
 
 
