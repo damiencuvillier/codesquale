@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
+import javax.swing.JScrollPane;
 
 public class ConsoleGUI extends JFrame {
 
@@ -53,6 +54,8 @@ public class ConsoleGUI extends JFrame {
 
 	private Logger rootLogger;
 	private com.codesquale.launcher.Process process ;
+
+	private JScrollPane jScrollPane = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -149,16 +152,10 @@ public class ConsoleGUI extends JFrame {
 	 */
 	private JPanel getConsole() {
 		if (ctn_console == null) {
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.fill = GridBagConstraints.BOTH;
-			gridBagConstraints.gridy = 0;
-			gridBagConstraints.weightx = 1.0;
-			gridBagConstraints.weighty = 1.0;
-			gridBagConstraints.gridx = 0;
 			ctn_console = new JPanel();
-			ctn_console.setLayout(new GridBagLayout());
+			ctn_console.setLayout(null);
 			ctn_console.setBounds(new Rectangle(0, 56, 860, 551));
-			ctn_console.add(getConsoleTextArea(), gridBagConstraints);
+			ctn_console.add(getJScrollPane(), null);
 		}
 		return ctn_console;
 	}
@@ -271,6 +268,9 @@ public class ConsoleGUI extends JFrame {
 			btn_ok.setText("Analyse");
 			btn_ok.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
+					btn_ok.setEnabled(false);
+					btn_cancel.setEnabled(true);
+					
 					field_console.setText("");
 					process = new com.codesquale.launcher.Process(new File(field_inputPath.getText()),
 							new File(field_outputPath.getText()));
@@ -308,6 +308,20 @@ public class ConsoleGUI extends JFrame {
 			});
 		}
 		return btn_cancel;
+	}
+
+	/**
+	 * This method initializes jScrollPane	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+	private JScrollPane getJScrollPane() {
+		if (jScrollPane == null) {
+			jScrollPane = new JScrollPane();
+			jScrollPane.setBounds(new Rectangle(0, 0, 860, 551));
+			jScrollPane.setViewportView(getConsoleTextArea());
+		}
+		return jScrollPane;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
