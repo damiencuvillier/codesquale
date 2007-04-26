@@ -35,7 +35,7 @@
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		<copy toDir="${tmpDir}/">
+		<copy toDir="${tmpDir}/lib">
 			<fileset dir="jars">
 				<include name="*.jar" />
 			</fileset>
