@@ -1,35 +1,31 @@
-<!-- Parsing tasks -->
-
-<!--
-	Ressources : 
-	http://ant.apache.org/manual/CoreTasks/style.html
--->
 <project name="CodeSquale BuildFile" default="build" basedir="..">
 	<description>
 		Build File
 		
 		Build dist directory
 	</description>
-	<target name="build">
-		<delete dir="tmp" />
-		<mkdir dir="tmp" />
-		<mkdir dir="tmp/xml" />
-		<copy todir="tmp/xml/" >
+	
+	<property name="tmpDir" value="tmp" />
+	
+	<!-- Distributable Zip Building -->
+	<target name="build" depends="buildJar">
+		
+		<!-- Copy all necessary files in a temporary directory -->
+		<mkdir dir="${tmpDir}" />
+		<mkdir dir="${tmpDir}/xml" />
+		<copy todir="${tmpDir}/xml/" >
 			<fileset dir="xml">
 				<include name="X*/**"/>
-				
 				<include name="style.css"/>				
 			</fileset>
 		</copy>
-		<copy todir="tmp">
+		<copy todir="${tmpDir}">
 			<fileset dir="xml">
 					<include name="AntScript.xml"/>
 			</fileset>
 		</copy>
-		
-		<mkdir dir="tmp/lib/" />
-		
-		<copy toDir="tmp/lib">
+		<mkdir dir="${tmpDir}/lib/" />
+		<copy toDir="${tmpDir}/lib">
 			<fileset dir="libs">
 				<include name="*.jar" />
 				
@@ -38,31 +34,35 @@
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		<copy toDir="tmp/">
+		<copy toDir="${tmpDir}/">
 			<fileset dir="jars">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		<copy toDir="tmp">
+		<copy toDir="${tmpDir}">
 			<fileset dir="src">
 				<include name="*.xml" />
 			</fileset>
 		</copy>
-		
+		<!-- Zip File Creating -->
 		<zip file="CodeSquale.zip">
-			<fileset dir="tmp">
+			<fileset dir="${tmpDir}">
 				<include name="**/*" />
 			</fileset>
 			<fileset dir="dist">
 				<include name="**/*.bat" />
 			</fileset>
 		</zip>
-		<delete dir="tmp" />
+		<!-- Deleting temporary directory -->
+		<delete dir="${tmpDir}" />
 	</target>
 	
 	
-	
+	<!-- Jar files building -->
 	<target name="buildJar">
+		<!-- if not exists, creating the jars directory in workspace
+		Warning : you should add this path to svn:ignore
+		-->
 		<mkdir dir="jars"/>
 		<jar destFile="jars/CodeSquale.jar" basedir="bin"
 			includes="com/codesquale/**"
