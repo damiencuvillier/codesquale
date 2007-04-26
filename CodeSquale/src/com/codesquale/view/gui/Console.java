@@ -34,7 +34,6 @@ public class Console extends JFrame {
 	private JTextField sourceFolder;
 	private JTextField targetFolder;
 	private JTextArea consoleOut;
-	private JComboBox level;
 	private JButton submit;
 	private JButton cancel;
 	
@@ -78,10 +77,6 @@ public class Console extends JFrame {
 		submit.setEnabled(false);
 		JScrollPane areaScrollPane = new JScrollPane(consoleOut);		
 		
-		String[] dataLevel = {"Debug", "Info", "Warning", "Error", "Fatal"};
-		level		= new JComboBox(dataLevel);
-		level.setSelectedIndex(0);
-		JScrollPane levelScrollPane = new JScrollPane(level);
 		
 	// Setting standard out to a JTextArea	
 		
@@ -97,15 +92,13 @@ public class Console extends JFrame {
 		appender.setName("consoleSwing");
 		appender.setImmediateFlush(true);
 		root.addAppender(appender);
-		root.setPriority(Priority.DEBUG);
+		root.setPriority(Priority.WARN);
 		
 		
 	// Listener for the source folder button	
 		folder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sourceFolder.setText(new FolderChooser().getFolder());
-				if(!(sourceFolder.getText().equals("")) && !(targetFolder.getText().equals("")))
-					submit.setEnabled(true);
+				
 				
 			}
 		});
@@ -142,7 +135,8 @@ public class Console extends JFrame {
 		
 
 	// Listener for the level choice
-		level.addActionListener(new ActionListener(){
+		/*
+		 * level.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				switch(level.getSelectedIndex()){
@@ -157,7 +151,7 @@ public class Console extends JFrame {
 
 			
 		});
-		
+		*/
 	// Listener to launch process
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -197,7 +191,6 @@ public class Console extends JFrame {
 //		param.add(XMLFile);
 		
 		param.add(new JLabel("Log level :"));
-		param.add(levelScrollPane);
 		param.add(new JLabel("Launch process :"));
 		param.add(submit);
 		param.add(new JLabel("Console :"));
