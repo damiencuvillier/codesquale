@@ -22,6 +22,13 @@ public class Process extends Thread{
 	
 	private  org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Process.class);
 
+	
+	
+	public Process(File source, File target){
+		setSource(source);
+		setTarget(target);	
+	}
+	
 	public Process(File source, File target, File XMLFile){
 		setSource(source);
 		setTarget(target);
