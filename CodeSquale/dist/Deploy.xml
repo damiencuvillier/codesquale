@@ -73,6 +73,7 @@
 			/>
 		<jar destFile="jars/CodeSquale-gui.jar" basedir="bin"
 			includes="com/codesquale/view/**"
+			
 			>
 			<manifest>
 				<attribute name="Main-Class" value="com.codesquale.view.gui.Launcher"/>
@@ -82,7 +83,17 @@
 	</target>
  	<!-- Helps for test the application -->
  	<target name="DeployOnTestDirAndTest" depends="build">
+ 		<echo message="Empty ${testDir}" />
+ 		<mkdir dir="${testDir}" />
+  		<delete>
+			<fileset dir="${testDir}">
+ 				<include name="**/*" />
+ 			</fileset>
+ 		</delete>
+ 		<mkdir dir="${testDir}" />
+ 		<echo message="Unzip CodeSquale.zip" />
  		<unzip src="CodeSquale.zip" dest="${testDir}" />
+ 		<echo message="Execute CodeSquale GUI" />
  		<exec dir="${testDir}" executable="launch.bat" />
  		
  	</target>
