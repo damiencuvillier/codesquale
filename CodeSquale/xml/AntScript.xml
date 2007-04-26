@@ -10,20 +10,23 @@
 		
 		For developers only
 	</description>
-	<property name="OutputDir" value="f:/w/tmp/generated/" />
-	<property name="SourceDir" value="f:/w/tmp/src/" />
+	
+	<!-- values are setted by programmation 
+		Values here are only used for test use -->
+	<property name="OutputDir" value="" />
+	<property name="SourceDir" value="" />
 	
 
-	
-	<property name="AntLRXMLdir" value="${OutputDir}XMLAntlr/" />
-	<property name="CodeSqualeXMLdir" value="${OutputDir}CodeSqualeXML/" />
-	<property name="MetricsDir" value="${OutputDir}metricsXML/" />
+	<!-- Subdirs of outputdir -->
+	<property name="AntLRXMLdir" value="XMLAntlr/" />
+	<property name="CodeSqualeXMLdir" value="CodeSqualeXML/" />
+	<property name="MetricsDir" value="metricsXML/" />
 	
 	<property name="XSDdir" value="xml/XSD Schemas/" />
 	<property name="XSLTdir" value="xml/XSLT StyleSheets/Java/" />
 	 
 	<property name="antlrFile" value="" />
-	<property name="tmpFile" value="${OutputDir}tmp" />
+	<property name="tmpFile" value="tmp" />
 	
 	<taskdef name="CodeSqualeAntlrProcess" 
 		classname="com.codesquale.ant.AntLRTask"/>
@@ -32,25 +35,25 @@
 
 	<target name="init">
 		<echo message="********************************" />
-		<echo message="******** CodeSquale ***********" />
+		<echo level="warn" message="******** CodeSquale ***********" />
 		<echo message="********************************" />		
 		<!-- Environment initialization -->
-		<echo message="Create Results dir" level="info" />
+		<echo level="warn" message="Create Results dir" />
 		
 		<mkdir dir="${OutputDir}" />
-		<mkdir dir="${CodeSqualeXMLdir}" />
-		<mkdir dir="${AntLRXMLdir}" />	
-		<mkdir dir="${AntLRXMLdir}xmlOutput" />
-		<mkdir dir="${MetricsDir}" />		
+		<mkdir dir="${OutputDir}/${CodeSqualeXMLdir}" />
+		<mkdir dir="${OutputDir}/${AntLRXMLdir}" />	
+		<mkdir dir="${OutputDir}/${AntLRXMLdir}xmlOutput" />
+		<mkdir dir="${OutputDir}/${MetricsDir}" />		
 		
 	</target>
 					
 	
 	<target name="CodeSqualeAntlrProcess" depends="init">
 		<!-- Browse files and build a project file & antlr xml content -->
-		<echo level="info" message="Browsing source code" />
+		<echo level="warn" message="Browsing source code" />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
-								target="${AntLRXMLdir}"
+								target="${OutputDir}/${AntLRXMLdir}"
 		/>
 	</target>
 	
@@ -60,20 +63,20 @@
 			Transforming antlr files to codesquale format file
 		-->
 		
-		<echo level="info" message="Parse xml files from antlr Format to CodeSquale Format" />
+		<echo level="warn" message="Parse xml files from antlr Format to CodeSquale Format" />
 		
 		<!-- XSD Schemas files copy -->
 		<echo level="info" message="XSD SCHEMA COPYING..." />
-		<copy todir="${CodeSqualeXMLdir}">
+		<copy todir="${OutputDir}/${CodeSqualeXMLdir}">
 			<fileset dir="${XSDdir}" > 
 				<include name="**/*.xsd"/>
 			</fileset>
 		</copy>
 		
-		<echo level="info" message="Project exploring ... " />
+		<echo level="warn" message="Project exploring ... " />
 		<xslt basedir="." processor="trax" 
-			in="${AntLRXMLdir}AntlrProjectOutput.xml"
-			out="${CodeSqualeXMLdir}project.xml"
+			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
+			out="${OutputDir}/${CodeSqualeXMLdir}project.xml"
 			extension="xml" 
 			description="Project File parsing"
 			style="${XSLTdir}project.xslt"
@@ -81,10 +84,10 @@
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
 		</xslt>
 		<!-- Directory Parsing -->
-		<echo level="info" message="Directories Exploring ..." />
+		<echo level="warn" message="Directories Exploring ..." />
 		<xslt basedir="." processor="trax" 
-			in="${AntLRXMLdir}AntlrProjectOutput.xml"
-			out="${CodeSqualeXMLdir}directories.xml"
+			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
+			out="${OutputDir}/${CodeSqualeXMLdir}directories.xml"
 			extension="xml" 
 			description="Directory files parsing"
 			style="${XSLTdir}directory.xslt"
@@ -95,19 +98,21 @@
 		
 		<!-- Delete Temporary File -->
 		<echo level="info" message="Deleting Temporary files" />
-		<delete file="${tmpFile}" />
+		<delete file="${OutputDir}/${tmpFile}" />
 		
 		
-		<echo level="info" message="AntLRtoCodeSqualeXML transition done"/>
+		<echo level="warn" message="AntLRtoCodeSqualeXML transition done"/>
 	</target>
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXMLProcess">
+		<echo level="warn" message="metrics are being calculating" />
 		<property name="fileName" value="xml/XQuery/DirectoryFile.xquery"/>
+		        <java jar="libs/kawa-1.9.1.jar" fork="true">
+        			<arg value="--xquery"/>
+        			<arg value="${fileName}"/>
+       		 </java>
 		
-        <java jar="libs/kawa-1.9.1.jar" fork="true">
-        	<arg value="--xquery"/>
-        	<arg value="${fileName}"/>
-        </java>
+		<echo level="warn" message="CodeSquale has done his job" />
 	</target>
 	
 	<!--
