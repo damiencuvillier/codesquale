@@ -83,7 +83,6 @@ public class ConsoleGUI extends JFrame {
 		appender.setName("consoleSwing");
 		appender.setImmediateFlush(true);
 		rootLogger.addAppender(appender);
-		rootLogger.setPriority(Priority.WARN);
 	}
 
 	/**
