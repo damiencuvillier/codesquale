@@ -142,7 +142,7 @@ public class ProjectBrowser
 		    doc = parser.newDocument();
 		    // Include a stylesheet
 //		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
-		    doc.appendChild(pi);
+//		    doc.appendChild(pi);
 		    
 		    // Insert the root element node
 		    Element element = doc.createElement("root");
