@@ -3,8 +3,8 @@ package com.codesquale.launcher;
 
 import java.io.File;
 
-import com.codesquale.exceptions.NotDirectoryException;
 import com.codesquale.file.FileFilter;
+import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.utils.Messages;
 
