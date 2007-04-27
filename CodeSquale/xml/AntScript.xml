@@ -13,8 +13,8 @@
 	
 	<!-- values are setted by programmation 
 		Values here are only used for test use -->
-	<property name="OutputDir" value="" />
-	<property name="SourceDir" value="" />
+	<property name="OutputDir" value="d:\tmp\out\" />
+	<property name="SourceDir" value="d:\tmp\src\" />
 	
 
 	<!-- Subdirs of outputdir -->
@@ -106,11 +106,12 @@
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXMLProcess">
 		<echo level="warn" message="metrics are being calculating" />
-		<property name="fileName" value="xml/XQuery/DirectoryFile.xquery"/>
-		        <java jar="libs/kawa-1.9.1.jar" fork="true">
-        			<arg value="--xquery"/>
-        			<arg value="${fileName}"/>
-       		 </java>
+		<CodeSqualeMetricsProcess outputDir="${OutputDir}/${MetricsDir}">
+			<fileset dir="${OutputDir}/${CodeSqualeXMLdir}">
+				<include name="*.xml"/>
+				<exclude name="project.xml" />
+			</fileset>
+		</CodeSqualeMetricsProcess>
 		
 		<echo level="warn" message="CodeSquale has done his job" />
 		<echo level="warn" message="You can read LoggingInfo.html file for more details" />
