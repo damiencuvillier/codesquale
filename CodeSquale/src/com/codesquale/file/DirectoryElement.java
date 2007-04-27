@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import com.codesquale.exceptions.NotDirectoryException;
 
 /**
  * Tree Element which represents a directoruy

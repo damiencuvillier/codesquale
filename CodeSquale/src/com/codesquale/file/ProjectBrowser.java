@@ -24,7 +24,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-import com.codesquale.exceptions.NotDirectoryException;
 import com.codesquale.metrics.ProjectUnitRatioMetrics;
 import com.codesquale.parser.ParsingUnit;
 
