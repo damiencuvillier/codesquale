@@ -141,7 +141,7 @@ public class ProjectBrowser
 		    //Create blank DOM Document
 		    doc = parser.newDocument();
 		    // Include a stylesheet
-		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
+//		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
 		    doc.appendChild(pi);
 		    
 		    // Insert the root element node
