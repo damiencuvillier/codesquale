@@ -55,6 +55,7 @@
 			<fileset dir="dist">
 				<include name="**/*.bat" />
 				<include name="**/*.exe" />				
+				<include name="**/*.txt" />
 			</fileset>
 		</zip>
 		<!-- Deleting temporary directory -->
