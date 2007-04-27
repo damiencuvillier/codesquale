@@ -46,7 +46,7 @@
 			</fileset>
 		</copy>
 		<!-- JavaExe files -->
-		<unzip src="dist/javaexe.zip" dest="${tmpDir}" />
+		<!--<unzip src="dist/javaexe.zip" dest="${tmpDir}" />-->
 		<!-- Zip File Creating -->
 		<zip file="CodeSquale.zip">
 			<fileset dir="${tmpDir}">
@@ -54,6 +54,7 @@
 			</fileset>
 			<fileset dir="dist">
 				<include name="**/*.bat" />
+				<include name="**/*.exe" />				
 			</fileset>
 		</zip>
 		<!-- Deleting temporary directory -->
