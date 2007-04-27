@@ -6,7 +6,7 @@
 	</description>
 	
 	<property name="tmpDir" value="tmp" />
- 	<property name="testDir" value="D:\Profiles\DCUVILLIER\Bureau\CodeSquale" />
+ 	<property name="testDir" value="D:\tmp\" />
 	
 	<!-- Distributable Zip Building -->
 	<target name="build" depends="buildJar">
@@ -26,7 +26,7 @@
 			</fileset>
 		</copy>
 		<mkdir dir="${tmpDir}/lib/" />
-		<copy toDir="${tmpDir}/lib">
+		<copy todir="${tmpDir}/lib">
 			<fileset dir="libs">
 				<include name="*.jar" />
 				
@@ -35,12 +35,12 @@
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		<copy toDir="${tmpDir}/lib">
+		<copy todir="${tmpDir}/lib">
 			<fileset dir="jars">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
-		<copy toDir="${tmpDir}">
+		<copy todir="${tmpDir}">
 			<fileset dir="src">
 				<include name="*.xml" />
 			</fileset>
@@ -67,11 +67,11 @@
 		Warning : you should add this path to svn:ignore
 		-->
 		<mkdir dir="jars"/>
-		<jar destFile="jars/CodeSquale.jar" basedir="bin"
+		<jar destfile="jars/CodeSquale.jar" basedir="bin"
 			includes="com/codesquale/**"
 			excludes="com/codesquale/view/**"
 			/>
-		<jar destFile="jars/CodeSquale-gui.jar" basedir="bin"
+		<jar destfile="jars/CodeSquale-gui.jar" basedir="bin"
 			includes="com/codesquale/view/**"
 			
 			>
