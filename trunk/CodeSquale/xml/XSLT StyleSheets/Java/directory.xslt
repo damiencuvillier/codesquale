@@ -52,12 +52,12 @@ Antlr to CodeSquale XML transforming
 				</directorySet>
 				<fileSet>
 					<xsl:for-each select="file">
-						<file>
+				<file>
 							<xsl:attribute name="name">
 								<xsl:value-of select="@value" />
 							</xsl:attribute>
 							<xsl:variable name="documentName" select="@href" />
-							<xsl:apply-templates select="document($documentName)/*/*" />
+							<xsl:apply-templates select="document($documentName)/*" />
 						</file>
 					</xsl:for-each>
 				</fileSet>

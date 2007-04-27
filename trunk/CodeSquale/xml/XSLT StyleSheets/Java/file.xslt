@@ -17,15 +17,13 @@ Antlr to CodeSquale XML transforming
 	<xsl:strip-space elements="*" />
 	<xsl:include href="class.xslt" />
 	<!--  Root launcher  -->
-	<xsl:template match="*[@text='ROOT']">
-		<file>
+	<xsl:template match="antlr.CommonAST[@type=0]">
 			<importSet>
 				<xsl:apply-templates select="antlr.CommonAST[@type=30]"/>
 			</importSet>
 			<classSet>
 				<xsl:apply-templates select="antlr.CommonAST[@type=14]" />
 			</classSet>
-		</file>
 	</xsl:template>
 	
 	<!--  ImportSet Process -->
