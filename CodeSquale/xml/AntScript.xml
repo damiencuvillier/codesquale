@@ -113,23 +113,10 @@
        		 </java>
 		
 		<echo level="warn" message="CodeSquale has done his job" />
+		<echo level="warn" message="You can read LoggingInfo.html file for more details" />
 	</target>
+
 	
-	<!--
-	One file test (file.xslt & class.xslt tests)
-	<target name="parseOneFile" depends="init" 
-			description="Parsing test">
-			
-			<xslt basedir="." 
-				in="${antlrFile}"
-				out="${tmpFile}"
-				extension="xml" 
-				description="Parse un fichier"
-				style="XSLT StyleSheets/Java/file.xslt"
-				/>
-			<delete file="${tmpFile}" />
-		</target>
-	-->
 
 </project>
 
