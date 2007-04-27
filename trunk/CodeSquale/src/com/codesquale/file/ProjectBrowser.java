@@ -3,8 +3,6 @@ package com.codesquale.file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,7 +12,6 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -25,10 +22,9 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.ProcessingInstruction;
+
 
 import com.codesquale.exceptions.NotDirectoryException;
-import com.codesquale.metrics.MetricsCalculator;
 import com.codesquale.metrics.ProjectUnitRatioMetrics;
 import com.codesquale.parser.ParsingUnit;
 
