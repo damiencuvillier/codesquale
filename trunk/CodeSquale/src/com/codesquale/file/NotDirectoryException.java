@@ -1,4 +1,4 @@
-package com.codesquale.exceptions;
+package com.codesquale.file;
 
 import java.io.File;
 
