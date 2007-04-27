@@ -1,26 +1,21 @@
 package com.codesquale.view.gui;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.Rectangle;
-import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.io.File;
 import java.io.PrintStream;
 
-import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
-import javax.swing.JScrollPane;
 
 public class ConsoleGUI extends JFrame {
 
@@ -291,6 +286,7 @@ public class ConsoleGUI extends JFrame {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getCancel() {
+		// FIXME Thread cancel is not efficient
 		if (btn_cancel == null) {
 			btn_cancel = new JButton();
 			btn_cancel.setBounds(new Rectangle(576, 29, 86, 22));
