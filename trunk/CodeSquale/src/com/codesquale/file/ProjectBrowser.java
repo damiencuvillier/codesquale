@@ -96,23 +96,14 @@ public class ProjectBrowser
 		    {
 		    	Node node = element.appendChild(doc.createElement("directory"));
 		    	((Element)node).setAttribute("value", dir.getName());
-		    	((Element)node).appendChild(doc.createTextNode(dir.getName()));
+		    	((Element)node).setAttribute("href", dir.getAbsolutePath());
 		    	
 		    	for(FileElement file: dir.getFilesList())
 		    	{
 		    		Node child = node.appendChild(doc.createElement("file"));
 		    		((Element)child).setAttribute("value", file.getName());
-		    		//((Element)child).appendChild(doc.createTextNode(file.getName().substring(0,file.getName().length() - (file.getExtension().length()+1))));
 		    		((Element)child).setAttribute("href", file.getXmlDesc());
-
-//		    		((Element)desc).setAttribute("xlink:type", "simple");
-//		    		((Element)desc).setAttribute("xlink:title", file.getName());
-//		    		((Element)desc).setAttribute("xlink:href", file.getXmlDesc());
-//		    		((Element)desc).setAttribute("xlink:show", "new");
-//		    		((Element)desc).setAttribute("xlink:actuate", "onRequest");
-		    	
-		    		//((Element)desc).appendChild(doc.createTextNode("description"));
-		    		
+    		
 		    	}
 		    	ProcessXMLTransform(node, dir.getDirectoriesList());
 		    }
