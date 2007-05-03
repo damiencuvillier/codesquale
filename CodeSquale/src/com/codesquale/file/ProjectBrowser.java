@@ -23,14 +23,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import com.codesquale.ant.AntRunner;
 import com.codesquale.parser.ParsingUnit;
 
 /**
- * Class for browsing a path
+ * Singleton Class for browsing a path
  *   - List files in a path and in subdirectories thanks to DirectoryElement Class
  *   - 
  * @author DCUVILLIER
- *
+ * @TODO Implement a initialization checker
  */
 public class ProjectBrowser 
 {
@@ -38,12 +39,41 @@ public class ProjectBrowser
 	
 	private DirectoryElement basePath = null;
 	private FileOutputStream projectOutputFile = null;
-	// TODO Implement constant manager with XML file
 	private String XMLoutputPath = "";
-	// Represent the projet XML file
-	private Document doc = null;
-	// File Name
 	private String projectOutputFileName = null;
+	
+	// check if project browser is init
+	private Boolean init = false;
+	
+    private ProjectBrowser()
+    {
+    }
+    /**
+     * Private ctr() 
+     * @return Single instance of ProjectBrowser
+     */
+    public static ProjectBrowser getInstance()
+    {
+      if (instance == null)
+          // it's ok, we can call this constructor
+    	  instance = new ProjectBrowser();		
+      return instance;
+    }
+    /**
+     * Clone not implemented
+     */
+    public ProjectBrowser clone() throws CloneNotSupportedException
+    {
+      throw new CloneNotSupportedException(); 
+    }
+    // Static instance  
+    private static ProjectBrowser instance;
+
+	
+	
+	
+	
+	
 	/**
 	 * Filter enables to filter file types
 	 */
@@ -58,12 +88,13 @@ public class ProjectBrowser
 	 * @param fileTypes : list of authorized file types (Constants are available in class File)
 	 * @throws NotDirectoryException 
 	 */
-	public ProjectBrowser(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
+	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
 		if( ! InputPath.isDirectory() ){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
 			 * */
 			logger.fatal("Specified path is not a directory");
+			init = false;
 			throw new NotDirectoryException(InputPath);
 		}
 		//this.fileFilter = fileFilter;
@@ -75,7 +106,9 @@ public class ProjectBrowser
 		 */
 		try {
 			setProjectOutputFile(new FileOutputStream(outputFile));
+			init = true;
 		} catch (FileNotFoundException e) {
+			init = false;
 			logger.fatal("Output file cannot be opened");
 		}
 	
@@ -106,5 +139,9 @@ public class ProjectBrowser
 	}
 	public String getProjectOutputFileName() {
 		return projectOutputFileName;
+	}
+	public Boolean isLoaded()
+	{
+		return init;
 	}
 }
