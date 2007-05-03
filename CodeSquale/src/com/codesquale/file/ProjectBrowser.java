@@ -37,13 +37,13 @@ public class ProjectBrowser
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
 	private DirectoryElement basePath = null;
-	private FileOutputStream outputFileStream = null;
+	private FileOutputStream projectOutputFile = null;
 	// TODO Implement constant manager with XML file
 	private String XMLoutputPath = "";
 	// Represent the projet XML file
 	private Document doc = null;
 	// File Name
-	private String filename = null;
+	private String projectOutputFileName = null;
 	/**
 	 * Filter enables to filter file types
 	 */
@@ -67,164 +67,44 @@ public class ProjectBrowser
 			throw new NotDirectoryException(InputPath);
 		}
 		//this.fileFilter = fileFilter;
-		basePath = new DirectoryElement(InputPath,fileFilter);
-		XMLoutputPath = outputPath.getAbsolutePath()+ "\\xmlOutput";
-		filename = outputFile.getName();
+		setBasePath(new DirectoryElement(InputPath,fileFilter));
+		setXMLoutputPath(outputPath.getAbsolutePath()+ "\\xmlOutput");
+		setProjectOutputFileName(outputFile.getName());
 		/*
 		 * Initialize outputFile
 		 */
 		try {
-			outputFileStream = new FileOutputStream(outputFile);
+			setProjectOutputFile(new FileOutputStream(outputFile));
 		} catch (FileNotFoundException e) {
 			logger.fatal("Output file cannot be opened");
 		}
 	
 	}
 	
-	/**
-	 * Create the XML stream based on project hierarchie
-	 * @param element
-	 * @param repository
-	 */
-	private void ProcessXMLTransform(Node element, Vector<DirectoryElement> repository)
-	{
-		  for(DirectoryElement dir: repository)
-		    {
-		    	Node node = element.appendChild(doc.createElement("directory"));
-		    	((Element)node).setAttribute("value", dir.getName());
-		    	((Element)node).setAttribute("href", dir.getAbsolutePath());
-		    	
-		    	for(FileElement file: dir.getFilesList())
-		    	{
-		    		Node child = node.appendChild(doc.createElement("file"));
-		    		((Element)child).setAttribute("value", file.getName());
-		    		((Element)child).setAttribute("href", file.getXmlDesc());
-    		
-		    	}
-		    	ProcessXMLTransform(node, dir.getDirectoriesList());
-		    }
+	public void setBasePath(DirectoryElement basePath) {
+		this.basePath = basePath;
 	}
-	/**
-	 * Create a XML file that represent 
-	 * project directories, files and XML description link 
-	 */
-	public void ProcessDescription()
-	{
-	
-		logger.debug("Processing project description in "+ filename + "...");
-		try {
-			
-		    //Create instance of DocumentBuilderFactory
-		    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		    //Get the DocumentBuilder
-		    DocumentBuilder parser;
-			parser = factory.newDocumentBuilder();
-		
-		    //Create blank DOM Document
-		    doc = parser.newDocument();
-		    // Include a stylesheet
-//		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
-//		    doc.appendChild(pi);
-		    
-		    // Insert the root element node
-		    Element element = doc.createElement("root");
-		    element.setAttribute("path", basePath.getAbsolutePath());
-		    element.setAttribute("xmlns:xi","http://www.w3.org/2001/XInclude");
-		    	    
-		    // proceed XML transformation
-		    ProcessXMLTransform(doc.appendChild(element), basePath.getDirectoriesList());
-		    
-		    //	write it out 
-		    TransformerFactory xformFactory  = TransformerFactory.newInstance();
-		    Transformer idTransform = xformFactory.newTransformer();
-		
-		    idTransform.setOutputProperty(OutputKeys.METHOD, "xml"); 
-		    idTransform.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1"); 
-		    idTransform.setOutputProperty(OutputKeys.INDENT, "yes"); 
-		    idTransform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no"); 
-		    
-		    Source input = new DOMSource(doc);
-		    Result output = new StreamResult(outputFileStream);
-			idTransform.transform(input, output);
-			
-		} catch (ParserConfigurationException e) {
-			logger.fatal("IOException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
-		} catch (TransformerException e) {
-			logger.fatal("TransformerException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
-		}
+	public DirectoryElement getBasePath() {
+		return basePath;
 	}
-	
-	/**
-	 * Browse javaFiles 
-	 */
-	public void ProcessAnalysis()
-	{
-	
-		logger.debug("Processing project analysis...");
 
-		ParsingUnit parsingUnit = null;
-		
-		for(FileElement fileElement : basePath.getGlobalFileList())
-		{
-			// XML description file path
-			String fileName = fileElement.getAbsolutePath().substring(basePath.getAbsolutePath().length()+1);
-			fileName = fileName.substring(0, fileName.length() - fileElement.getExtension().length());
-			fileName = fileName.replace('\\', '.');
-			
-			String absolutePath =XMLoutputPath+"\\"+fileName + "xml";
-			
-			// set the XML filname path to the fileElement
-			fileElement.setXmlDesc(absolutePath);
-			
-			// Debug information about file being parsed
-			logger.debug("Parsing "+fileElement.getName());
-			
-			parsingUnit = new ParsingUnit();
-			
-			parsingUnit.DoParse(fileElement.getIOElement());
-			
-			// Get the AST XML of the source file
-			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
-		
-		}
+	public void setXMLoutputPath(String xMLoutputPath) {
+		XMLoutputPath = xMLoutputPath;
 	}
-	
-	
-	
-	private void populateProjectDescription()
-	{
-									
-//		    fileElement.setMetricsData(parsingUnit.getSourceFileRawData());
-//				
-//				classCount+=fileElement.getMetricsData().GetClassCount();
-//				methodCount += fileElement.getMetricsData().GetMethodCount();
-//				linesCount += fileElement.getMetricsData().GetLineCount();
-//                interfaceCount += fileElement.getMetricsData().GetInterfaceCounter();
-             
-	
-		
+	public String getXMLoutputPath() {
+		return XMLoutputPath;
+	}
+	public void setProjectOutputFile(FileOutputStream projectOutputFile) {
+		this.projectOutputFile = projectOutputFile;
+	}
 
-//		projectGlobalMetrics.setClassCount(classCount);
-//		projectGlobalMetrics.setMethodCount(methodCount);
-//		projectGlobalMetrics.setlinesCount(linesCount);
-//		projectGlobalMetrics.setInterfaceCounter(interfaceCount);
-//		
-//		System.out.println("Project global Metrics : ");
-//		System.out.println(projectGlobalMetrics.getFileCounter()+" files, ");
-//		System.out.println(projectGlobalMetrics.getClassCount()+" classes, ");
-//		System.out.println(projectGlobalMetrics.getMethodCount()+" methodes, ");
-//		System.out.println(projectGlobalMetrics.getLineCount()+ " lines, ");
-//
-//		System.out.println(interfaceCount+" interfaces, ");
-//		
-//		System.out.println("Project Ratio Metrics : ");
-//		System.out.println("\tAverage number of methods by class: " + 
-//				Float.toString(MetricsCalculator.CalculateRatioMethodByClass
-//				(projectGlobalMetrics.getClassCount(),
-//				 projectGlobalMetrics.getMethodCount())));
-		
-		
-	
+	public FileOutputStream getProjectOutputFile() {
+		return projectOutputFile;
 	}
-	
+	public void setProjectOutputFileName(String projectOutputFileName) {
+		this.projectOutputFileName = projectOutputFileName;
+	}
+	public String getProjectOutputFileName() {
+		return projectOutputFileName;
+	}
 }
