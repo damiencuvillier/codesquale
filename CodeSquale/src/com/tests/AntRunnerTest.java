@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.codesquale.ant.AntRunner;
-import com.codesquale.antlr.AntlrParsingProcess;
+import com.codesquale.parser.AntlrParsingProcess;
 import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.ProjectBrowser;
@@ -80,12 +80,9 @@ public class AntRunnerTest extends TestCase{
 		AntlrParsingProcess parsing;
 			
 		try {
-			browser = new ProjectBrowser(new File("Z:\\Livrables\\alpha.V0.1\\V0.1\\jedit"), new File("results"),new File("output.xml"),filter);	parsing = new AntlrParsingProcess(browser);
+			ProjectBrowser.getInstance().init(new File("Z:\\Livrables\\alpha.V0.1\\V0.1\\jedit"), new File("results"),new File("output.xml"),filter);
 			
-			parsing = new AntlrParsingProcess(browser);
-			
-			parsing.ProcessAnalysis();
-			parsing.ProcessDescription();
+			AntlrParsingProcess.getInstance().execute();
 			
 		} catch (NotDirectoryException e) {
 			logger.error("File is not valid");
