@@ -1,4 +1,4 @@
-package com.codesquale.antlr;
+package com.codesquale.parser;
 
 import java.io.FileOutputStream;
 import java.util.Vector;
@@ -29,33 +29,60 @@ public class AntlrParsingProcess {
 
 	private static Logger logger = Logger.getLogger(AntlrParsingProcess.class);
 	
-	private ProjectBrowser project = null;
+	//private ProjectBrowser project = null;
 	// XML project file linking AST files 
 	private Document doc = null;
 	
 	public AntlrParsingProcess(ProjectBrowser p)
 	{
-		project = p;
+		//project = ProjectBrowser.getInstance();
 	}
+	
+	private AntlrParsingProcess()
+    {
+    }
+    /**
+     * Private ctr() 
+     * @return Single instance of AntlrParsingProcess
+     */
+    public static AntlrParsingProcess getInstance()
+    {
+      if (instance == null)
+          // it's ok, we can call this constructor
+    	  instance = new AntlrParsingProcess();		
+      return instance;
+    }
+    /**
+     * Clone not implemented
+     */
+    public AntlrParsingProcess clone() throws CloneNotSupportedException
+    {
+      throw new CloneNotSupportedException(); 
+    }
+    // Static instance  
+    private static AntlrParsingProcess instance;
+	
+	
+	
 	/**
 	 * Browse javaFiles and serialize the antlr AST to the project XMLoutputPath 
 	 * 
 	 */
-	public void ProcessAnalysis()
+	private void processAnalysis()
 	{
 	
 		logger.debug("Processing project analysis...");
 
 		ParsingUnit parsingUnit = null;
 		
-		for(FileElement fileElement : project.getBasePath().getGlobalFileList())
+		for(FileElement fileElement : ProjectBrowser.getInstance().getBasePath().getGlobalFileList())
 		{
 			// XML description file path
-			String fileName = fileElement.getAbsolutePath().substring(project.getBasePath().getAbsolutePath().length()+1);
+			String fileName = fileElement.getAbsolutePath().substring(ProjectBrowser.getInstance().getBasePath().getAbsolutePath().length()+1);
 			fileName = fileName.substring(0, fileName.length() - fileElement.getExtension().length());
 			fileName = fileName.replace('\\', '.');
 			
-			String absolutePath = project.getXMLoutputPath() +"\\"+fileName + "xml";
+			String absolutePath = ProjectBrowser.getInstance().getXMLoutputPath() +"\\"+fileName + "xml";
 			
 			// set the XML filname path to the fileElement
 			fileElement.setXmlDesc(absolutePath);
@@ -64,10 +91,11 @@ public class AntlrParsingProcess {
 			logger.debug("Parsing "+fileElement.getName());
 			
 			parsingUnit = new ParsingUnit();
-			
 			parsingUnit.DoParse(fileElement.getIOElement());
 			
 			// Get the AST XML of the source file
+			logger.debug("AST Transform "+fileElement.getName());
+			
 			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
 		
 		}
@@ -77,7 +105,7 @@ public class AntlrParsingProcess {
 	 * @param element
 	 * @param repository
 	 */
-	private void ProcessXMLTransform(Node element, Vector<DirectoryElement> repository)
+	private void processXMLTransform(Node element, Vector<DirectoryElement> repository)
 	{
 		  for(DirectoryElement dir: repository)
 		    {
@@ -92,17 +120,17 @@ public class AntlrParsingProcess {
 		    		((Element)child).setAttribute("href", file.getXmlDesc());
     		
 		    	}
-		    	ProcessXMLTransform(node, dir.getDirectoriesList());
+		    	processXMLTransform(node, dir.getDirectoriesList());
 		    }
 	}
 	/**
 	 * Create a XML file that represent 
 	 * project directories, files and XML description link 
 	 */
-	public void ProcessDescription()
+	private void processDescription()
 	{
 	
-		logger.debug("Processing project description in "+ project.getProjectOutputFile() + "...");
+		logger.debug("Processing project description in "+ ProjectBrowser.getInstance().getProjectOutputFileName() + "...");
 		try {
 			
 		    //Create instance of DocumentBuilderFactory
@@ -120,11 +148,11 @@ public class AntlrParsingProcess {
 		    
 		    // Insert the root element node
 		    Element element = doc.createElement("root");
-		    element.setAttribute("path", project.getBasePath().getAbsolutePath());
+		    element.setAttribute("path", ProjectBrowser.getInstance().getBasePath().getAbsolutePath());
 		    element.setAttribute("xmlns:xi","http://www.w3.org/2001/XInclude");
 		    	    
 		    // proceed XML transformation
-		    ProcessXMLTransform(doc.appendChild(element), project.getBasePath().getDirectoriesList());
+		    processXMLTransform(doc.appendChild(element), ProjectBrowser.getInstance().getBasePath().getDirectoriesList());
 		    
 		    //	write it out 
 		    TransformerFactory xformFactory  = TransformerFactory.newInstance();
@@ -136,7 +164,7 @@ public class AntlrParsingProcess {
 		    idTransform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no"); 
 		    
 		    Source input = new DOMSource(doc);
-		    Result output = new StreamResult(project.getProjectOutputFile());
+		    Result output = new StreamResult(ProjectBrowser.getInstance().getProjectOutputFile());
 			idTransform.transform(input, output);
 			
 		} catch (ParserConfigurationException e) {
@@ -145,5 +173,14 @@ public class AntlrParsingProcess {
 			logger.fatal("TransformerException at ProcessAnalysis() in ProjectBrowser : " +e.getMessage());
 		}
 	}
-	
+	public void execute()
+	{
+		if(ProjectBrowser.getInstance().isLoaded())
+		{
+			processAnalysis();
+			processDescription();
+		}else{
+			logger.fatal("ProjectBrowser initialization error");
+		}
+	}	
 }

@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import com.codesquale.antlr.AntlrParsingProcess;
+import com.codesquale.parser.AntlrParsingProcess;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
@@ -22,19 +22,16 @@ public class AntLRTask extends Task {
 		FileFilter filter = new FileFilter();
 		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 		
-		logger.info("Browsing File...");
-		
-		ProjectBrowser browser;
-		AntlrParsingProcess parsing;
-		
+		logger.info("Browsing project files...");
 		
 		try {
-			browser = new ProjectBrowser(new File(source),new File(target), new File(target+"AntlrProjectOutput.xml"), filter);
 			
-			parsing = new AntlrParsingProcess(browser);
+			// Need to init the project browser
+			ProjectBrowser.getInstance().init(new File(source),new File(target), new File(target+"AntlrProjectOutput.xml"), filter);
 			
-			parsing.ProcessAnalysis();
-			parsing.ProcessDescription();
+			// Now we can run the AntlrProcess
+			AntlrParsingProcess.getInstance().execute();
+			
 			
 		} catch (NotDirectoryException e) {
 			logger.error("File is not valid");
