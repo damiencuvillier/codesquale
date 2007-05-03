@@ -69,11 +69,7 @@ public class ProjectBrowser
     // Static instance  
     private static ProjectBrowser instance;
 
-	
-	
-	
-	
-	
+
 	/**
 	 * Filter enables to filter file types
 	 */

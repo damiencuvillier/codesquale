@@ -39,39 +39,7 @@ public class ParsingUnit {
 	
 	// Enables the class to log errors
 	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParsingUnit.class);
-	
-	
-	/**
-	 * Counts the number of line in the source file stream
-	 * @param codeSourceFileStream
-	 */
-//	private void ParseLineNumber(FileInputStream codeSourceFileStream)
-//	{
-//		//	Initialise 
-//		myLineLexer = new JavaLexer(codeSourceFileStream);
-//		//	Initializiong the metrics
-//		int previousLine = 0;
-//		int tokenLine = 0;
-//
-//		// Simple counting on the class number and method
-//		do
-//		{
-//			try {
-//				currentToken = myLineLexer.nextToken();
-//			} catch (TokenStreamException e) {
-//				e.printStackTrace();
-//				logger.fatal(Utilities.getCurrentTime()+"Lexer encoutered fatal error. Invalid token sequence detected.");
-//			}
-//
-//			// Count the total number of lines in this file
-//			tokenLine = currentToken.getLine();
-//			if(previousLine ==0 || tokenLine!=previousLine) sourceFileRawData.IncrementLineCounter();
-//		    previousLine = tokenLine;
-//			
-//		}while(currentToken != null && currentToken.getType()!= JavaTokenTypes.EOF);
-//
-//	}
-	
+		
 	/**
 	 *  Parse a fileStream and calculates counters
 	 * @param codeSourceFileStream
@@ -145,7 +113,6 @@ public class ParsingUnit {
 	 * Find a child of the given AST that has the given type
 	 * @returns a child AST of the given type. If it can't find a child of the given type, return null.
 	 */
-	/*
 	private AST getChild(AST ast, int childType) {
 		AST child = ast.getFirstChild();
 		while (child != null) {
@@ -157,7 +124,7 @@ public class ParsingUnit {
 		}
 		return null;
 	}
-	*/
+	
 	
 	/**
 	 * Count the number of type occurence in the abstract tree

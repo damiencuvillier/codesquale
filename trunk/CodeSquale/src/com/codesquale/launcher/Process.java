@@ -36,22 +36,9 @@ public class Process extends Thread{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void run(){
 		
-//		try {
-//			logger.info("File Filter init");
-//			FileFilter filter = new FileFilter();
-//			filter.addFileType(FileFilter.JAVA_SOURCEFILE);
-//			logger.info("Browsing File...");
-//			ProjectBrowser browser = new ProjectBrowser(source,target, XMLFile, filter);
-//			browser.ProcessAnalysis();
-//			browser.ProcessDescription();
-//
-//		} catch (NotDirectoryException e) {
-//			logger.info("Param is not a valid directory");
-//		}
-//		logger.info("Done...");
-//		logger.info("Results written in " + XMLFile.getAbsolutePath() );
 		try
 		{
 			HashMap myHash = new HashMap();
