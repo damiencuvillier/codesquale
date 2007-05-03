@@ -61,10 +61,6 @@ public class MetricsTask extends Task {
 		this.filesets = filesets;
 	}
 
-//	public String getFile() {
-//		return file;
-//	}
-
 	public void setOutputDir(String outputDir) {
 		this.outputDir = outputDir;
 	} 
