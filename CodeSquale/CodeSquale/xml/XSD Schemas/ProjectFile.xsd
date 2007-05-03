@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
+<!--==============================-->
+<!-- Definition of simple element -->
+<!--==============================-->
+<!-- Directory description -->
+<xs:element name="dir">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+		The dir element provides information about a directory of the project
+		including name and the XML attached description file.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType>
+		<xs:attribute ref="name" use="required"/>
+		<xs:attribute ref="descriptionFile" use="required"/>	
+	</xs:complexType>
+
+</xs:element>	
+	
+<!--================================-->
+<!-- Definition of simple attribute -->
+<!--================================-->
+<xs:attribute name="language" type="xs:string"/>
+<xs:attribute name="name" type="xs:string"/>
+<xs:attribute name="descriptionFile" type="xs:string"/>
+	
+		
+<!--===============================-->
+<!-- Definition of complex element -->
+<!--===============================-->
+		
+<!-- Project description -->	
+<xs:element name="project">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="dir"/>
+		</xs:sequence>
+		<xs:attribute ref="name" use="required"/>
+		<xs:attribute ref="language"  use="required"/>
+	</xs:complexType>		
+</xs:element>
+	
+</xs:schema>
