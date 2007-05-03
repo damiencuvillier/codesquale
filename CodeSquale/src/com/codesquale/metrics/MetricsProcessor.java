@@ -25,7 +25,7 @@ public class MetricsProcessor {
 	@SuppressWarnings("deprecation")
 	public void generateResultFile(String in, String out)
 	{
-		logger.debug("Entering method GenerateResultFile...");
+		logger.debug("Entering method GenerateResultFile..." + out);
 		
 		XQueryExpression exp = null;
 		File inputFile = null;
@@ -101,7 +101,7 @@ public class MetricsProcessor {
 			logger.fatal(e.getMessageAndLocation());
 		}
 		
-		logger.debug("Exiting method GenerateResultFile...");
+		logger.debug("Exiting method GenerateResultFile..."+out);
 	}
 
 }

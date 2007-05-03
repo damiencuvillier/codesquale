@@ -1,8 +1,6 @@
 package com.codesquale.file;
 
 import java.io.File;
-import com.codesquale.metrics.FileUnitRawMetrics;
-
 
 public class FileElement extends AbstractElement 
 {
@@ -13,18 +11,11 @@ public class FileElement extends AbstractElement
 	private String xmlDesc;
 	File file = null;
 	
-	
-	/*
-	 * Metrics parameters
-	 */
-	FileUnitRawMetrics metricsData = null;
-	
 	public FileElement(File physicalFile)
 	{
 		super(physicalFile);
 		file = physicalFile;
 	}
-
 	
 	/*
 	 * Returns the extension of the file
@@ -48,17 +39,6 @@ public class FileElement extends AbstractElement
 		String message = "<FILE name=\""+getName()+"\" xmlDesc=\""+ getXmlDesc() +"\" />";
 		return message;
 	}
-
-
-	public FileUnitRawMetrics getMetricsData() {
-		return metricsData;
-	}
-
-
-	public void setMetricsData(FileUnitRawMetrics metricsData) {
-		this.metricsData = metricsData;
-	}
-
 
 	public String getXmlDesc() {
 		return xmlDesc;
