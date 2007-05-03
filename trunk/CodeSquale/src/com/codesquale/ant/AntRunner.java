@@ -41,7 +41,7 @@ import org.apache.tools.ant.listener.Log4jListener;
 public class AntRunner
 {
 
-    public AntRunner()
+    private AntRunner()
     {
     }
     /**
