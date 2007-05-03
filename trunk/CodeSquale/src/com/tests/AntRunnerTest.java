@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.codesquale.ant.AntRunner;
-import com.codesquale.exceptions.NotDirectoryException;
+import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.utils.Messages;

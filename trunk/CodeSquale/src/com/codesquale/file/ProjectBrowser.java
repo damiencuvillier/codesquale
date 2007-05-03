@@ -23,8 +23,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-
-import com.codesquale.metrics.ProjectUnitRatioMetrics;
 import com.codesquale.parser.ParsingUnit;
 
 /**
@@ -36,8 +34,6 @@ import com.codesquale.parser.ParsingUnit;
  */
 public class ProjectBrowser 
 {
-	private ProjectUnitRatioMetrics projectGlobalMetrics = null;
-	
 	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
 	
 	private DirectoryElement basePath = null;
@@ -159,14 +155,13 @@ public class ProjectBrowser
 	}
 	
 	/**
-	 * Browse javaFiles & get basic metrics
+	 * Browse javaFiles 
 	 */
 	public void ProcessAnalysis()
 	{
 	
 		logger.debug("Processing project analysis...");
-		// Create the project file description		
-		projectGlobalMetrics = new ProjectUnitRatioMetrics();
+
 		ParsingUnit parsingUnit = null;
 		
 		for(FileElement fileElement : basePath.getGlobalFileList())
@@ -184,7 +179,6 @@ public class ProjectBrowser
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
-			projectGlobalMetrics.incrementFileCounter();
 			parsingUnit = new ParsingUnit();
 			
 			parsingUnit.DoParse(fileElement.getIOElement());

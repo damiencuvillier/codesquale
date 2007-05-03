@@ -1,5 +1,7 @@
 package com.codesquale.view.gui;
 
+import com.codesquale.view.gui.ConsoleGUI;
+
 
 public class Launcher {
 
