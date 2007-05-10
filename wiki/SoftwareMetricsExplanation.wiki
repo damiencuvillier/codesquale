@@ -8,12 +8,12 @@
 || *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NPAC*|| Packages ||Number of packages.||Total number of distinct packages in the project. Classes that are not defined in a package belong to the _default package_.||_N/A_||
 ||*NFIL*|| Files ||Number of source files.||The total number of sources files included in the project.||_N/A_||
-||*NINT*|| Interfaces ||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_N/A_||
+||*NINT*|| Interfaces ||Number of interfaces.||Total number of interfaces(*_public_* and *_private_*).||_Yes_||
 
 ==2. Class metrics==
 || *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NTLA*|| Classes ||Number of classes.||Total number of classes.||_N/A_||
-||*NPCL*|| Public Classes ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_N/A_||
+||*NTLA*|| Classes ||Number of classes.||Total number of classes.||_Yes_||
+||*NPCL*|| Public Classes ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_Yes_||
 ||*NFCL*|| Final Classes ||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
 ||*NACL*|| Ac ||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
 ||*NCCL*|| Cc ||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
