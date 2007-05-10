@@ -12,9 +12,9 @@ package com.codesquale.metrics;
 
 
 
-public class SaxonMetricsFactory extends IMetricsFactory 
+public class SaxonMetricsFactory implements IMetricsFactory 
 {
-	public void GenereateResultsFile() 
+	public void GenerateResultsFile() 
 	{
 	
 	}

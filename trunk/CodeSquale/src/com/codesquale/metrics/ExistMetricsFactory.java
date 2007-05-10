@@ -10,7 +10,7 @@ package com.codesquale.metrics;
 
 
 
-public class ExistMetricsFactory extends IMetricsFactory 
+public class ExistMetricsFactory implements IMetricsFactory 
 {
 	public void GenerateResultsFile() 
 	{
