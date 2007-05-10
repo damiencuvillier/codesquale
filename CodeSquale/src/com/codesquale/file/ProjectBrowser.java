@@ -83,8 +83,9 @@ public class ProjectBrowser
 	 * @param InputPath : Directory where source code is located
 	 * @param fileTypes : list of authorized file types (Constants are available in class File)
 	 * @throws NotDirectoryException 
+	 * @throws FileNotFoundException 
 	 */
-	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException{
+	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException, FileNotFoundException{
 		if( ! InputPath.isDirectory() ){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
@@ -106,6 +107,7 @@ public class ProjectBrowser
 		} catch (FileNotFoundException e) {
 			init = false;
 			logger.fatal("Output file cannot be opened");
+			throw e;
 		}
 	
 	}
