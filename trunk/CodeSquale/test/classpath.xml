@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<directory xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DirectoryFile.xsd" absolutePath="@value" name="classpath">
+<directorySet/>
+<fileSet>
+<file name="BshClassLoader.java">
+<importSet>
+<import value="java.net."/>
+<import value="java.util."/>
+<import value="java.io."/>
+<import value="bsh"/>
+</importSet>
+<classSet>
+<class name="BshClassLoader" package="bsh.classpath." parentClass="URLClassLoader" modifier="public">
+<implementedInterfaceSet/>
+<attributeSet>
+<attribute name="BshClassManager" type="BshClassManager" modifier=""/>
+</attributeSet>
+<methodSet>
+<method name="addURL" returnType="" modifier=""/>
+<method name="loadClass" returnType="Class" modifier=""/>
+<method name="findClass" returnType="Class" modifier=""/>
+<method name="getClassManager" returnType="BshClassManager" modifier=""/>
+</methodSet>
+</class>
+</classSet>
+</file>
+<file name="BshClassPath.java">
+<importSet>
+<import value="java.util."/>
+<import value="zip."/>
+<import value="java.io."/>
+<import value="java.net."/>
+<import value="java.io.File"/>
+<import value="bsh"/>
+<import value="bsh"/>
+<import value="bsh"/>
+<import value="ref.WeakReference"/>
+<import value="bsh"/>
+</importSet>
+<classSet>
+<class name="BshClassPath" package="bsh.classpath." parentClass="" modifier="public">
+<implementedInterfaceSet>
+<interface name="ClassPathListener"/>
+<interface name="NameSource"/>
+</implementedInterfaceSet>
+<attributeSet>
+<attribute name="String" type="String" modifier=""/>
+<attribute name="List" type="List" modifier="private"/>
+<attribute name="List" type="List" modifier="private"/>
+<attribute name="Map" type="Map" modifier="private"/>
+<attribute name="Map" type="Map" modifier="private"/>
+<attribute name="" type="boolean" modifier="private"/>
+<attribute name="UnqualifiedNameTable" type="UnqualifiedNameTable" modifier="private"/>
+<attribute name="" type="boolean" modifier="private"/>
+<attribute name="Vector" type="Vector" modifier=""/>
+<attribute name="" type="[" modifier="static"/>
+<attribute name="BshClassPath" type="BshClassPath" modifier="static"/>
+<attribute name="BshClassPath" type="BshClassPath" modifier="static"/>
+<attribute name="List" type="List" modifier=""/>
+<attribute name="MappingFeedback" type="MappingFeedback" modifier="static"/>
+</attributeSet>
+<methodSet>
+<method name="setPath" returnType="" modifier=""/>
+<method name="addComponent" returnType="" modifier=""/>
+<method name="add" returnType="" modifier=""/>
+<method name="add" returnType="" modifier=""/>
+<method name="getPathComponents" returnType="" modifier=""/>
+<method name="getClassesForPackage" returnType="Set" modifier=""/>
+<method name="getClassSource" returnType="ClassSource" modifier=""/>
+<method name="setClassSource" returnType="" modifier=""/>
+<method name="insureInitialized" returnType="" modifier=""/>
+<method name="insureInitialized" returnType="" modifier=""/>
+<method name="getFullPath" returnType="List" modifier=""/>
+<method name="getClassNameByUnqName" returnType="String" modifier=""/>
+<method name="getUnqualifiedNameTable" returnType="UnqualifiedNameTable" modifier=""/>
+<method name="buildUnqualifiedNameTable" returnType="UnqualifiedNameTable" modifier=""/>
+<method name="getAllNames" returnType="" modifier=""/>
+<method name="map" returnType="" modifier=""/>
+<method name="map" returnType="" modifier=""/>
+<method name="map" returnType="" modifier=""/>
+<method name="mapClass" returnType="" modifier=""/>
+<method name="reset" returnType="" modifier=""/>
+<method name="clearCachedStructures" returnType="" modifier=""/>
+<method name="classPathChanged" returnType="" modifier=""/>
+<method name="traverseDirForClasses" returnType="" modifier=""/>
+<method name="traverseDirForClassesAux" returnType="List" modifier=""/>
+<method name="searchJarForClasses" returnType="" modifier=""/>
+<method name="isClassFileName" returnType="" modifier=""/>
+<method name="isArchiveFileName" returnType="" modifier=""/>
+<method name="canonicalizeClassName" returnType="String" modifier=""/>
+<method name="splitClassname" returnType="" modifier=""/>
+<method name="removeInnerClassNames" returnType="Collection" modifier=""/>
+<method name="getUserClassPathComponents" returnType="" modifier=""/>
+<method name="getPackagesSet" returnType="Set" modifier=""/>
+<method name="addListener" returnType="" modifier=""/>
+<method name="removeListener" returnType="" modifier=""/>
+<method name="notifyListeners" returnType="" modifier=""/>
+<method name="getUserClassPath" returnType="BshClassPath" modifier=""/>
+<method name="getBootClassPath" returnType="BshClassPath" modifier=""/>
+<method name="getRTJarPath" returnType="String" modifier=""/>
+<method name="main" returnType="" modifier=""/>
+<method name="toString" returnType="String" modifier=""/>
+<method name="nameSpaceChanged" returnType="" modifier=""/>
+<method name="addNameSourceListener" returnType="" modifier=""/>
+<method name="addMappingFeedback" returnType="" modifier=""/>
+<method name="startClassMapping" returnType="" modifier=""/>
+<method name="classMapping" returnType="" modifier=""/>
+<method name="errorWhileMapping" returnType="" modifier=""/>
+<method name="endClassMapping" returnType="" modifier=""/>
+</methodSet>
+</class>
+</classSet>
+</file>
+<file name="ClassManagerImpl.java">
+<importSet>
+<import value="java.net."/>
+<import value="java.util."/>
+<import value="ref."/>
+<import value="java.io.IOException"/>
+<import value="java.io."/>
+<import value="BshClassPath.ClassSource"/>
+<import value="BshClassPath.JarClassSource"/>
+<import value="BshClassPath.GeneratedClassSource"/>
+<import value="bsh"/>
+<import value="bsh"/>
+<import value="bsh"/>
+<import value="bsh"/>
+</importSet>
+<classSet>
+<class name="ClassManagerImpl" package="bsh.classpath." parentClass="BshClassManager" modifier="public">
+<implementedInterfaceSet/>
+<attributeSet>
+<attribute name="String" type="String" modifier="static"/>
+<attribute name="BshClassPath" type="BshClassPath" modifier="private"/>
+<attribute name="" type="boolean" modifier="private"/>
+<attribute name="BshClassPath" type="BshClassPath" modifier="private"/>
+<attribute name="Vector" type="Vector" modifier="private"/>
+<attribute name="ReferenceQueue" type="ReferenceQueue" modifier="private"/>
+<attribute name="BshClassLoader" type="BshClassLoader" modifier="private"/>
+<attribute name="Map" type="Map" modifier="private"/>
+</attributeSet>
+<methodSet>
+<method name="classForName" returnType="Class" modifier=""/>
+<method name="getResource" returnType="URL" modifier=""/>
+<method name="getResourceAsStream" returnType="InputStream" modifier=""/>
+<method name="getLoaderForClass" returnType="ClassLoader" modifier=""/>
+<method name="addClassPath" returnType="" modifier=""/>
+<method name="reset" returnType="" modifier=""/>
+<method name="setClassPath" returnType="" modifier=""/>
+<method name="reloadAllClasses" returnType="" modifier=""/>
+<method name="initBaseLoader" returnType="" modifier=""/>
+<method name="reloadClasses" returnType="" modifier=""/>
+<method name="reloadPackage" returnType="" modifier=""/>
+<method name="getClassPath" returnType="BshClassPath" modifier=""/>
+<method name="doSuperImport" returnType="" modifier=""/>
+<method name="hasSuperImport" returnType="" modifier=""/>
+<method name="getClassNameByUnqName" returnType="String" modifier=""/>
+<method name="addListener" returnType="" modifier=""/>
+<method name="removeListener" returnType="" modifier=""/>
+<method name="getBaseLoader" returnType="ClassLoader" modifier=""/>
+<method name="defineClass" returnType="Class" modifier=""/>
+<method name="classLoaderChanged" returnType="" modifier=""/>
+<method name="dump" returnType="" modifier=""/>
+</methodSet>
+</class>
+</classSet>
+</file>
+<file name="ClassPathListener.java">
+<importSet/>
+<classSet/>
+</file>
+<file name="DiscreteFilesClassLoader.java">
+<importSet>
+<import value="java.io."/>
+<import value="java.io.File"/>
+<import value="java.util."/>
+<import value="java.awt."/>
+<import value="bsh"/>
+<import value="BshClassPath.ClassSource"/>
+<import value="BshClassPath.DirClassSource"/>
+<import value="BshClassPath.GeneratedClassSource"/>
+</importSet>
+<classSet>
+<class name="DiscreteFilesClassLoader" package="bsh.classpath." parentClass="BshClassLoader" modifier="public">
+<implementedInterfaceSet/>
+<attributeSet>
+<attribute name="ClassSourceMap" type="ClassSourceMap" modifier=""/>
+</attributeSet>
+<methodSet>
+<method name="findClass" returnType="Class" modifier=""/>
+<method name="toString" returnType="String" modifier=""/>
+</methodSet>
+</class>
+</classSet>
+</file>
+</fileSet>
+</directory>
