@@ -3,8 +3,8 @@ import com.codesquale.metrics.*;
 
 public class ExistMetricsFactory implements IMetricsFactory 
 {
-	public void GenerateResultsFile() 
-	{
-	
+
+	public void CalculateCountersFromSourceFile(String in, String out) {
+		
 	}
 }
