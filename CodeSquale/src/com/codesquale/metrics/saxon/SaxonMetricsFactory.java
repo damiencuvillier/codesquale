@@ -25,72 +25,23 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	
 	
 	private static Logger logger = Logger.getLogger(SaxonMetricsFactory.class);
-	private Configuration config = null;
-	private StaticQueryContext staticContext = null;
-	private DynamicQueryContext dynamicContext = null;
-	
-	
-	public SaxonMetricsFactory()
-	{
-		// Creating configuration
-		config = new Configuration();
-		// Creating static context  : used for compile xquery
-		staticContext = new StaticQueryContext(config);
-		// Creating dynamic context : used for process xquery
-		dynamicContext = new DynamicQueryContext(config);
-	}
-	
+
 	@SuppressWarnings("deprecation")
-	public void generateResultFile(String in, String out)
+	public void generateResultFile(String fullPathSourceFile, String fullPathResultFile)
 	{
-		logger.debug("Processing Xquery..." + out);
+		logger.debug("Processing Xquery from the file... " + fullPathSourceFile);
 		
 		// Preparing the single file to analyze
 		File inputFile = null;
 		StreamSource inputStreamSource = null;
 		// Loading the file to analyze
-		inputFile = new File(in);
+		inputFile = new File(fullPathSourceFile);
 		inputStreamSource = new StreamSource(inputFile);
 		
-		XQueryExpression exp = null;
-	
-
-		try 
-		{
-			// Retrieving the query
-			String queryString = Utilities.readFileAsString(SaxonQueryProvider.SINGLE_FILE_COUNTING);
-			exp = staticContext.compileQuery(queryString);
-	
-		} 
-		catch (XPathException e) 
-		{
-			logger.fatal(e.getMessage());
-		}
-		catch(IOException ex)
-		{
-			logger.fatal(ex.getMessage());
-		}
+		SaxonProcessor.getInstance().setXMLSourceDocument(inputStreamSource);
+		SaxonProcessor.getInstance().ExecuteSingleFileCountingQuery(fullPathResultFile);
 		
-		
-		try 
-		{
-			// Paramètrage du fichier d'entrée
-			dynamicContext.setContextNode(
-					config.buildDocument(inputStreamSource));
-			
-			Properties props = new Properties();
-			props.setProperty(OutputKeys.METHOD, "xml");
-			props.setProperty(OutputKeys.INDENT, "yes");
-			
-			exp.run(dynamicContext, new StreamResult(new File(out)), null);
-			
-		} 
-		catch (XPathException e) 
-		{
-			logger.fatal(e.getMessage());
-		}
-		
-		logger.debug("Xquery process finished..."+out);
+		logger.debug("Xquery process finished... "+ fullPathResultFile + " generated ...");
 	}
 
 }
