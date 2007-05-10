@@ -10,8 +10,8 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
-import com.codesquale.metrics.MetricsProcessor;
-
+import com.codesquale.metrics.IMetricsFactory;
+import com.codesquale.metrics.MetricsFactoryProvider;
 
 public class MetricsTask extends Task {
 	
@@ -20,7 +20,14 @@ public class MetricsTask extends Task {
     private String outputDir;
     private Vector filesets = new Vector();
 
-
+	private IMetricsFactory myFactory = null;
+    
+    public MetricsTask(MetricsFactoryProvider.MetricsFactoryType factoryType)
+    {
+    	// Set up the desired implementation of XQuery
+    	myFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(factoryType);
+    }
+    
     public void addFileset(FileSet fileset) {
         filesets.add(fileset);
     }
@@ -36,14 +43,12 @@ public class MetricsTask extends Task {
              for(int i=0; i<includedFiles.length; i++) {
                  String filename = includedFiles[i].replace('\\','/');           // 4
                  filename = filename.substring(filename.lastIndexOf("/")+1);
-//                 if (foundLocation==null) {
+                 //if (foundLocation==null) {
                      File base  = ds.getBasedir();                               // 5
                      File found = new File(base, includedFiles[i]);
-
                      foundLocation = found.getAbsolutePath();
-                     MetricsProcessor processor = new MetricsProcessor();
-                     processor.generateResultFile(foundLocation, outputDir+found.getName());
-//                 }
+                     myFactory.CalculateCountersFromSourceFile(foundLocation, outputDir+found.getName());
+                //}
              }
          }	
     }
