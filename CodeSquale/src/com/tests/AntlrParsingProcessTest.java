@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,18 +12,18 @@ import javax.xml.transform.TransformerException;
 import junit.framework.JUnit4TestAdapter;
 
 import org.apache.log4j.Logger;
-import org.apache.tools.ant.BuildException;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import com.codesquale.ant.AntLRTask;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.AntlrParsingProcess;
-/*
- * Class test that execute the antlr process on test directory
+/**
+ * 
+ * @author mbourguignon
+ * 
+ * class test that execute the antlr process on test directory
  * 
  * Analyse and Parse the test class : .\tests\ClassMoney.java
  * Generate the AST XML file : .\test\ClassMoney.java
