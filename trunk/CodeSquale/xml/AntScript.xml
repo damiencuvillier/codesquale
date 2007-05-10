@@ -27,7 +27,7 @@
 	 
 	<property name="antlrFile" value="" />
 	<property name="tmpFile" value="tmp" />
-	
+	<!-- TODO standardizes dir names-->
 	<taskdef name="CodeSqualeAntlrProcess" 
 		classname="com.codesquale.ant.AntLRTask"/>
 	<taskdef name="CodeSqualeMetricsProcess" 
@@ -35,10 +35,10 @@
 
 	<target name="init">
 		<echo message="********************************" />
-		<echo level="warn" message="******** CodeSquale ***********" />
+		<echo message="******** CodeSquale ***********" />
 		<echo message="********************************" />		
 		<!-- Environment initialization -->
-		<echo level="warn" message="Create Results dir" />
+		<echo message="Create Results dir" />
 		
 		<mkdir dir="${OutputDir}" />
 		<mkdir dir="${OutputDir}/${CodeSqualeXMLdir}" />
@@ -51,7 +51,7 @@
 	
 	<target name="CodeSqualeAntlrProcess" depends="init">
 		<!-- Browse files and build a project file & antlr xml content -->
-		<echo level="warn" message="Browsing source code" />
+		<echo message="Browsing source code" />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
 								target="${OutputDir}/${AntLRXMLdir}"
 		/>
@@ -63,7 +63,7 @@
 			Transforming antlr files to codesquale format file
 		-->
 		
-		<echo level="warn" message="Parse xml files from antlr Format to CodeSquale Format" />
+		<echo message="Parse xml files from antlr Format to CodeSquale Format" />
 		
 		<!-- XSD Schemas files copy -->
 		<echo level="info" message="XSD SCHEMA COPYING..." />
@@ -73,7 +73,7 @@
 			</fileset>
 		</copy>
 		
-		<echo level="warn" message="Project exploring ... " />
+		<echo message="Project exploring ... " />
 		<xslt basedir="." processor="trax" 
 			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
 			out="${OutputDir}/${CodeSqualeXMLdir}project.xml"
@@ -84,7 +84,7 @@
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
 		</xslt>
 		<!-- Directory Parsing -->
-		<echo level="warn" message="Directories Exploring ..." />
+		<echo message="Directories Exploring ..." />
 		<xslt basedir="." processor="trax" 
 			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
 			out="${OutputDir}/${CodeSqualeXMLdir}directories.xml"
@@ -98,14 +98,14 @@
 		
 		<!-- Delete Temporary File -->
 		<echo level="info" message="Deleting Temporary files" />
-		<delete file="${OutputDir}/${tmpFile}" />
+		<!--<delete file="${OutputDir}/${tmpFile}" />-->
 		
 		
-		<echo level="warn" message="AntLRtoCodeSqualeXML transition done"/>
+		<echo message="AntLRtoCodeSqualeXML transition done"/>
 	</target>
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXMLProcess">
-		<echo level="warn" message="metrics are being calculating" />
+		<echo message="metrics are being calculating" />
 		<CodeSqualeMetricsProcess outputDir="${OutputDir}/${MetricsDir}">
 			<fileset dir="${OutputDir}/${CodeSqualeXMLdir}">
 				<include name="*.xml"/>
@@ -113,8 +113,8 @@
 			</fileset>
 		</CodeSqualeMetricsProcess>
 		
-		<echo level="warn" message="CodeSquale has done his job" />
-		<echo level="warn" message="You can read LoggingInfo.html file for more details" />
+		<echo message="CodeSquale has done his job" />
+		<echo message="You can read LoggingInfo.html file for more details" />
 	</target>
 
 	
