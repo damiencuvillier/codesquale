@@ -75,20 +75,20 @@ public class AntRunner
      * @param _baseDir The project's base directory. If none is provided, will be defaulted to "." (the current directory).
      * @exception Exceptions are self-explanatory (read their Message)
      */
-    public void init(String _buildFile, String _baseDir) throws Exception
+    public void init(String _buildFile) throws Exception
     {
         // Create a new project, and perform some default initialization
         project = new Project();
         try { project.init(); }
         catch (BuildException e)
             { throw new Exception("The default task list could not be loaded."); }
-
+        project.setBasedir(".");
         // Set the base directory. If none is given, "." is used.
-        if (_baseDir == null) _baseDir=new String(".");
-        try { project.setBasedir(_baseDir); }
-        catch (BuildException e)
-            { throw new Exception("The given basedir doesn't exist, " +
-            					  "or isn't a directory."); }
+//        if (_baseDir == null) _baseDir=new String(".");
+//        try { project.setBasedir(_baseDir); }
+//        catch (BuildException e)
+//            { throw new Exception("The given basedir doesn't exist, " +
+//            					  "or isn't a directory."); }
 
         // Parse the given buildfile. If none is given, "build.xml" is used.
         if (_buildFile == null) _buildFile=new String("build.xml");
