@@ -15,7 +15,6 @@ import com.codesquale.file.ProjectBrowser;
 public class AntLRTask extends Task {
 	private static Logger logger = Logger.getLogger(AntLRTask.class);
 	private String source, target;
-	private boolean success = false;
 	
 	public void execute() throws BuildException {
 		logger.info("File Filter init");
@@ -32,22 +31,16 @@ public class AntLRTask extends Task {
 			
 			// Now we can run the AntlrProcess
 			AntlrParsingProcess.getInstance().execute();
-	
-			success = true;
 			
 		} catch (NotDirectoryException e) {
 			logger.error("File is not valid");
-			success = false;
 		} catch (Exception e)
 		{
 			logger.error(e.getMessage());
-			success = false;
 		}
 		
 	}
-	public boolean isSuccessfull() {
-		return success;
-	}
+
 	public String getSource() {
 		return source;
 	}
