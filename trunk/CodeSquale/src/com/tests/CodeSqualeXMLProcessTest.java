@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.codesquale.ant.AntRunner;
-import com.codesquale.file.FileFilter;
+
 
 /**
  * 

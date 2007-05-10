@@ -1,11 +1,7 @@
 package com.tests;
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
 
 import com.codesquale.metrics.*;
-import com.codesquale.metrics.saxon.SaxonMetricsFactory;
 
 import junit.framework.JUnit4TestAdapter;
 
