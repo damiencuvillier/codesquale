@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Hashtable;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.codesquale.ant.AntRunner;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
@@ -46,7 +48,7 @@ public class AntlrParsingProcessTest {
 	public void setUp()
 	{
 		input = "test";
-		output = "test\\testOutput";
+		output = "test\\testOutput\\XMLAntlr";
 		filter = new FileFilter();
 		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 	}
@@ -59,7 +61,19 @@ public class AntlrParsingProcessTest {
 			
 			// Need to init the project browser
 			try {
-				ProjectBrowser.getInstance().init(new File(input),new File(output), new File(output+"AntlrProjectOutput.xml"), filter);
+				
+				AntRunner.getInstance().init("xml\\AntScript.xml");
+				
+				Hashtable hash = new Hashtable();
+				
+				hash.put("OutputDir", "test\\testOutput\\");
+				hash.put("SourceDir", "test");
+				
+				AntRunner.getInstance().setProperties(hash, false);
+				
+				AntRunner.getInstance().runTarget("init");
+				
+				ProjectBrowser.getInstance().init(new File(input),new File(output), new File(output+"\\AntlrProjectOutput.xml"), filter);
 
 				AntlrParsingProcess.getInstance().execute();
 				
@@ -82,6 +96,10 @@ public class AntlrParsingProcessTest {
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (IOException e) {
+				// TODO Bloc catch auto-généré
+				e.printStackTrace();
+				assertTrue(false);
+			} catch (Exception e) {
 				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
