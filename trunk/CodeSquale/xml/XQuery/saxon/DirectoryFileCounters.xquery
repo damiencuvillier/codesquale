@@ -1,15 +1,18 @@
+xquery version "1.0";
+
 let $classCount := count(//directory/fileSet/file/classSet/class)
 let $methodCount := count(//directory/fileSet/file/classSet/class/methodSet/method)
 let $attributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute)
 let $interfaceCount := count(//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
 let $classes := //directory/fileSet/file/classSet/class
+
 return
 	<resultFile>
 		<globalCounters>
-			<classCount>{$classCount}</classCount>
-			<methodCount>{$methodCount}</methodCount>
-			<attributeCount>{$attributeCount}</attributeCount>
-			<interfaceCount>{$interfaceCount}</interfaceCount>
+		    <classCount value="{$classCount}" />
+			<methodCount value="{$methodCount}" />
+			<attributeCount value="{$attributeCount}" />
+			<interfaceCount value="{$interfaceCount}" />
 		</globalCounters>
 
 		<classResults>
