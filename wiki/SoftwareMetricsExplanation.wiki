@@ -14,6 +14,7 @@
 || *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NTLA*|| Classes ||Number of classes.||Total number of classes.||_Yes_||
 ||*NPCL*|| Public Classes ||Number of *_public class *_.||Total number of *_public class_* (suffixed by the keyword *_public_*).||_Yes_||
+||*NPPC*|| Private Classes ||Number of *_private class *_.||Total number of *_private class_* (suffixed by the keyword *_private_*).||_Yes_||
 ||*NFCL*|| Final Classes ||Number of *_final class*_.||Total number of *_final class_* (suffixed by the keyword *_final_*).||_N/A_||
 ||*NACL*|| Ac ||Number of *_abstract class*_.||Total number of *_abstract class_* (suffixed by the keyword *_abstract_*).||_N/A_||
 ||*NCCL*|| Cc ||Numer of *_concrete class*_.||Total number of *_concrete class_* (all classes which are not *_abstract_*).||_N/A_||
@@ -27,8 +28,8 @@
 || *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NOME*|| Methods ||Number of methods.||Total number  of methods in the project (without counting the class constructors).|| Yes ||
 ||*NONM*|| Native Methods ||Number of native methods.||A native method is a method implemented in a “native” language, usually C or C++. This measure provides a count of the total number of native methods in all the classes.||_N/A_||
-||*NOPM*|| Public Methods ||Number of *_public_* methods.||Count all the *_public_* methods.||_N/A_||
-||*NPRM*||  ||Number of *_private_* methods.||Count all the *_private_* methods.||_N/A_||
+||*NOPM*|| Public Methods ||Number of *_public_* methods.||Count all the *_public_* methods.||_Yes_||
+||*NPRM*||  ||Number of *_private_* methods.||Count all the *_private_* methods.||_Yes_||
 ||*NORM*|| NRM ||Number of remote methods.||A remote method call is defined as an invocation of a method that is not declared in any of: the class itself; a class or interface that the class extends or implements; a class or method that extends the class.||_N/A_||
 
 ==4. Line of source code metrics==
@@ -43,9 +44,9 @@
 
 ==5. Variable and attribute metrics==
 || *CS Abbr.* || *Other Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
-||*NOAT*|| NOA ||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_N/A_||
-||*NOPA*|| ||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_N/A_||
-||*NPRA*|| ||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_N/A_||
+||*NOAT*|| NOA ||Number of attributes.||Total number of attributes in the project. Attributes are class variables.||_Yes_||
+||*NOPA*|| ||Number of *_public_* attributes.||Total number of *_public_* attributes in the project.||_Yes_||
+||*NPRA*|| ||Number of *_private_*  attributes.||Total number of *_private_* attributes in the project.||_Yes_||
 ||*NMSV*|| ||Number of *_method scope_*  variables.||Total number of *_method scope_* variables in the project. "Method scope" variables are variables that are declared and initialized inside a method corpse. They are destroyed when the method finishes processing.||_N/A_||
 
 ==__________________________________________________________________________________________==
@@ -60,9 +61,9 @@
 
 || *CS Abbr.* || *ISO Abbr.* || *Details* || *Description* || *Feature supported by CS* ||
 ||*NOII*|| ||Number of implemented interface.||A Java class may implement zero or more interfaces. This measure indicates the total number of interfaces implemented by a class.||_N/A_||
-||*NOCM*|| ||Number of class methods.||This measure indicates the number of methods that have been explicitly defined in a class.It does not include the methods inherited from a super class.||N/A_||
-||*RROC*|| ||Reuse ratio of a class.||The reuse ratio is given by  U = Number of superclasses/Total number of classes.||N/A_||
-||*RSOC*|| ||Specialization ratio of a class.||This ration measures the extent to which a superclass has captured abstraction. The specialization ratio is given as S=Number of subclasses/Number of superclasses.||N/A_||
+||*NOCM*|| ||Number of class methods.||This measure indicates the number of methods that have been explicitly defined in a class.It does not include the methods inherited from a super class.||_Yes_||
+||*RROC*|| ||Reuse ratio of a class.||The reuse ratio is given by  U = Number of superclasses/Total number of classes.||_N/A_||
+||*RSOC*|| ||Specialization ratio of a class.||This ration measures the extent to which a superclass has captured abstraction. The specialization ratio is given as S=Number of subclasses/Number of superclasses.||_N/A_||
 
 
 
