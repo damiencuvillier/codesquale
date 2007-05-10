@@ -17,19 +17,37 @@ Antlr to CodeSquale XML transforming
 	<xsl:strip-space elements="*" />
 	
 	
+	
+
+	<!--  Project Description -->
 	<xsl:template match="root">
-		<project name="test" language="java" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 	xsi:noNamespaceSchemaLocation="../projectFileSchema.xsd">
+		<project language="java" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 	
+			xsi:noNamespaceSchemaLocation="../projectFileSchema.xsd">
+		<!-- TODO Add Project Name -->
+		<!-- TODO put language in parameter -->
 			<xsl:attribute name="xsi:noNamespaceSchemaLocation">
 				<xsl:text>ProjectFile.xsd</xsl:text>
 			</xsl:attribute>
-		<!--  TODO AbsolutePath -->
+		<!-- TODO AbsolutePath -->
+		
+		<xsl:include href="functions.xslt" />
+		
+		<!-- Dir Node : Defines the source dir for the project -->
 			<dir>
-				<xsl:attribute name="name">
+			<!-- Dir node has two attributes :
+				- absolutePath : absolute path of the sourcedir
+				- TODO name = relative path = name of the path
+				- descriptionFile
+			 -->
+			 	<xsl:variable name="name" select="substring-after(@path,'\')" />
+			 	<xsl:attribute name="name">
+					<xsl:value-of select="$name" />
+				</xsl:attribute>
+				<xsl:attribute name="absolutePath">
 					<xsl:value-of select="@path" />
 				</xsl:attribute>
 				<xsl:attribute name="descriptionFile">
 					<xsl:value-of select="concat(@path,'.xml')" />
-					
 				</xsl:attribute>
 			</dir>
 		</project>
