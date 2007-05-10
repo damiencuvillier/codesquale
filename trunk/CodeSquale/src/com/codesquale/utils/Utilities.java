@@ -16,7 +16,7 @@ public class Utilities {
 		return Integer.toString(sec) + Integer.toString(min) + Integer.toString(hour);
 	}
 	
-	private static String readFileAsString(String filePath) throws java.io.IOException
+	public static String readFileAsString(String filePath) throws java.io.IOException
     {
         StringBuffer fileData = new StringBuffer(1000);
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
