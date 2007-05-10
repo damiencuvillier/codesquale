@@ -3,7 +3,6 @@ package com.tests;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import junit.framework.JUnit4TestAdapter;
@@ -12,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import antlr.ANTLRException;
+
 
 import com.codesquale.parser.ParsingUnit;
 
@@ -32,7 +31,7 @@ public class ParsingUnitTest {
 	{
 	
 		myParsingUnit = new ParsingUnit();
-		myTestFile = new File("test\\ClassMoney.javatest");	
+		myTestFile = new File("test\\ClassMoney.java");	
 	}
 	
 	@Test

@@ -74,37 +74,28 @@ public class ParsingUnit {
 	/**
 	 * Save the abstract syntaxic tree to XML file structure
 	 * @param fileName 
+	 * @throws IOException 
 	 */
-	public FileOutputStream ASTToXML(String fileName)
+	public FileOutputStream ASTToXML(String fileName) throws IOException
 	{
-		try {
 			FileOutputStream output = new FileOutputStream(fileName);
 			Writer writer = new OutputStreamWriter(output);
 			abstractTree.xmlSerialize(writer);
 			writer.flush();
 			
-			return output;
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			logger.fatal(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
-		}
 		
-		return null;
+			return output;
 	}
 	
-	public void DoParse(File codeSourceFile)
+	public void DoParse(File codeSourceFile) throws FileNotFoundException
 	{
 		
 	    FileInputStream duplicateSourceStream = null;
 	    FileInputStream codeSourceFileStream= null;
-		try {
-			duplicateSourceStream = new FileInputStream(codeSourceFile);
-			codeSourceFileStream = new FileInputStream(codeSourceFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	    
+
+		duplicateSourceStream = new FileInputStream(codeSourceFile);
+		codeSourceFileStream = new FileInputStream(codeSourceFile);
+
 		ParseCodeSourceStream(codeSourceFileStream);		
 	}
 	
