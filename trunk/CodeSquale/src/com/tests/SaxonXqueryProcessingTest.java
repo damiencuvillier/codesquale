@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import com.codesquale.metrics.*;
+import com.codesquale.metrics.saxon.SaxonMetricsFactory;
+
 import junit.framework.JUnit4TestAdapter;
 
 import org.apache.log4j.Logger;
@@ -32,7 +34,7 @@ public class SaxonXqueryProcessingTest {
 	@Test
 	public void ProcessXquery()
 	{
-		MetricsProcessor metrics = new MetricsProcessor();
+		SaxonMetricsFactory metrics = new SaxonMetricsFactory();
 		
 		metrics.generateResultFile("test\\classpath.xml","U:\\out\\test.xml");
 	}
