@@ -19,7 +19,9 @@ public class SaxonXqueryProcessingTest {
 	
 
 	private static Logger logger = Logger.getLogger(SaxonXqueryProcessingTest.class);
-
+	
+	private MetricsFactoryProvider.MetricsFactoryType desiredFactory  = null;
+	private IMetricsFactory saxonFactory = null;
 	
 	public static junit.framework.Test suite() {
 		 return new JUnit4TestAdapter(SaxonXqueryProcessingTest.class);
@@ -28,14 +30,14 @@ public class SaxonXqueryProcessingTest {
 	
 	@Before public void setUp()
 	{
-	
+		desiredFactory = MetricsFactoryProvider.MetricsFactoryType.SAXON_FACTORY;
+		
+		saxonFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(desiredFactory);
 	}
 	
 	@Test
 	public void ProcessXquery()
 	{
-		SaxonMetricsFactory metrics = new SaxonMetricsFactory();
-		
-		metrics.generateResultFile("test\\classpath.xml","U:\\out\\test.xml");
+		saxonFactory.CalculateCountersFromSourceFile("test\\classpath.xml","U:\\out\\test.xml");
 	}
 }
