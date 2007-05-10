@@ -14,5 +14,5 @@ package com.codesquale.metrics;
 
 public interface IMetricsFactory 
 {
-	public void GenereateResultsFile();
+	public void GenerateResultsFile();
 }
