@@ -34,6 +34,8 @@ public class SaxonXqueryProcessingTest {
 	@Test
 	public void ProcessXquery()
 	{
-		saxonFactory.CalculateCountersFromSourceFile("test\\classpath.xml","U:\\out\\test.xml");
+		String sampleTestFile = "test\\classpath.xml";
+		String otherSampleTestFile = "xml\\models\\DirectoryFile_Sample.xml";
+		saxonFactory.CalculateCountersFromSourceFile(otherSampleTestFile,"U:\\out\\test.xml");
 	}
 }
