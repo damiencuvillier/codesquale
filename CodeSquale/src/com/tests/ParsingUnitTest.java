@@ -39,8 +39,10 @@ public class ParsingUnitTest {
 	{
 		try
 		{		
+			logger.info("Parsing file...");
 			myParsingUnit.DoParse(myTestFile);
-					
+			
+			logger.info("Transform file to AST xml file");
 			FileOutputStream xmlFile = myParsingUnit.ASTToXML("ClassMoney.xml");
 			
 			if(xmlFile.equals(null))
