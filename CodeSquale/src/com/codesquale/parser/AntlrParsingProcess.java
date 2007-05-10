@@ -152,11 +152,16 @@ public class AntlrParsingProcess {
 	    
 	    // Insert the root element node
 	    Element element = doc.createElement("root");
-	    element.setAttribute("path", ProjectBrowser.getInstance().getBasePath().getAbsolutePath());
+	   // element.setAttribute("path", ProjectBrowser.getInstance().getBasePath().getAbsolutePath());
 	    element.setAttribute("xmlns:xi","http://www.w3.org/2001/XInclude");
-	    	    
+	    
+	    Node node = element.appendChild(doc.createElement("directory"));
+    	((Element)node).setAttribute("value", ProjectBrowser.getInstance().getBasePath().getName());
+    	((Element)node).setAttribute("href", ProjectBrowser.getInstance().getBasePath().getAbsolutePath());
+    	
+    	
 	    // proceed XML transformation
-	    processXMLTransform(doc.appendChild(element), ProjectBrowser.getInstance().getBasePath().getDirectoriesList());
+	    processXMLTransform(doc.appendChild(element).getFirstChild(), ProjectBrowser.getInstance().getBasePath().getDirectoriesList());
 	    
 	    //	write it out 
 	    TransformerFactory xformFactory  = TransformerFactory.newInstance();
