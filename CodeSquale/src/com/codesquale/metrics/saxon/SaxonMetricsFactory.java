@@ -1,4 +1,4 @@
-package com.codesquale.metrics;
+package com.codesquale.metrics.saxon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,18 +18,19 @@ import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
 
 import com.codesquale.utils.*;
+import com.codesquale.metrics.*;
 
 
-public class MetricsProcessor {
+public class SaxonMetricsFactory implements IMetricsFactory {
 	
 	
-	private static Logger logger = Logger.getLogger(MetricsProcessor.class);
+	private static Logger logger = Logger.getLogger(SaxonMetricsFactory.class);
 	private Configuration config = null;
 	private StaticQueryContext staticContext = null;
 	private DynamicQueryContext dynamicContext = null;
 	
 	
-	public MetricsProcessor()
+	public SaxonMetricsFactory()
 	{
 		// Creating configuration
 		config = new Configuration();
@@ -57,7 +58,7 @@ public class MetricsProcessor {
 		try 
 		{
 			// Retrieving the query
-			String queryString = Utilities.readFileAsString("U:\\xquery\\saxon\\DirectoryFileCounters.xquery");
+			String queryString = Utilities.readFileAsString(SaxonQueryProvider.SINGLE_FILE_COUNTING);
 			exp = staticContext.compileQuery(queryString);
 	
 		} 
