@@ -39,6 +39,10 @@ public class AntlrParsingProcessTest {
 
 	private FileFilter filter;
 	
+	public static junit.framework.Test suite() {
+		 return new JUnit4TestAdapter(AntlrParsingProcessTest.class);
+	}
+	
 	@Before
 	public void setUp()
 	{
