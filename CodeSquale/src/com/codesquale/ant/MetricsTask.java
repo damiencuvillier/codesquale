@@ -11,6 +11,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
 import com.codesquale.metrics.IMetricsFactory;
+import com.codesquale.metrics.MetricsFactoryType;
 import com.codesquale.metrics.MetricsFactoryProvider;
 
 public class MetricsTask extends Task {
@@ -20,12 +21,10 @@ public class MetricsTask extends Task {
     private String outputDir;
     private Vector filesets = new Vector();
 
-	private IMetricsFactory myFactory = null;
+	private IMetricsFactory myFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(MetricsFactoryType.SAXON_FACTORY);
     
-    public MetricsTask(MetricsFactoryProvider.MetricsFactoryType factoryType)
+    public MetricsTask()
     {
-    	// Set up the desired implementation of XQuery
-    	myFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(factoryType);
     }
     
     public void addFileset(FileSet fileset) {
