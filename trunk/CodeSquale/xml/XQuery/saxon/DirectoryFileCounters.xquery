@@ -20,27 +20,25 @@ let $interfaceCount := count(//directory/fileSet/file/classSet/class/implemented
 let $classes := //directory/fileSet/file/classSet/class
 
 return
-	<directoryResult name="{//directory/@name}" absolutePath="{//directory/@absolutePath}">
+	<directoryResult package="{//directory/@completeName}" absolutePath="{//directory/@absolutePath}">
+		
 		<counters>
 			<classes>
 			    <all>{$classCount}</all>
 			    <private>{$privateClassCount}</private>
 			    <public>{$publicClassCount}</public>
 			</classes>
-			
 			<methods>
-				<all value="{$methodCount}" />
-				<private value="{$privateMethodCount}" />
-			    <public value="{$publicMethodCount}" />
+				<all>{$methodCount}</all>
+				<private>{$privateMethodCount}</private>
+			    <public>{$publicMethodCount}</public>
 			</methods>
-			
 			<attributes>
-				<all value="{$attributeCount}" />
-				<private value="{$privateAttributeCount}" />
-				<public value="{$publicAttributeCount}" />
+				<all>{$attributeCount}</all>
+				<private>{$privateAttributeCount}</private>
+				<public>{$publicAttributeCount}</public>
 			</attributes>
-			
-			<interface value="{$interfaceCount}" />
+			<interfaces>{$interfaceCount}</interfaces>
 		</counters>
 
 		<ratios>
