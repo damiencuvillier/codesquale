@@ -9,7 +9,10 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.Configuration;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.query.DynamicQueryContext;
+import net.sf.saxon.query.QueryResult;
 import net.sf.saxon.query.StaticQueryContext;
 import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
@@ -30,6 +33,7 @@ public class SaxonProcessor
 	
 	
 	private XQueryExpression singleFileCountingQuery = null;
+	private XQueryExpression numberOfClasses = null;
 	
 	public static SaxonProcessor getInstance()
 	{
@@ -37,6 +41,7 @@ public class SaxonProcessor
 		
 		return _instance;
 	}
+	
 	
 	public void ExecuteSingleFileCountingQuery(String outFileFullPath)
 	{
@@ -51,11 +56,38 @@ public class SaxonProcessor
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void setXMLSourceDocument(StreamSource inputFile)
+	public int GetNumberOfClasses()
 	{
 		try {
-			dynamicContext.setContextNode(config.buildDocument(inputFile));
+			SequenceIterator classesIterator = numberOfClasses.iterator(dynamicContext);
+
+			while (true && classesIterator != null) 
+			{
+			    NodeInfo classesValue = (NodeInfo)classesIterator.next();
+			    if (classesValue==null) break;
+			    return Integer.parseInt(classesValue.getStringValue());
+			}   
+			
+		} catch (XPathException e) {
+			logger.fatal(e.getMessage());
+		}
+		return -1;
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	public void setXMLSourceDocument(String inputFilePath)
+	{
+		// Preparing the single file to analyze
+		File inputFile = null;
+		StreamSource inputStreamSource = null;
+		
+		// Loading the file to analyze
+		inputFile = new File(inputFilePath);
+		inputStreamSource = new StreamSource(inputFile);
+		
+		try {
+			dynamicContext.setContextNode(config.buildDocument(inputStreamSource));
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
 		}
@@ -84,6 +116,9 @@ public class SaxonProcessor
 		try {
 			 singleFileCountingQueryString = Utilities.readFileAsString(SaxonQueryProvider.SINGLE_FILE_COUNTING);
 			 singleFileCountingQuery = staticContext.compileQuery(singleFileCountingQueryString);
+			  
+			 numberOfClasses = staticContext.compileQuery("//directoryResult/counters/classes/all");
+			 
 		} catch (IOException e) 
 		{
 			logger.fatal(e.getMessage());
