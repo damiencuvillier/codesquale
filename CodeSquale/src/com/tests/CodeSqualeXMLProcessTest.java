@@ -36,8 +36,8 @@ public class CodeSqualeXMLProcessTest {
 				
 				Hashtable hash = new Hashtable();
 				
-				hash.put("OutputDir", "testoutput");
 				hash.put("SourceDir", "testfiles");
+				hash.put("OutputDir", "testoutput");
 				
 				AntRunner.getInstance().setProperties(hash, false);
 				

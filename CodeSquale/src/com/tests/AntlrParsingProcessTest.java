@@ -47,8 +47,8 @@ public class AntlrParsingProcessTest {
 	@Before
 	public void setUp()
 	{
-		input = "test";
-		output = "test\\testOutput\\XMLAntlr";
+		input = "testfiles";
+		output = "testOutput\\XMLAntlr";
 		filter = new FileFilter();
 		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 	}
@@ -66,8 +66,8 @@ public class AntlrParsingProcessTest {
 				
 				Hashtable hash = new Hashtable();
 				
-				hash.put("OutputDir", "test\\testOutput\\");
-				hash.put("SourceDir", "test");
+				hash.put("OutputDir", "testoutput");
+				hash.put("SourceDir", "testfiles");
 				
 				AntRunner.getInstance().setProperties(hash, false);
 				

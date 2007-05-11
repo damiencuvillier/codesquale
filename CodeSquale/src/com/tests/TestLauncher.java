@@ -7,6 +7,8 @@ public class TestLauncher {
 	
 		junit.textui.TestRunner.run(ParsingUnitTest.suite());
 		junit.textui.TestRunner.run(AntlrParsingProcessTest.suite());
+		junit.textui.TestRunner.run(CodeSqualeXMLProcessTest.suite());
+		junit.textui.TestRunner.run(SaxonXqueryProcessingTest.suite());
 		
 	}
 
