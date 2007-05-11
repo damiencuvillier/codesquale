@@ -44,8 +44,8 @@ public class SaxonQueryProvider {
 		{
 			 singleFileCountingQuery = context.compileQuery(getSingleFileCountingQuery());
 			 numberOfClasses = context.compileQuery(getNumberOfClassesQuery());
-			 numberOfPrivateClasses = context.compileQuery(getNumberOfPublicClassesQuery()); 
-			 numberOfPublicClasses = context.compileQuery(getNumberOfPrivateClassesQuery()); 
+			 numberOfPrivateClasses = context.compileQuery(getNumberOfPrivateClassesQuery()); 
+			 numberOfPublicClasses = context.compileQuery(getNumberOfPublicClassesQuery()); 
 		} 
 		catch (XPathException ex) 
 		{
