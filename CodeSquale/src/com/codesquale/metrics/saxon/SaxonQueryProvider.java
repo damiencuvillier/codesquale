@@ -1,8 +1,6 @@
 package com.codesquale.metrics.saxon;
 
 import java.io.IOException;
-
-import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.query.StaticQueryContext;
 import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
