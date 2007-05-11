@@ -32,7 +32,7 @@ public class ParsingUnitTest {
 	{
 	
 		myParsingUnit = ParsingUnitFactory.getInstance().createInstance();
-		myTestFile = new File("testfiles\\ClassMoney.java");	
+		myTestFile = new File("testfiles\\src\\ClassMoney.java");	
 	}
 	
 	@Test
