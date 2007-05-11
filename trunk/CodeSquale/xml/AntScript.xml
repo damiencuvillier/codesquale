@@ -4,7 +4,10 @@
 	Ressources : 
 	http://ant.apache.org/manual/CoreTasks/style.html
 -->
-<project name="CodeSquale Scripts" default="CodeSqualeMetricsProcess" basedir="..">
+<project name="CodeSquale Scripts" 
+	default="CodeSqualeMetricsProcess"
+	basedir="..">
+	
 	<description>
 		Tests Scripts
 		
@@ -18,9 +21,9 @@
 	
 
 	<!-- Subdirs of outputdir -->
-	<property name="AntLRXMLdir" value="XMLAntlr/" />
-	<property name="CodeSqualeXMLdir" value="CodeSqualeXML/" />
-	<property name="MetricsDir" value="metricsXML/" />
+	<property name="AntLRXMLdir" value="XMLAntlr\" />
+	<property name="CodeSqualeXMLdir" value="CodeSqualeXML\" />
+	<property name="MetricsDir" value="metricsXML\" />
 	
 	<property name="XSDdir" value="xml/XSD Schemas/" />
 	<property name="XSLTdir" value="xml/XSLT StyleSheets/Java/" />
@@ -39,11 +42,15 @@
 		<echo message="********************************" />		
 		<!-- Environment initialization -->
 		<echo message="Create Results dir" />
+		
+		<!-- Delete files if output dir already exists -->
 		<delete failonerror="false">
 			<fileset dir="${OutputDir}" >
 				<include name="**/*.xml"/>
 			</fileset>
 		</delete>
+		
+		<!-- Create output dir -->
 		<mkdir dir="${OutputDir}" />
 		<mkdir dir="${OutputDir}/${CodeSqualeXMLdir}" />
 		<mkdir dir="${OutputDir}/${AntLRXMLdir}" />	
@@ -109,9 +116,9 @@
 	</target>
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXMLProcess">
-		<echo message="metrics are being calculating" />
-		<CodeSqualeMetricsProcess outputDir="${OutputDir}/${MetricsDir}">
-			<fileset dir="${OutputDir}/${CodeSqualeXMLdir}">
+		<echo message="Metrics are being calculating" />
+		<CodeSqualeMetricsProcess outputDir="${OutputDir}${MetricsDir}">
+			<fileset dir="${OutputDir}\${CodeSqualeXMLdir}">
 				<include name="*.xml"/>
 				<exclude name="project.xml" />
 			</fileset>
