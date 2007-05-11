@@ -58,7 +58,7 @@ public class SaxonQueryProvider {
 	 */
 	
 	
-	public XQueryExpression getnumberOfClassesQueryObject()
+	public XQueryExpression getNumberOfClassesQueryObject()
 	{
 		return numberOfClasses ;
 	}
@@ -68,12 +68,12 @@ public class SaxonQueryProvider {
 		return numberOfPrivateClasses ;
 	}
 	
-	public XQueryExpression getsnumberOfPublicClassesQueryObject()
+	public XQueryExpression getNumberOfPublicClassesQueryObject()
 	{
 		return numberOfPublicClasses ;
 	}
 	
-	public XQueryExpression getsingleFileCountingQueryObject()
+	public XQueryExpression getSingleFileCountingQueryObject()
 	{
 		return singleFileCountingQuery ;
 	}

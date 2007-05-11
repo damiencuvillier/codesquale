@@ -32,8 +32,9 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		SaxonProcessor.getInstance().setXMLSourceDocument(fullPathResultFile);
 		// Updating the project counters
 		ProjectGlobalCounters.getInstance().incrementNumberOfClasses(GetNumberOfClasses());
+		ProjectGlobalCounters.getInstance().incrementNumberOfPrivateClasses(GetNumberOfPrivateClasses());
+		ProjectGlobalCounters.getInstance().incrementNumberOfPublicClasses(GetNumberOfPublicClasses());
 		
-
 		logger.debug("Xquery counting process finished "+ fullPathResultFile + " generated ...");
 	}
 	
@@ -45,7 +46,7 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		props.setProperty(OutputKeys.INDENT, "yes");
 		
 		try {
-			SaxonQueryProvider.getInstance().getsingleFileCountingQueryObject().run
+			SaxonQueryProvider.getInstance().getSingleFileCountingQueryObject().run
 				(SaxonProcessor.getInstance().getDynamicQueryContext(), new StreamResult(new File(outFileFullPath)), props);
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
@@ -56,7 +57,47 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	{
 		try {
 			SequenceIterator classesIterator = 
-				SaxonQueryProvider.getInstance().getnumberOfClassesQueryObject().iterator
+				SaxonQueryProvider.getInstance().getNumberOfClassesQueryObject().iterator
+				(SaxonProcessor.getInstance().getDynamicQueryContext());
+
+			while (true && classesIterator != null) 
+			{
+			    NodeInfo classesValue = (NodeInfo)classesIterator.next();
+			    if (classesValue==null) break;
+			    return Integer.parseInt(classesValue.getStringValue());
+			}   
+			
+		} catch (XPathException e) {
+			logger.fatal(e.getMessage());
+		}
+		return -1;
+	}
+	
+	private int GetNumberOfPrivateClasses()
+	{
+		try {
+			SequenceIterator classesIterator = 
+				SaxonQueryProvider.getInstance().getNumberOfPrivateClassesQueryObject().iterator
+				(SaxonProcessor.getInstance().getDynamicQueryContext());
+
+			while (true && classesIterator != null) 
+			{
+			    NodeInfo classesValue = (NodeInfo)classesIterator.next();
+			    if (classesValue==null) break;
+			    return Integer.parseInt(classesValue.getStringValue());
+			}   
+			
+		} catch (XPathException e) {
+			logger.fatal(e.getMessage());
+		}
+		return -1;
+	}
+	
+	private int GetNumberOfPublicClasses()
+	{
+		try {
+			SequenceIterator classesIterator = 
+				SaxonQueryProvider.getInstance().getNumberOfPublicClassesQueryObject().iterator
 				(SaxonProcessor.getInstance().getDynamicQueryContext());
 
 			while (true && classesIterator != null) 
