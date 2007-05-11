@@ -1,5 +1,5 @@
+#summary How to use XSLT processor in CodeSquale and Why ?
 #labels Phase-Implementation
-#How to use XSLT processor in CodeSquale and Why ?
 
 = Introduction =
 
@@ -85,4 +85,3 @@ _
 The difficult point is that we must included all necessary libraries in Ant Home. It seems really easy but it means that it has to be done in Development Platform, Testing PlatForm, Binary software...
 It causes lots of bugs..
 Still looking for improvements... 
-
