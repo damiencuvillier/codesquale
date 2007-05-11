@@ -31,9 +31,13 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		// Getting info about file which has been processed
 		SaxonProcessor.getInstance().setXMLSourceDocument(fullPathResultFile);
 		// Updating the project counters
-		ProjectGlobalCounters.getInstance().incrementNumberOfClasses(GetNumberOfClasses());
-		ProjectGlobalCounters.getInstance().incrementNumberOfPrivateClasses(GetNumberOfPrivateClasses());
-		ProjectGlobalCounters.getInstance().incrementNumberOfPublicClasses(GetNumberOfPublicClasses());
+		int numberOfClasses = GetNumberOfClasses();
+		int numberOfPrivateClasses = GetNumberOfPrivateClasses();
+		int numberOfPublicClasses = GetNumberOfPublicClasses();
+		
+		if(numberOfClasses!=-1) ProjectGlobalCounters.getInstance().incrementNumberOfClasses(numberOfClasses);
+		if(numberOfPrivateClasses!=-1) ProjectGlobalCounters.getInstance().incrementNumberOfPrivateClasses(numberOfPrivateClasses);
+		if(numberOfPublicClasses!=-1) ProjectGlobalCounters.getInstance().incrementNumberOfPublicClasses(numberOfPublicClasses);
 		
 		logger.debug("Xquery counting process finished "+ fullPathResultFile + " generated ...");
 	}

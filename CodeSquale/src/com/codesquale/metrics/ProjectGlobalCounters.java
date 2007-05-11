@@ -36,8 +36,8 @@ public class ProjectGlobalCounters
 		        out.write("\t<counter>\r\n");
 		        out.write("\t\t<classes>\r\n");
 		        out.write("\t\t<all>"+ numberOfClasses +"</all>\r\n");
-		        out.write("\t\t<private>"+ numberOfPrivateClasses +"</private>\r\n");
 		        out.write("\t\t<public>"+ numberOfPublicClasses +"</public>\r\n");
+		        out.write("\t\t<private>"+ numberOfPrivateClasses +"</private>\r\n");
 		        out.write("\t\t</classes>\r\n");
 		        out.write("\t</counter>\r\n");
 		        out.write("</projectResults>\r\n"); 
