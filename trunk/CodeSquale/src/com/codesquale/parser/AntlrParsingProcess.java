@@ -24,7 +24,7 @@ import org.w3c.dom.Node;
 import com.codesquale.file.DirectoryElement;
 import com.codesquale.file.FileElement;
 import com.codesquale.file.ProjectBrowser;
-import com.codesquale.parser.ParsingUnit;
+import com.codesquale.parser.IParsingUnit;
 import com.codesquale.utils.Utilities;
 
 public class AntlrParsingProcess {
@@ -76,7 +76,7 @@ public class AntlrParsingProcess {
 	
 		logger.debug("Processing project analysis...");
 
-		ParsingUnit parsingUnit = null;
+		IParsingUnit parsingUnit = null;
 		
 		for(FileElement fileElement : ProjectBrowser.getInstance().getBasePath().getGlobalFileList())
 		{
@@ -93,7 +93,8 @@ public class AntlrParsingProcess {
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
 			
-			parsingUnit = new ParsingUnit();
+			parsingUnit = ParsingUnitFactory.getInstance().createInstance();
+			
 			parsingUnit.DoParse(fileElement.getIOElement());
 			
 			// Get the AST XML of the source file
