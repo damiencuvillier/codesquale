@@ -24,8 +24,9 @@ public class ProjectGlobalCounters
 	
 	public void SerializeProjectsResult(String outputFile)
 	{
-		 try {        
-		        OutputStream fout= new FileOutputStream("fibonacci.xml");
+		 try {    
+			 
+		        OutputStream fout= new FileOutputStream(outputFile);
 		        OutputStream bout= new BufferedOutputStream(fout);
 		        OutputStreamWriter out = new OutputStreamWriter(bout, "8859_1");
 		      
