@@ -49,9 +49,10 @@ Antlr to CodeSquale XML transforming
 			<xsl:attribute name="package" >
 				<!--  All childs which have type value = 68 ==> imports -->
 				<xsl:for-each select="../*[@type=16]//*[@type=68]//@text">
-					<!--  concatenation of the value and . -->
+					   concatenation of the value and . 
 					<xsl:value-of select="concat(.,'.')" />
 				</xsl:for-each>
+				
 			</xsl:attribute>
 			<xsl:attribute name="parentClass">
 				<xsl:value-of select="./*[@type=18]//*[@type=68]/@text" />
