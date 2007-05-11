@@ -12,7 +12,6 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.query.DynamicQueryContext;
-import net.sf.saxon.query.QueryResult;
 import net.sf.saxon.query.StaticQueryContext;
 import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
@@ -49,8 +48,16 @@ public class SaxonProcessor
 		props.setProperty(OutputKeys.METHOD, "xml");
 		props.setProperty(OutputKeys.INDENT, "yes");
 		
+		File outputFile = new File(outFileFullPath);
+		
+		StreamResult serializedFile =  new StreamResult(outputFile);
+		
+		
 		try {
-			singleFileCountingQuery.run(dynamicContext, new StreamResult(new File(outFileFullPath)), props);
+			System.out.println(outFileFullPath);
+			System.out.println(dynamicContext);
+			singleFileCountingQuery.run(dynamicContext,serializedFile,props);
+			System.out.println("Test2");
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
 		}
