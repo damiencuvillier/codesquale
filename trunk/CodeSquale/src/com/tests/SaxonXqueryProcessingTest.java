@@ -16,7 +16,7 @@ public class SaxonXqueryProcessingTest {
 
 	private static Logger logger = Logger.getLogger(SaxonXqueryProcessingTest.class);
 	
-	private MetricsFactoryProvider.MetricsFactoryType desiredFactory  = null;
+	private MetricsFactoryType desiredFactory  = null;
 	private IMetricsFactory saxonFactory = null;
 	
 	public static junit.framework.Test suite() {
@@ -26,7 +26,7 @@ public class SaxonXqueryProcessingTest {
 	
 	@Before public void setUp()
 	{
-		desiredFactory = MetricsFactoryProvider.MetricsFactoryType.SAXON_FACTORY;
+		desiredFactory = MetricsFactoryType.SAXON_FACTORY;
 		
 		saxonFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(desiredFactory);
 	}
