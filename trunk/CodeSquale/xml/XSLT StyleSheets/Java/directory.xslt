@@ -28,27 +28,47 @@ Antlr to CodeSquale XML transforming
 	<xsl:include href="file.xslt" />
 	
 	<!-- Global Variables -->
-	
+	<xsl:variable name="rootDir" select="/root/directory/@href" />
 	
 	<!--  Additionnal components -->
+	<!--  String Extension Allows to make some usefull operation on strings -->
 	<xalan:component prefix="str" elements="replace">
 		<xalan:script lang="javaclass" src="xalan://com.codesquale.xslt.StringExtension" />
 	</xalan:component>
 	
-	
 	<!-- Directory Process -->
 	<xsl:template match="//directory">
-		<xsl:variable name="rootDir" select="/root/directory[@href]" />
-		<xsl:message>Analyse directory <xsl:value-of select="@value" /></xsl:message>
 		
-		<!-- Create Package Name -->
-		
-		<xsl:message><xsl:value-of select="$rootDir" /></xsl:message>
-		<xsl:variable name="packageName" select="str:replace(str:replace(@href,$rootDir,''),'\','.')" />
+		<xsl:message>Analyse directory <xsl:value-of select="@href" /></xsl:message>
+
+		<!-- Get Package Name -->
+		<xsl:variable name="packageName">
+			<xsl:choose>
+				<xsl:when test="$rootDir = @href">
+					<xsl:text></xsl:text>
+				</xsl:when>
+				<xsl:otherwise>
+				 	<xsl:value-of select="str:replace(str:replace(@href,concat($rootDir,'\'),''),'\','.')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 
 
+		<!-- Setting up the descriptionfile name -->
+		<xsl:variable name="descriptionFileName">
+			<xsl:choose>
+				<xsl:when test="$packageName = ''">
+					<!-- Particular case : the first (root) directory -->
+					<xsl:value-of select="concat(@value,'.xml')" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat($packageName,'.xml')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		
 		<!-- RedirectNode allows to write to separated files -->
-		<redirect:write select="concat(@value,'.xml')">
+		<redirect:write select="$descriptionFileName">
 			<directory>
 				<!-- XML Schema -->
 				<xsl:attribute name="xsi:noNamespaceSchemaLocation">
@@ -71,11 +91,27 @@ Antlr to CodeSquale XML transforming
 				<directorySet>
 					 <xsl:for-each select="directory">
 					 	<dir>
+					 		<!-- each dir name is concatened with package name
+					 		So, all the description file are prefixed with packagename -->
+					 		<xsl:variable name="completeName">
+					 			<xsl:choose>
+						 			<xsl:when test="$packageName != ''">
+						 				<xsl:value-of select="concat($packageName,concat('.',@value))" />
+						 			</xsl:when>
+						 			<xsl:otherwise>
+						 				<xsl:value-of select="@value" />
+						 			</xsl:otherwise>
+					 			</xsl:choose>
+					 			
+					 		</xsl:variable>
 					 		<xsl:attribute name="name">
 					 			<xsl:value-of select="@value" />
 					 		</xsl:attribute>
+					 		<xsl:attribute name="completeName">
+					 			<xsl:value-of select="$completeName" />
+					 		</xsl:attribute>
 					 		<xsl:attribute name="descriptionFile">
-					 			<xsl:value-of select="concat(@value,'.xml')" />
+					 			<xsl:value-of select="concat($completeName,'.xml')" />
 					 		</xsl:attribute>
 					 		<xsl:attribute name="absolutePath">
 								<xsl:value-of select="@href" />
