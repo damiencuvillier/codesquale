@@ -39,7 +39,11 @@
 		<echo message="********************************" />		
 		<!-- Environment initialization -->
 		<echo message="Create Results dir" />
-		
+		<delete failonerror="false">
+			<fileset dir="${OutputDir}" >
+				<include name="**/*.xml"/>
+			</fileset>
+		</delete>
 		<mkdir dir="${OutputDir}" />
 		<mkdir dir="${OutputDir}/${CodeSqualeXMLdir}" />
 		<mkdir dir="${OutputDir}/${AntLRXMLdir}" />	
