@@ -13,6 +13,7 @@ import org.apache.tools.ant.types.FileSet;
 import com.codesquale.metrics.IMetricsFactory;
 import com.codesquale.metrics.MetricsFactoryType;
 import com.codesquale.metrics.MetricsFactoryProvider;
+import com.codesquale.metrics.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
 	
@@ -50,7 +51,9 @@ public class MetricsTask extends Task {
                      myFactory.CalculateCountersFromSourceFile(foundLocation, outputDir+found.getName());
                 //}
              }
-         }	
+         }
+         
+         ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project_results.xml");
     }
     protected void validate() {
         if (filesets.size()<1) throw new BuildException("fileset not set");
