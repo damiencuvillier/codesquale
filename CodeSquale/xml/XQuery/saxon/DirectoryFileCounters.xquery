@@ -23,9 +23,9 @@ return
 	<directoryResult name="{//directory/@name}" absolutePath="{//directory/@absolutePath}">
 		<counters>
 			<classes>
-			    <all value="{$classCount}" />
-			    <private value="{$privateClassCount}" />
-			    <public value="{$publicClassCount}" />
+			    <all>{$classCount}</all>
+			    <private>{$privateClassCount}</private>
+			    <public>{$publicClassCount}</public>
 			</classes>
 			
 			<methods>
