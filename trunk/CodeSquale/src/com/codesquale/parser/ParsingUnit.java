@@ -25,7 +25,7 @@ import com.codesquale.parser.java.*;
  * These data are necessary to calculte the final metrics.
  * @author dwillier
  */
-class ParsingUnit implements IParsingUnit {
+public class ParsingUnit implements IParsingUnit {
 	// Declaring the Lexer
 	JavaLexer myJavaLexer = null;
 	JavaLexer myLineLexer = null;
@@ -35,7 +35,7 @@ class ParsingUnit implements IParsingUnit {
 	CommonAST abstractTree = null;
 	int TypeCount[] = new int[1]; 
 	
-	public ParsingUnit()
+	protected ParsingUnit()
 	{
 	
 	}
