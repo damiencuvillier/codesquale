@@ -13,13 +13,14 @@ import org.junit.Test;
 
 
 
-import com.codesquale.parser.ParsingUnit;
+import com.codesquale.parser.IParsingUnit;
+import com.codesquale.parser.ParsingUnitFactory;
 
 public class ParsingUnitTest {
 	
 	private static Logger logger = Logger.getLogger(ParsingUnitTest.class);
 	
-	private ParsingUnit myParsingUnit = null;
+	private IParsingUnit myParsingUnit = null;
 	private File myTestFile = null;
 	
 	public static junit.framework.Test suite() {
@@ -30,7 +31,7 @@ public class ParsingUnitTest {
 	@Before public void setUp()
 	{
 	
-		myParsingUnit = new ParsingUnit();
+		myParsingUnit = ParsingUnitFactory.getInstance().createInstance();
 		myTestFile = new File("test\\ClassMoney.java");	
 	}
 	
