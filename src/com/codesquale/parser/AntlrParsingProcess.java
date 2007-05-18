@@ -88,7 +88,7 @@ public class AntlrParsingProcess {
 			String absolutePath = ProjectBrowser.getInstance().getXMLoutputPath() +"\\"+fileName + "xml";
 			
 			// set the XML filname path to the fileElement
-			fileElement.setXmlDescription(absolutePath);
+			fileElement.setXmlDesc(absolutePath);
 			
 			// Debug information about file being parsed
 			logger.debug("Parsing "+fileElement.getName());
@@ -122,12 +122,7 @@ public class AntlrParsingProcess {
 		    	{
 		    		Node child = node.appendChild(doc.createElement("file"));
 		    		((Element)child).setAttribute("value", file.getName());
-		    		((Element)child).setAttribute("href", file.getXmlDescription());
-		    		((Element)child).setAttribute("size",String.valueOf(file.getFileSize()));
-		    		((Element)child).setAttribute("modified",file.getLastModified());
-		    		((Element)child).setAttribute("toli",String.valueOf(file.getTopLinesCount()));
-		    		((Element)child).setAttribute("ploc",String.valueOf(file.getPhysicalLinesCount()));
-		    		((Element)child).setAttribute("blli",String.valueOf(file.getBlankLinesCount()));
+		    		((Element)child).setAttribute("href", file.getXmlDesc());
     		
 		    	}
 		    	processXMLTransform(node, dir.getDirectoriesList());

@@ -63,7 +63,8 @@ public class ParsingUnit implements IParsingUnit {
 			ASTFactory factory = new ASTFactory();
 			abstractTree = (CommonAST)factory.create(0,"ROOT");
 			
-			abstractTree.setFirstChild(myJavaRecognizer.getAST());			
+			abstractTree.setFirstChild(myJavaRecognizer.getAST());
+			
 			
 		} catch (RecognitionException e1) {
 			e1.printStackTrace();
