@@ -48,6 +48,11 @@ Antlr to CodeSquale XML transforming
 					<xsl:text></xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
+					<!--
+					 Get Package name
+					  Erase root dir for package name
+					  Replace \ to .
+					 -->
 				 	<xsl:value-of select="str:replace(str:replace(@href,concat($rootDir,'\'),''),'\','.')" />
 				</xsl:otherwise>
 			</xsl:choose>
@@ -59,9 +64,12 @@ Antlr to CodeSquale XML transforming
 			<xsl:choose>
 				<xsl:when test="$packageName = ''">
 					<!-- Particular case : the first (root) directory -->
+					
+					<!-- Replace %20 by white space (fix bug from ant) -->
 					<xsl:value-of select="concat(@value,'.xml')" />
 				</xsl:when>
 				<xsl:otherwise>
+					<!-- Replace %20 by white space (fix bug from ant) -->
 					<xsl:value-of select="concat($packageName,'.xml')" />
 				</xsl:otherwise>
 			</xsl:choose>
