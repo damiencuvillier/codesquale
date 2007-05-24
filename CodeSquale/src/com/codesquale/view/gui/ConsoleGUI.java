@@ -267,12 +267,19 @@ public class ConsoleGUI extends JFrame {
 					btn_cancel.setEnabled(true);
 					
 					field_console.setText("");
-					process = new com.codesquale.launcher.Process(new File(field_inputPath.getText()),
-							new File(field_outputPath.getText()));
+					File input = new File(field_inputPath.getText());
+					File output = new File(field_outputPath.getText());
 					
-					process.start();
+					field_console.setText(field_inputPath.getText()+"\n"+field_inputPath);
 					
-					btn_ok.setEnabled(false);
+					if(input.exists()&& input.isDirectory())
+					{
+						process = new com.codesquale.launcher.Process(input,output);
+						
+						process.start();
+						
+						btn_ok.setEnabled(false);
+					}
 					
 				}
 			});
