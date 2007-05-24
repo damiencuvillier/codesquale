@@ -85,11 +85,7 @@ public class FileElement extends AbstractElement
 	           
 	      }catch (Exception e) {
 	       System.err.println("Error: " + e);
-	      }
-
-		logger.info("TOLI:" + topLinesCount);
-		logger.info("PLOC:" + physicalLinesCount);
-		logger.info("BLLI:" + blankLinesCount);
+	      }		
 	}
 	
 	/*
