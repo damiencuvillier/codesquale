@@ -20,57 +20,61 @@ let $interfaceCount := count(//directory/fileSet/file/classSet/class/implemented
 let $classes := //directory/fileSet/file/classSet/class
 
 return
-	<directoryResult package="{//directory/@completeName}" absolutePath="{//directory/@absolutePath}">
-		
-		<counters>
-			<classes>
-			    <all>{$classCount}</all>
-			    <private>{$privateClassCount}</private>
-			    <public>{$publicClassCount}</public>
-			</classes>
-			<methods>
-				<all>{$methodCount}</all>
-				<private>{$privateMethodCount}</private>
-			    <public>{$publicMethodCount}</public>
-			</methods>
-			<attributes>
-				<all>{$attributeCount}</all>
-				<private>{$privateAttributeCount}</private>
-				<public>{$publicAttributeCount}</public>
-			</attributes>
-			<interfaces>{$interfaceCount}</interfaces>
-		</counters>
+<directoryResults packageName="{//directory/@completeName}" absolutePath="{//directory/@absolutePath}">
+			<packageCounters>
+				<classes>
+				    <all>{$classCount}</all>
+				    <private>{$privateClassCount}</private>
+				    <public>{$publicClassCount}</public>
+				</classes>
+				<methods>
+					<all>{$methodCount}</all>
+					<private>{$privateMethodCount}</private>
+				    <public>{$publicMethodCount}</public>
+				</methods>
+				<attributes>
+					<all>{$attributeCount}</all>
+					<private>{$privateAttributeCount}</private>
+					<public>{$publicAttributeCount}</public>
+				</attributes>
+				<interfaces>{$interfaceCount}</interfaces>
+			</packageCounters>
+	{
+	if($classCount != 0) 
+		then 		
+			<packageRatios>
+				<averageMethodNumberPerClass>
+					<all>{$methodCount div $classCount}</all>
+					<private>{$privateMethodCount div $classCount}</private>
+					<public>{$publicMethodCount div $classCount}</public>
+				</averageMethodNumberPerClass>
+				<averageAttributeNumberPerClass>
+					<all>{$attributeCount div $classCount}</all>
+					<private>{$privateAttributeCount div $classCount}</private>
+					<public>{$publicAttributeCount div $classCount}</public>
+				</averageAttributeNumberPerClass>
+			</packageRatios>
+		else ()
+	}
 
-		<ratios>
-			<averageMethodNumberPerClass>
-				<all value="{$methodCount div $classCount}" />
-				<private value="{$privateMethodCount div $classCount}" />
-				<public value="{$publicMethodCount div $classCount}" />
-			</averageMethodNumberPerClass>
-			<averageAttributeNumberPerClass>
-				<all value="{$attributeCount div $classCount}" />
-				<private value="{$privateAttributeCount div $classCount}" />
-				<public value="{$publicAttributeCount div $classCount}" />
-			</averageAttributeNumberPerClass>
-		</ratios>
-		
-		<classCounter>
-		{
-			for $x in $classes
-				return
-					<class name="{$x/@name}">
-						<methods>
-							<all value="{count($x/methodSet/method)}" />
-							<public value="{count($x/methodSet/method[@modifier="private"])}" />
-							<private value="{count($x/methodSet/method[@modifier="public"])}" />
-						</methods>
-						<attributes>
-							<all value="{count($x/attributeSet/attribute)}" />
-							<private value="{count($x/attributeSet/attribute[@modifier="private"])}" />
-							<public value="{count($x/attributeSet/attribute[@modifier="public"])}" />
-						</attributes>
-						<interfaceCount value="{count($x/implementedInterfaceSet/interface)}" />
-					</class>
-		}
-		</classCounter>
-	</directoryResult>
+	<classesResultCounters>
+	{
+		for $x in $classes
+			return
+				<classResultCounters className="{$x/@name}">
+					<methodCount>
+						<all>{count($x/methodSet/method)}</all>
+						<public>{count($x/methodSet/method[@modifier="private"])}</public>
+						<private>{count($x/methodSet/method[@modifier="public"])}</private>
+					</methodCount>
+					<attributeCount>
+						<all>{count($x/attributeSet/attribute)}</all>
+						<private>{count($x/attributeSet/attribute[@modifier="private"])}</private>
+						<public>{count($x/attributeSet/attribute[@modifier="public"])}</public>
+					</attributeCount>
+					<interfaceCount>{count($x/implementedInterfaceSet/interface)}</interfaceCount>
+				</classResultCounters>
+	}
+	</classesResultCounters>
+	
+</directoryResults>
