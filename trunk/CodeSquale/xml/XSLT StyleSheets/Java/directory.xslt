@@ -74,13 +74,14 @@ Antlr to CodeSquale XML transforming
 				<xsl:attribute name="xsi:noNamespaceSchemaLocation">
 					<xsl:text>DirectoryFile.xsd</xsl:text>
 				</xsl:attribute>
-				<!-- Absolute Path -->
-				<xsl:attribute name="absolutePath">
-					<xsl:value-of select="@href" />
-				</xsl:attribute>
+				
 				<!--  Directory name -->
 				<xsl:attribute name="name">
 					 <xsl:value-of select="@value" />
+				</xsl:attribute>
+				<!-- Absolute Path -->
+				<xsl:attribute name="absolutePath">
+					<xsl:value-of select="@href" />
 				</xsl:attribute>
 				<!--  Complete Name : equals to package Name -->
 				<xsl:attribute name="completeName">
@@ -104,15 +105,16 @@ Antlr to CodeSquale XML transforming
 					 			</xsl:choose>
 					 			
 					 		</xsl:variable>
+					 		<xsl:attribute name="descriptionFile">
+					 			<xsl:value-of select="concat($completeName,'.xml')" />
+					 		</xsl:attribute>
 					 		<xsl:attribute name="name">
 					 			<xsl:value-of select="@value" />
 					 		</xsl:attribute>
 					 		<xsl:attribute name="completeName">
 					 			<xsl:value-of select="$completeName" />
 					 		</xsl:attribute>
-					 		<xsl:attribute name="descriptionFile">
-					 			<xsl:value-of select="concat($completeName,'.xml')" />
-					 		</xsl:attribute>
+					 		
 					 		<xsl:attribute name="absolutePath">
 								<xsl:value-of select="@href" />
 							</xsl:attribute>
