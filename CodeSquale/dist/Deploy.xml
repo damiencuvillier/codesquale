@@ -31,9 +31,6 @@
 				<include name="*.jar" />
 				
 			</fileset>
-			<fileset dir="libs/antAdditionnalLibs">
-				<include name="*.jar" />
-			</fileset>
 		</copy>
 		<copy todir="${tmpDir}/lib">
 			<fileset dir="jars">
