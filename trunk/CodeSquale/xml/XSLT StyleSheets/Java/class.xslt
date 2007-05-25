@@ -38,6 +38,7 @@ Antlr to CodeSquale XML transforming
 			<xsl:attribute name="modifier">
 				<xsl:value-of select="./*[@type=5]/*/@text" />
 			</xsl:attribute>
+
 		</attribute>
 	</xsl:template>
 	<!-- Attributes -->
@@ -54,6 +55,17 @@ Antlr to CodeSquale XML transforming
 			<xsl:attribute name="modifier">
 				<xsl:value-of select="./*[@type=5]/*[@type=68]/@text" />
 			</xsl:attribute>
+						
+			
+			<xsl:attribute name="instructionCount">
+				<!--<xsl:for-each select="./*[@type=7]/*[@type=28]">
+					<xsl:for-each select="descendant-or-self::*[@type=28]">
+							$exprCount=$exprCount+1
+					</xsl:for-each> 
+				</xsl:for-each> -->
+				<xsl:value-of select="count(./*[@type=7]/*[@type=28])" />
+			</xsl:attribute>
+			
 		</method>
 	</xsl:template>
 	<!--  /Methods-->
