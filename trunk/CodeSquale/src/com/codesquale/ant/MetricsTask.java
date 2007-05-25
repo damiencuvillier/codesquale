@@ -26,7 +26,6 @@ public class MetricsTask extends Task {
     
     public MetricsTask()
     {
-    	System.out.println("Entering metricsTask ctor");
     }
     
     public void addFileset(FileSet fileset) {
