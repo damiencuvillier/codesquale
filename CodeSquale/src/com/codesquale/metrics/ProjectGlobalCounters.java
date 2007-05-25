@@ -33,13 +33,14 @@ public class ProjectGlobalCounters
 		        out.write("<?xml version=\"1.0\" ");
 		        out.write("encoding=\"ISO-8859-1\"?>\r\n");  
 		        out.write("<projectResults>\r\n");  
-		        out.write("\t<counter>\r\n");
+		        out.write("\t<projectGlobalMetrics>\r\n");
+		        out.write("\t\t<files>"+ numberOfFiles +"</files>\r\n");
 		        out.write("\t\t<classes>\r\n");
 		        out.write("\t\t<all>"+ numberOfClasses +"</all>\r\n");
 		        out.write("\t\t<public>"+ numberOfPublicClasses +"</public>\r\n");
-		        out.write("\t\t<private>"+ numberOfPrivateClasses +"</private>\r\n");
+		        out.write("\t\t<others>"+ numberOfPrivateClasses +"</others>\r\n");
 		        out.write("\t\t</classes>\r\n");
-		        out.write("\t</counter>\r\n");
+		        out.write("\t</projectGlobalMetrics>\r\n");
 		        out.write("</projectResults>\r\n"); 
 		        
 		        out.flush();  // Don't forget to flush!
@@ -68,6 +69,7 @@ public class ProjectGlobalCounters
 	
 	private int numberOfInterfaces=0;
 	
+	private int numberOfFiles=0;
 	
 	public void incrementNumberOfClasses(int num) { this.numberOfClasses+=num; }
 	public void incrementNumberOfPublicClasses(int num) { this.numberOfPublicClasses+=num; }
@@ -82,6 +84,7 @@ public class ProjectGlobalCounters
 	public void incrementNumberOfPrivateAttributes(int num) { this.numberOfPrivateAttributes+=num; }
 	
 	public void incrementNumberOfInterfaces(int num) { this.numberOfInterfaces+=num; }
-
+	
+	public void incrementNumberOfFiles(int num) {this.numberOfFiles+=num;}
 
 }
