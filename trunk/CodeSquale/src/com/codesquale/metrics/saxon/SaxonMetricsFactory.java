@@ -8,6 +8,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
@@ -54,12 +55,22 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		// result
 		ExecuteSingleFileCountingQuery(fullPathResultFile);
 
-		// Setting to SaxonProcessor the result file just being generated
+		// Setting to SaxonProcessor the source file as the result file just
+		// being generated in order catch the package metrics
 		SaxonProcessor.getInstance().setXMLSourceDocument(fullPathResultFile);
-		// Retrieving the package counters calculated from our result file
-		int numberOfClasses = GetNumberOfClasses();
-		int numberOfPrivateClasses = GetNumberOfPrivateClasses();
-		int numberOfPublicClasses = GetNumberOfPublicClasses();
+
+		int numberOfClasses = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance()
+								.getNumberOfClassesQueryObject());
+		int numberOfPrivateClasses = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance()
+								.getNumberOfPrivateClassesQueryObject());
+		int numberOfPublicClasses = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance()
+								.getNumberOfPublicClassesQueryObject());
 
 		// Incrementing the global project counters
 		if (numberOfClasses != -1)
@@ -77,7 +88,8 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	}
 
 	/**
-	 * The method executes the counting xquery on a Tansformed XSLT results file.
+	 * The method executes the counting xquery on a Tansformed XSLT results
+	 * file.
 	 * 
 	 * @param outFileFullPath
 	 *            Represents the full path of the counters file to be created.
@@ -94,78 +106,6 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
 		}
-	}
-
-	/**
-	 * This method executes a simple xquery request to obtain number of private classes.
-	 * @return Nnumber of private classes got by the request
-	 */
-	private int GetNumberOfClasses() {
-		try {
-			SequenceIterator classesIterator = SaxonQueryProvider.getInstance()
-					.getNumberOfClassesQueryObject().iterator(
-							SaxonProcessor.getInstance()
-									.getDynamicQueryContext());
-
-			while (true && classesIterator != null) {
-				NodeInfo classesValue = (NodeInfo) classesIterator.next();
-				if (classesValue == null)
-					break;
-				return Integer.parseInt(classesValue.getStringValue());
-			}
-
-		} catch (XPathException e) {
-			logger.fatal(e.getMessage());
-		}
-		return -1;
-	}
-
-	/**
-	 * This method executes a simple xquery request to obtain total number of classes.
-	 * @return Total number of classes got by the request
-	 */
-	private int GetNumberOfPrivateClasses() {
-		try {
-			SequenceIterator classesIterator = SaxonQueryProvider.getInstance()
-					.getNumberOfPrivateClassesQueryObject().iterator(
-							SaxonProcessor.getInstance()
-									.getDynamicQueryContext());
-
-			while (true && classesIterator != null) {
-				NodeInfo classesValue = (NodeInfo) classesIterator.next();
-				if (classesValue == null)
-					break;
-				return Integer.parseInt(classesValue.getStringValue());
-			}
-
-		} catch (XPathException e) {
-			logger.fatal(e.getMessage());
-		}
-		return -1;
-	}
-
-	/**
-	 * This method executes a simple xquery request to obtain number of public classes.
-	 * @return Total number of public classes got by the request
-	 */
-	private int GetNumberOfPublicClasses() {
-		try {
-			SequenceIterator classesIterator = SaxonQueryProvider.getInstance()
-					.getNumberOfPublicClassesQueryObject().iterator(
-							SaxonProcessor.getInstance()
-									.getDynamicQueryContext());
-
-			while (true && classesIterator != null) {
-				NodeInfo classesValue = (NodeInfo) classesIterator.next();
-				if (classesValue == null)
-					break;
-				return Integer.parseInt(classesValue.getStringValue());
-			}
-
-		} catch (XPathException e) {
-			logger.fatal(e.getMessage());
-		}
-		return -1;
 	}
 
 }
