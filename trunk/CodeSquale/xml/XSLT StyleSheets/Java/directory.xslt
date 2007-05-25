@@ -135,6 +135,21 @@ Antlr to CodeSquale XML transforming
 							<xsl:attribute name="name">
 								<xsl:value-of select="@value" />
 							</xsl:attribute>
+							<xsl:attribute name="lastmodified">
+								<xsl:value-of select="@modified" />
+							</xsl:attribute>
+							<xsl:attribute name="filesize">
+								<xsl:value-of select="@size" />
+							</xsl:attribute>
+							<xsl:attribute name="toli">
+								<xsl:value-of select="@toli" />
+							</xsl:attribute>
+							<xsl:attribute name="ploc">
+								<xsl:value-of select="@ploc" />
+							</xsl:attribute>
+							<xsl:attribute name="blli">
+								<xsl:value-of select="@blli" />
+							</xsl:attribute>
 							<xsl:variable name="documentName" select="@href" />
 							<xsl:apply-templates select="document($documentName)/*" />
 						</file>
