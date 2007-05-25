@@ -5,8 +5,11 @@ import java.io.File;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.Configuration;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.query.DynamicQueryContext;
 import net.sf.saxon.query.StaticQueryContext;
+import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
@@ -60,6 +63,33 @@ public class SaxonProcessor {
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Retrieve the integer value from a request that returns a single XML element ex:<element>myValue</element>
+	 * 
+	 * @param scalarReturnExpression The compiled XQuery expression that returns single XML attribute
+	 * @return the integer value returned by the request
+	 */
+	public int ExecuteIntegerScaler(XQueryExpression scalarReturnExpression) {
+		try {
+			SequenceIterator classesIterator = scalarReturnExpression
+					.iterator(SaxonProcessor.getInstance()
+							.getDynamicQueryContext());
+
+			while (true && classesIterator != null) {
+				NodeInfo classesValue = (NodeInfo) classesIterator.next();
+				if (classesValue == null)
+					break;
+				return Integer.parseInt(classesValue.getStringValue());
+			}
+
+		} catch (XPathException e) {
+			logger.fatal(e.getMessage());
+		}
+		return -1;
+
 	}
 
 	/**

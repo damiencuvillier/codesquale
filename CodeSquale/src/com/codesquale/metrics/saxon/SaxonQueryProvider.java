@@ -21,15 +21,16 @@ public class SaxonQueryProvider {
 	private static Logger logger = Logger.getLogger(SaxonProcessor.class);
 
 	private final String SINGLE_FILE_COUNTING_QUERY_PATH = "xml\\XQuery\\saxon\\DirectoryFileCounters.xquery";
+	
+	private String numberOfClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/all";
+	private String numberOfOthersClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/others";
+	private String numberOfPublicClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/public";
 
 	private XQueryExpression singleFileCountingQuery = null;
-
 	private XQueryExpression numberOfClasses = null;
-
 	private XQueryExpression numberOfPrivateClasses = null;
-
 	private XQueryExpression numberOfPublicClasses = null;
-
+	
 	/**
 	 *  Private instance of the class itselft needed by the singleton mechanism.
 	 */
@@ -61,11 +62,11 @@ public class SaxonQueryProvider {
 		try {
 			singleFileCountingQuery = context
 					.compileQuery(getSingleFileCountingQuery());
-			numberOfClasses = context.compileQuery(getNumberOfClassesQuery());
+			numberOfClasses = context.compileQuery(numberOfClassesQuery);
 			numberOfPrivateClasses = context
-					.compileQuery(getNumberOfPrivateClassesQuery());
+					.compileQuery(numberOfOthersClassesQuery);
 			numberOfPublicClasses = context
-					.compileQuery(getNumberOfPublicClassesQuery());
+					.compileQuery(numberOfPublicClassesQuery);
 		} catch (XPathException ex) {
 			logger.fatal(ex.getMessage());
 		}
@@ -91,9 +92,6 @@ public class SaxonQueryProvider {
 		return singleFileCountingQuery;
 	}
 
-	/*
-	 * Query litterals
-	 */
 
 	private String getSingleFileCountingQuery() {
 		try {
@@ -103,18 +101,6 @@ public class SaxonQueryProvider {
 		}
 
 		return null;
-	}
-
-	private String getNumberOfClassesQuery() {
-		return "//directoryResult/counters/classes/all";
-	}
-
-	private String getNumberOfPrivateClassesQuery() {
-		return "//directoryResult/counters/classes/private";
-	}
-
-	private String getNumberOfPublicClassesQuery() {
-		return "//directoryResult/counters/classes/public";
 	}
 
 }
