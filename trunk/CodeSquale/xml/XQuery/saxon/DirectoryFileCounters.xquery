@@ -1,62 +1,77 @@
 xquery version "1.0";
 
-(: counting classes :)
-let $classCount := count(//directory/fileSet/file/classSet/class)
-let $otherClassCount := count(//directory/fileSet/file/classSet/class[@modifier!="public"])
-let $publicClassCount := count(//directory/fileSet/file/classSet/class[@modifier="public"])
+(: counting number of classes in package :)
+let $packageClassCount := count(//directory/fileSet/file/classSet/class)
+let $packageOtherClassCount := count(//directory/fileSet/file/classSet/class[@modifier!="public"])
+let $packagePublicClassCount := count(//directory/fileSet/file/classSet/class[@modifier="public"])
 
-(: counting method :)
-let $methodCount := count(//directory/fileSet/file/classSet/class/methodSet/method)
-let $otherMethodCount := count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier!="public"])
-let $publicMethodCount := count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier="public"])
+(: counting number of method in package :)
+let $packageMethodCount := count(//directory/fileSet/file/classSet/class/methodSet/method)
+let $packageOtherMethodCount := count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier!="public"])
+let $packagePublicMethodCount := count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier="public"])
 
+(: counting number of attributes in package :)
+let $packageAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute)
+let $packageOtherAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier!="public"])
+let $packagePublicAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier="public"])
 
-let $attributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute)
-let $otherAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier!="public"])
-let $publicAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier="public"])
+(: counting number of interfaces in package :)
+let $packageInterfaceCount := count(//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
 
-(: others counters :)
-let $interfaceCount := count(//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
+(: counting number of files in package :)
+let $packageFileCount := count(//directory/fileSet/file)
+
+(: counting package lines of code :)
+let $packageToli := sum(data(//directory/fileSet/file/@toli))
+let $packagePloc := sum(data(//directory/fileSet/file/@ploc))
+let $packageBlli := sum(data(//directory/fileSet/file/@blli))
+
 (: iterators :)
 let $files := //directory/fileSet/file
-let $classes := //directory/fileSet/file/classSet/class
+
 
 return
 <directoryResults packageName="{//directory/@completeName}" absolutePath="{//directory/@absolutePath}">
 
 <packageAnalysis>
 	<packageGlobalMetrics>
+		<files>{$packageFileCount}</files>
+		<linesOfCode>
+			<toli>{$packageToli}</toli>
+			<ploc>{$packagePloc}</ploc>
+			<blli>{$packageBlli}</blli>
+		</linesOfCode>
 		<classes>
-			<all>{$classCount}</all>
-			<public>{$publicClassCount}</public>
-			<others>{$otherClassCount}</others>
+			<all>{$packageClassCount}</all>
+			<public>{$packagePublicClassCount}</public>
+			<others>{$packageOtherClassCount}</others>
 		</classes>
 		<methods>
-			<all>{$methodCount}</all>
-			<public>{$publicMethodCount}</public>
-			<others>{$otherMethodCount}</others>
+			<all>{$packageMethodCount}</all>
+			<public>{$packagePublicMethodCount}</public>
+			<others>{$packageOtherMethodCount}</others>
 		</methods>
 		<attributes>
-			<all>{$attributeCount}</all>
-			<public>{$publicAttributeCount}</public>
-			<others>{$otherAttributeCount}</others>
+			<all>{$packageAttributeCount}</all>
+			<public>{$packagePublicAttributeCount}</public>
+			<others>{$packageOtherAttributeCount}</others>
 		</attributes>
-		<interfaces>{$interfaceCount}</interfaces>
+		<implementedInterfaces>{$packageInterfaceCount}</implementedInterfaces>
 	</packageGlobalMetrics>
 	
 	{
-	if($classCount != 0) 
+	if($packageClassCount != 0) 
 		then 		
 			<packageRatios>
 				<averageMethodNumberPerClass>
-					<all>{$methodCount div $classCount}</all>
-					<public>{$publicMethodCount div $classCount}</public>
-					<others>{$otherMethodCount div $classCount}</others>
+					<all>{$packageMethodCount div $packageClassCount}</all>
+					<public>{$packagePublicMethodCount div $packageClassCount}</public>
+					<others>{$packageOtherMethodCount div $packageClassCount}</others>
 				</averageMethodNumberPerClass>
 				<averageAttributeNumberPerClass>
-					<all>{$attributeCount div $classCount}</all>
-					<public>{$publicAttributeCount div $classCount}</public>
-					<others>{$otherAttributeCount div $classCount}</others>
+					<all>{$packageAttributeCount div $packageClassCount}</all>
+					<public>{$packagePublicAttributeCount div $packageClassCount}</public>
+					<others>{$packageOtherAttributeCount div $packageClassCount}</others>
 				</averageAttributeNumberPerClass>
 			</packageRatios>
 		else ()
@@ -82,20 +97,20 @@ return
 					</attributes>
 					<classSet>
 					{
-						for $x in //directory/fileSet/file[@name=data($file/@name)]/classSet/class
+						for $class in //directory/fileSet/file[@name=data($file/@name)]/classSet/class
 							return
-								<class name="{$x/@name}">
+								<class name="{$class/@name}">
 									<methodCount>
-										<all>{count($x/methodSet/method)}</all>
-										<public>{count($x/methodSet/method[@modifier="public"])}</public>
-										<others>{count($x/methodSet/method[@modifier!="public"])}</others>
+										<all>{count($class/methodSet/method)}</all>
+										<public>{count($class/methodSet/method[@modifier="public"])}</public>
+										<others>{count($class/methodSet/method[@modifier!="public"])}</others>
 									</methodCount>
 									<attributeCount>
-										<all>{count($x/attributeSet/attribute)}</all>
-										<public>{count($x/attributeSet/attribute[@modifier="public"])}</public>
-										<others>{count($x/attributeSet/attribute[@modifier!="public"])}</others>
+										<all>{count($class/attributeSet/attribute)}</all>
+										<public>{count($class/attributeSet/attribute[@modifier="public"])}</public>
+										<others>{count($class/attributeSet/attribute[@modifier!="public"])}</others>
 									</attributeCount>
-									<implementedInterfaceCount>{count($x/implementedInterfaceSet/interface)}</implementedInterfaceCount>
+									<implementedInterfaceCount>{count($class/implementedInterfaceSet/interface)}</implementedInterfaceCount>
 								</class>
 
 					}
