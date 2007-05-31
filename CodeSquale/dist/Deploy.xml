@@ -33,11 +33,6 @@
 				
 			</fileset>
 		</copy>
-		<copy todir="${tmpDir}/libs">
-			<fileset dir="jars">
-				<include name="*.jar" />
-			</fileset>
-		</copy>
 		<copy todir="${tmpDir}">
 			<fileset dir="src">
 				<include name="*.xml" />
@@ -106,18 +101,6 @@
  	
  	
  	
-	<!--<target name="DeployJarInAnt" depends="buildJar">
-		<echo message="Generate Jars Files and deploy them in Ant Home" />
-		<property name="eclipse" value="$eclipse.home" />
-		<copy todir="${eclipse}/plugins/org.apache.ant_1.6.5/lib/" overwrite="true">
-			<fileset dir="jars">
-				<include name="CodeSquale-Ant.jar"/>
-			</fileset>
-			<fileset dir="libs">
-				<include name="**/*.jar"/>
-			</fileset>
-		</copy>
-	</target>-->
 </project>
 
 
