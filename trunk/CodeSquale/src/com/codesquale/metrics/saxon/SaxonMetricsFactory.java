@@ -6,9 +6,6 @@ import java.util.Properties;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
@@ -71,7 +68,13 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 				.ExecuteIntegerScaler(
 						SaxonQueryProvider.getInstance()
 								.getNumberOfPublicClassesQueryObject());
+		int numberOfFiles = SaxonProcessor.getInstance()
+		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance()
+						.getNumberOfFilesObject());
+		
 
+		// TODO Rajouter logging si les compteurs sont == -1
 		// Incrementing the global project counters
 		if (numberOfClasses != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfClasses(
@@ -82,7 +85,10 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		if (numberOfPublicClasses != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfPublicClasses(
 					numberOfPublicClasses);
-
+		
+		if(numberOfFiles!=-1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfFiles(numberOfFiles);
+			
 		logger.debug("Xquery counting process finished " + fullPathResultFile
 				+ " generated ...");
 	}
