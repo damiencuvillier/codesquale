@@ -2,7 +2,8 @@ package com.codesquale.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Utilities {
 	

@@ -1,5 +1,5 @@
 package com.codesquale.metrics.exist;
-import com.codesquale.metrics.*;
+import com.codesquale.metrics.IMetricsFactory;
 
 public class ExistMetricsFactory implements IMetricsFactory 
 {
