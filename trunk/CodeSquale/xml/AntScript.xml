@@ -6,8 +6,8 @@
 -->
 <project name="CodeSquale Scripts" 
 	default="CodeSqualeMetricsProcess"
-	basedir=".." >
-	
+	basedir="." >
+
 	<description>
 		Tests Scripts
 		
@@ -16,34 +16,35 @@
 	
 	<!-- values are setted by programmation 
 		Values here are only used for test use -->
-	<property name="OutputDir" value="d:\tmp\out tpm\" />
+	<property name="OutputDir" value="d:\tmp\out\" />
 	<property name="SourceDir" value="d:\tmp\src\" />
 	
-
 	<!-- Subdirs of outputdir -->
 	<property name="AntLRXMLdir" value="Data\01.Antlr\" />
 	<property name="CodeSqualeXMLdir" value="Data\02.ProjectData\" />
 	<property name="MetricsDir" value="Data\03.Metrics\" />
 	<property name="ReportDir" value="Report\" />
 	
-	<property name="XSDdir" value="xml/XSD Schemas/" />
-	<property name="XSLTdir" value="xml/XSLT StyleSheets/Java/" />
+	<property name="XSDdir" value="XSD Schemas/" />
+	<property name="XSLTdir" value="XSLT StyleSheets/Java/" />
 	 
 	<property name="antlrFile" value="" />
 	<property name="tmpFile" value="tmp" />
 
-	
 	<taskdef name="CodeSqualeAntlrProcess" 
-		classname="com.codesquale.ant.AntLRTask"/>
+		classname="com.codesquale.ant.AntLRTask" 
+		/>
 	<taskdef name="CodeSqualeMetricsProcess" 
-		classname="com.codesquale.ant.MetricsTask"/>
+		classname="com.codesquale.ant.MetricsTask"
+		/>
 	
-	
+
 	 
-	<target name="CodeSqualeInit">
+	<target name="CodeSqualeInit" >
 		<echo message="********************************" />
 		<echo message="******** CodeSquale ***********" />
 		<echo message="********************************" />		
+		
 		<!-- Environment initialization -->
 		<echo message="Create Results dir" />
 		
@@ -65,7 +66,8 @@
 	</target>
 					
 	
-	<target name="CodeSqualeAntlrProcess" depends="CodeSqualeInit">
+	<target name="CodeSqualeAntlrProcess" 
+			depends="CodeSqualeInit">
 		<!-- Browse files and build a project file & antlr xml content -->
 		<echo message="Browsing source code" />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
@@ -78,13 +80,12 @@
 		<!-- 
 			Transforming antlr files to codesquale format file
 		-->
-		
 		<echo message="Parse xml files from antlr Format to CodeSquale Format" />
 		
 		<!-- XSD Schemas files copy -->
 		<echo level="info" message="XSD SCHEMA COPYING..." />
 		<copy todir="${OutputDir}/${CodeSqualeXMLdir}">
-			<fileset dir="${XSDdir}" > 
+			<fileset dir="${basedir}/${XSDdir}" > 
 				<include name="**/*.xsd"/>
 			</fileset>
 		</copy>
@@ -97,12 +98,12 @@
 			description="Project File parsing"
 			style="${XSLTdir}project.xslt"
 			>
-			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
+			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />	
 		</xslt>
 		<!-- Directory Parsing -->
 		<echo message="Directories Exploring ..." />
 		
-		<xslt basedir="." processor="trax" 
+		<xslt basedir="." processor="trax"
 			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
 			out="${OutputDir}/${CodeSqualeXMLdir}/${tmpFile}"
 			extension="xml" 
@@ -123,7 +124,7 @@
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXSLTProcess">
 		<echo message="Metrics are being calculating" />
 		<!-- FIXME Why metricsProcess does not work in eclipse ? -->
-		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}">
+		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}" queryFile="XQuery/saxon/DirectoryFileCounters.xquery">
 			<fileset dir="${OutputDir}\${CodeSqualeXMLdir}">
 				<include name="*.xml"/>
 				<exclude name="project.xml" />

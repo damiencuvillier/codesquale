@@ -1,0 +1,30 @@
+<!-- Ant Configuration -->
+
+<!--
+	Ressources : 
+	http://ant.apache.org/manual/CoreTasks/style.html
+-->
+<project name="CodeSquale Launcher" 
+	default="launch"
+	basedir="." >
+	<target name="launch">
+		<java classname="org.apache.tools.ant.launch.Launcher"
+	        fork="true"
+	        failonerror="true"
+	        dir="."
+	        timeout="4000000"
+	        taskname="startAnt"
+		>
+			<classpath>
+		        <pathelement location="${ant.home}/lib/ant-launcher.jar"/>
+		    </classpath>
+		    <arg value="-buildfile"/>
+		    <arg file="AntScript.xml"/>
+			<!--<arg value="-logger" />
+			<arg value="org.apache.tools.ant.listener.Log4jListener" />-->
+			<arg value="-lib"/>
+			<arg value="../libs"/>
+		    <arg value="CodeSqualeMetricsProcess"/>
+		</java>
+	</target>
+</project>
