@@ -1,8 +1,14 @@
 <!-- Ant Configuration -->
 
 <!--
+
+Damien Cuvillier
+Mai 2007
+Ajilon IT 
+Agence Nord
+
 	Ressources : 
-	http://ant.apache.org/manual/CoreTasks/style.html
+	http://ant.apache.org/manual/running.html#viajava
 -->
 <project name="CodeSquale Launcher" 
 	default="launch"
@@ -20,6 +26,7 @@
 		    </classpath>
 		    <arg value="-buildfile"/>
 		    <arg file="AntScript.xml"/>
+		<!-- TODO logger : LOG4J -->
 			<!--<arg value="-logger" />
 			<arg value="org.apache.tools.ant.listener.Log4jListener" />-->
 			<arg value="-lib"/>
