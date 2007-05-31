@@ -4,7 +4,7 @@ import com.codesquale.metrics.*;
 public class ExistMetricsFactory implements IMetricsFactory 
 {
 
-	public void CalculateCountersFromSourceFile(String in, String out) {
+	public void CalculateCountersFromSourceFile(String in, String out, String queryFile) {
 		
 	}
 }
