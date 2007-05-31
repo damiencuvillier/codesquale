@@ -73,6 +73,20 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfFilesObject());
 		
+		int numberOfToli = SaxonProcessor.getInstance()
+		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getNumberOfToliQueryObject());
+		
+		int numberOfPloc = SaxonProcessor.getInstance()
+		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getNumberOfPlocQueryObject());
+		
+		int numberOfBlli = SaxonProcessor.getInstance()
+		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getNumberOfBlliQueryObject());
 
 		// TODO Rajouter logging si les compteurs sont == -1
 		// Incrementing the global project counters
@@ -88,6 +102,16 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		
 		if(numberOfFiles!=-1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfFiles(numberOfFiles);
+		
+		if(numberOfToli!=-1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfToli);
+		
+		if(numberOfPloc!=-1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfPloc);
+		
+		if(numberOfBlli!=-1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfBlli);
+			
 			
 		logger.debug("Xquery counting process finished " + fullPathResultFile
 				+ " generated ...");
