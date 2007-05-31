@@ -43,14 +43,14 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	 */
 	@SuppressWarnings("deprecation")
 	public void CalculateCountersFromSourceFile(String fullPathSourceFile,
-			String fullPathResultFile) {
+			String fullPathResultFile, String queryFile) {
 		logger.debug("Processing Xquery counting from the file "
 				+ fullPathSourceFile + " ...");
 		// Setting to SaxonProcessor the file to analyze
 		SaxonProcessor.getInstance().setXMLSourceDocument(fullPathSourceFile);
 		// Call the private method that executes the query and serializes the
 		// result
-		ExecuteSingleFileCountingQuery(fullPathResultFile);
+		ExecuteSingleFileCountingQuery(fullPathResultFile, queryFile);
 
 		// Setting to SaxonProcessor the source file as the result file just
 		// being generated in order catch the package metrics
@@ -58,15 +58,15 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 
 		int numberOfClasses = SaxonProcessor.getInstance()
 				.ExecuteIntegerScaler(
-						SaxonQueryProvider.getInstance()
+						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfClassesQueryObject());
 		int numberOfPrivateClasses = SaxonProcessor.getInstance()
 				.ExecuteIntegerScaler(
-						SaxonQueryProvider.getInstance()
+						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfPrivateClassesQueryObject());
 		int numberOfPublicClasses = SaxonProcessor.getInstance()
 				.ExecuteIntegerScaler(
-						SaxonQueryProvider.getInstance()
+						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfPublicClassesQueryObject());
 		int numberOfFiles = SaxonProcessor.getInstance()
 		.ExecuteIntegerScaler(
@@ -100,13 +100,13 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	 * @param outFileFullPath
 	 *            Represents the full path of the counters file to be created.
 	 */
-	public void ExecuteSingleFileCountingQuery(String outFileFullPath) {
+	public void ExecuteSingleFileCountingQuery(String outFileFullPath, String queryFile) {
 		Properties props = new Properties();
 		props.setProperty(OutputKeys.METHOD, "xml");
 		props.setProperty(OutputKeys.INDENT, "yes");
 
 		try {
-			SaxonQueryProvider.getInstance().getSingleFileCountingQueryObject()
+			SaxonQueryProvider.getInstance(queryFile).getSingleFileCountingQueryObject()
 					.run(SaxonProcessor.getInstance().getDynamicQueryContext(),
 							new StreamResult(new File(outFileFullPath)), props);
 		} catch (XPathException e) {

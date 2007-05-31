@@ -27,15 +27,14 @@ public class CodeSqualeMetricsProcessTest {
 			try {
 				AntRunner.getInstance().init("xml\\AntScript.xml");
 				
-				Hashtable hash = new Hashtable();
-				
-				hash.put("SourceDir", "d:\\tmp\\src");
-				hash.put("OutputDir", "d:\\tmp\\out");
-				
-				AntRunner.getInstance().setProperties(hash, false);
+//				Hashtable hash = new Hashtable();
+//				
+//		 		hash.put("SourceDir", "d:\\tmp\\src");
+//				hash.put("OutputDir", "d:\\tmp\\out");
+//				
+//				AntRunner.getInstance().setProperties(hash, false);
 				
 			} catch (Exception e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			}

@@ -82,7 +82,7 @@ public class AntRunner
         try { project.init(); }
         catch (BuildException e)
             { throw new Exception("The default task list could not be loaded."); }
-        project.setBasedir(".");
+        //project.setBasedir(".");
         // Set the base directory. If none is given, "." is used.
 //        if (_baseDir == null) _baseDir=new String(".");
 //        try { project.setBasedir(_baseDir); }

@@ -38,6 +38,6 @@ public class SaxonXqueryTest {
 	{
 		String sampleTestFile = "test\\classpath.xml";
 		String otherSampleTestFile = "xml\\models\\DirectoryFile_Sample.xml";
-		saxonFactory.CalculateCountersFromSourceFile(otherSampleTestFile,"testoutput\\MetricsTest.xml");
+		saxonFactory.CalculateCountersFromSourceFile(otherSampleTestFile,"testoutput\\MetricsTest.xml", "XQuery/saxon/DirectoryFileCounters.xquery");
 	}
 }

@@ -1,6 +1,7 @@
 package com.codesquale.metrics.saxon;
 
 import java.io.IOException;
+
 import net.sf.saxon.query.StaticQueryContext;
 import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.trans.XPathException;
@@ -20,7 +21,6 @@ public class SaxonQueryProvider {
 
 	private static Logger logger = Logger.getLogger(SaxonProcessor.class);
 
-	private final String SINGLE_FILE_COUNTING_QUERY_PATH = "xml\\XQuery\\saxon\\DirectoryFileCounters.xquery";
 
 	private String numberOfClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/all";
 
@@ -50,28 +50,28 @@ public class SaxonQueryProvider {
 	 * 
 	 * @return A unique SaxonQueryProvider reference.
 	 */
-	public static SaxonQueryProvider getInstance() {
+	public static SaxonQueryProvider getInstance(String queryFile) {
 		if (_instance == null)
-			_instance = new SaxonQueryProvider();
+			_instance = new SaxonQueryProvider(queryFile);
 
 		return _instance;
 	}
 
-	private SaxonQueryProvider() {
-		compileQuery();
+	private SaxonQueryProvider(String queryFile) {
+		compileQuery(queryFile);
 	}
 
 	/**
 	 * Compile all the query contained in the SaxonQueryProvider class.
 	 * 
 	 */
-	private void compileQuery() {
+	private void compileQuery(String queryFile) {
 		StaticQueryContext context = SaxonProcessor.getInstance()
 				.getStaticQueryContext();
 
 		try {
 			singleFileCountingQuery = context
-					.compileQuery(getSingleFileCountingQuery());
+					.compileQuery(getSingleFileCountingQuery(queryFile));
 			numberOfClasses = context.compileQuery(numberOfClassesQuery);
 			numberOfPrivateClasses = context
 					.compileQuery(numberOfOthersClassesQuery);
@@ -109,9 +109,9 @@ public class SaxonQueryProvider {
 		return singleFileCountingQuery;
 	}
 
-	private String getSingleFileCountingQuery() {
+	private String getSingleFileCountingQuery(String queryFile) {
 		try {
-			return Utilities.readFileAsString(SINGLE_FILE_COUNTING_QUERY_PATH);
+			return Utilities.readFileAsString(queryFile);
 		} catch (IOException e) {
 			logger.fatal("The XQuery file seems to be unavailable.");
 		}
