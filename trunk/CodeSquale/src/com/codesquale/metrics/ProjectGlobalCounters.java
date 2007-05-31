@@ -35,6 +35,11 @@ public class ProjectGlobalCounters
 		        out.write("<projectResults>\r\n");  
 		        out.write("\t<projectGlobalMetrics>\r\n");
 		        out.write("\t\t<files>"+ numberOfFiles +"</files>\r\n");
+		        out.write("\t\t<linesOfCode>\r\n");
+		        out.write("\t\t\t<toli>"+numberOfToli+"</toli>\r\n");
+		        out.write("\t\t\t<ploc>"+numberOfPloc+"</ploc>\r\n");
+		        out.write("\t\t\t<blli>"+numberOfBlli+"</blli>\r\n");
+		        out.write("\t\t</linesOfCode>\r\n");
 		        out.write("\t\t<classes>\r\n");
 		        out.write("\t\t<all>"+ numberOfClasses +"</all>\r\n");
 		        out.write("\t\t<public>"+ numberOfPublicClasses +"</public>\r\n");
@@ -71,6 +76,10 @@ public class ProjectGlobalCounters
 	
 	private int numberOfFiles=0;
 	
+	private int numberOfToli=0;
+	private int numberOfPloc=0;
+	private int numberOfBlli=0;
+	
 	public void incrementNumberOfClasses(int num) { this.numberOfClasses+=num; }
 	public void incrementNumberOfPublicClasses(int num) { this.numberOfPublicClasses+=num; }
 	public void incrementNumberOfPrivateClasses(int num) { this.numberOfPrivateClasses+=num; }
@@ -86,5 +95,9 @@ public class ProjectGlobalCounters
 	public void incrementNumberOfInterfaces(int num) { this.numberOfInterfaces+=num; }
 	
 	public void incrementNumberOfFiles(int num) {this.numberOfFiles+=num;}
+	
+	public void incrementNumberOfToli(int num) {this.numberOfToli+=num;}
+	public void incrementNumberOfPloc(int num) {this.numberOfPloc+=num;}
+	public void incrementNumberOfBlli(int num) {this.numberOfBlli+=num;}
 
 }
