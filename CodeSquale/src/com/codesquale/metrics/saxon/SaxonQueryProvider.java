@@ -21,7 +21,6 @@ public class SaxonQueryProvider {
 
 	private static Logger logger = Logger.getLogger(SaxonProcessor.class);
 
-
 	private String numberOfClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/all";
 
 	private String numberOfOthersClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/others";
@@ -29,6 +28,12 @@ public class SaxonQueryProvider {
 	private String numberOfPublicClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/public";
 
 	private String numberOfFilesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/files";
+
+	private String numberOfToliQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/toli";
+
+	private String numberOfPlocQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/ploc";
+
+	private String numberOfBlliQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/blli";
 
 	private XQueryExpression singleFileCountingQuery = null;
 
@@ -39,6 +44,12 @@ public class SaxonQueryProvider {
 	private XQueryExpression numberOfPublicClasses = null;
 
 	private XQueryExpression numberOfFile = null;
+
+	private XQueryExpression numberOfToli;
+
+	private XQueryExpression numberOfPloc;
+
+	private XQueryExpression numberOfBlli;
 
 	/**
 	 * Private instance of the class itselft needed by the singleton mechanism.
@@ -78,6 +89,13 @@ public class SaxonQueryProvider {
 			numberOfPublicClasses = context
 					.compileQuery(numberOfPublicClassesQuery);
 			numberOfFile = context.compileQuery(numberOfFilesQuery);
+
+			numberOfToli = context.compileQuery(numberOfToliQuery);
+
+			numberOfPloc = context.compileQuery(numberOfPlocQuery);
+
+			numberOfBlli = context.compileQuery(numberOfBlliQuery);
+
 		} catch (XPathException ex) {
 			logger.fatal(ex.getMessage());
 		}
@@ -87,12 +105,10 @@ public class SaxonQueryProvider {
 	 * XQuery object
 	 */
 
-	
-	public XQueryExpression getNumberOfFilesObject()
-	{
+	public XQueryExpression getNumberOfFilesObject() {
 		return numberOfFile;
 	}
-	
+
 	public XQueryExpression getNumberOfClassesQueryObject() {
 		return numberOfClasses;
 	}
@@ -108,6 +124,22 @@ public class SaxonQueryProvider {
 	public XQueryExpression getSingleFileCountingQueryObject() {
 		return singleFileCountingQuery;
 	}
+	
+	public XQueryExpression getNumberOfToliQueryObject()
+	{
+		return numberOfToli;
+	}
+	
+	public XQueryExpression getNumberOfPlocQueryObject()
+	{
+		return numberOfPloc;
+	}
+	
+	public XQueryExpression getNumberOfBlliQueryObject()
+	{
+		return numberOfBlli;
+	}
+	
 
 	private String getSingleFileCountingQuery(String queryFile) {
 		try {
@@ -118,5 +150,5 @@ public class SaxonQueryProvider {
 
 		return null;
 	}
-
+	
 }
