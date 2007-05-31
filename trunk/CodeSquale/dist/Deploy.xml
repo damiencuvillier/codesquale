@@ -26,14 +26,14 @@
 					<include name="AntScript.xml"/>
 			</fileset>
 		</copy>-->
-		<mkdir dir="${tmpDir}/lib/" />
-		<copy todir="${tmpDir}/lib">
+		<mkdir dir="${tmpDir}/libs/" />
+		<copy todir="${tmpDir}/libs">
 			<fileset dir="libs">
 				<include name="*.jar" />
 				
 			</fileset>
 		</copy>
-		<copy todir="${tmpDir}/lib">
+		<copy todir="${tmpDir}/libs">
 			<fileset dir="jars">
 				<include name="*.jar" />
 			</fileset>
