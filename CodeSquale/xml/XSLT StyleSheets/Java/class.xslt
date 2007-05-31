@@ -46,27 +46,61 @@ Antlr to CodeSquale XML transforming
 	<!--  Methods -->
 	<xsl:template match="antlr.CommonAST[@type=6]/antlr.CommonAST[@type=9]">
 		<method>
+			<!-- method name -->
 			<xsl:attribute name="name">
-				<xsl:value-of select="./*[@type=68]/@text" />
+				<xsl:value-of select="*[@type=68]/@text" />
 			</xsl:attribute>
-			<xsl:attribute name="returnType">
-				<xsl:value-of select="./*[@type=13]/*[@type=68]/@text" />
+			<!-- /method name -->
+			
+			<!-- method return -->
+			<xsl:attribute name="return"> 
+				<xsl:value-of select="./*[@type=13]/*/@text" />
 			</xsl:attribute>
+			<!-- /method return -->
+			
+			<!-- method modifier -->			
 			<xsl:attribute name="modifier">
-				<xsl:value-of select="./*[@type=5]/*[@type=68]/@text" />
+				<xsl:value-of select="./*[@type=5]/*/@text" />
 			</xsl:attribute>
-						
-			
-			<xsl:attribute name="instructionCount">
-				<!--<xsl:for-each select="./*[@type=7]/*[@type=28]">
-					<xsl:for-each select="descendant-or-self::*[@type=28]">
-							$exprCount=$exprCount+1
-					</xsl:for-each> 
-				</xsl:for-each> -->
-				<xsl:value-of select="count(./*[@type=7]/*[@type=28])" />
-			</xsl:attribute>
-			
+			<!-- /method modifier -->
+	
+			<!-- Variables -->
+			<varSet>	
+				<xsl:call-template name="variables" />
+			</varSet>	
+			<!-- /Variables -->
+	
 		</method>
 	</xsl:template>
 	<!--  /Methods-->
+	
+	<xsl:template name="variables" match="antlr.CommonAST[@type=10]">
+	
+		
+		<var>
+
+		
+			<!--  var name -->
+			<xsl:attribute name="name">
+				<xsl:value-of select="./*[@type=68]/@text" />
+			</xsl:attribute>
+			<!-- /var name -->
+			
+			<!-- var type -->
+			<xsl:attribute name="type"> 
+				<xsl:value-of select="./*[@type=13]/*/@text" />
+			</xsl:attribute>
+			<!-- /var type -->
+			
+			<!-- var modifier -->			
+			<xsl:attribute name="modifier">
+				<xsl:value-of select="./*[@type=5]/*/@text" />
+			</xsl:attribute>
+			<!-- /var modifier -->
+		</var>
+		<xsl:apply-templates  /> 	
+	</xsl:template>
+	
+
+	
 </xsl:stylesheet>
