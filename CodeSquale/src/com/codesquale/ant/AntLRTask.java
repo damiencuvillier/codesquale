@@ -6,10 +6,10 @@ import org.apache.log4j.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import com.codesquale.parser.AntlrParsingProcess;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
+import com.codesquale.parser.AntlrParsingProcess;
 
 
 public class AntLRTask extends Task {

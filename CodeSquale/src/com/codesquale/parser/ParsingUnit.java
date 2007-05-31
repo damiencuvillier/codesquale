@@ -15,7 +15,8 @@ import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
 
-import com.codesquale.parser.java.*;
+import com.codesquale.parser.java.JavaLexer;
+import com.codesquale.parser.java.JavaRecognizer;
 
 
 

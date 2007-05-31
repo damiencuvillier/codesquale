@@ -24,7 +24,6 @@ import org.w3c.dom.Node;
 import com.codesquale.file.DirectoryElement;
 import com.codesquale.file.FileElement;
 import com.codesquale.file.ProjectBrowser;
-import com.codesquale.parser.IParsingUnit;
 import com.codesquale.utils.Utilities;
 
 public class AntlrParsingProcess {

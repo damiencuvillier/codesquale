@@ -1,9 +1,6 @@
 package com.tests;
 
 import static org.junit.Assert.assertTrue;
-
-import java.util.Hashtable;
-
 import junit.framework.Assert;
 import junit.framework.JUnit4TestAdapter;
 

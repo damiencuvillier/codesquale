@@ -11,8 +11,8 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
 import com.codesquale.metrics.IMetricsFactory;
-import com.codesquale.metrics.MetricsFactoryType;
 import com.codesquale.metrics.MetricsFactoryProvider;
+import com.codesquale.metrics.MetricsFactoryType;
 import com.codesquale.metrics.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
