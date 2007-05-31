@@ -70,7 +70,7 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 								.getNumberOfPublicClassesQueryObject());
 		int numberOfFiles = SaxonProcessor.getInstance()
 		.ExecuteIntegerScaler(
-				SaxonQueryProvider.getInstance()
+				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfFilesObject());
 		
 
