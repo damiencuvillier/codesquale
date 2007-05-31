@@ -1,10 +1,10 @@
 package com.tests;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Hashtable;
 
 import junit.framework.JUnit4TestAdapter;
-
-import static org.junit.Assert.*;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;

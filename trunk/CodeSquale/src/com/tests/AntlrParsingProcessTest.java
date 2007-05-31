@@ -1,11 +1,9 @@
 package com.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Hashtable;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -19,7 +17,6 @@ import org.junit.Test;
 import com.codesquale.ant.AntRunner;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
-import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.AntlrParsingProcess;
 /**
  * 
@@ -64,43 +61,30 @@ public class AntlrParsingProcessTest {
 				
 				AntRunner.getInstance().init("xml\\AntScript.xml");
 				
-				Hashtable hash = new Hashtable();
+				AntRunner.getInstance().runTarget("CodeSqualeAntlrProcess");
 				
-				hash.put("OutputDir", "testoutput");
-				hash.put("SourceDir", "testfiles");
-				
-				AntRunner.getInstance().setProperties(hash, false);
-				
-				AntRunner.getInstance().runTarget("init");
-				
-				ProjectBrowser.getInstance().init(new File(input),new File(output), new File(output+"\\AntlrProjectOutput.xml"), filter);
+//				ProjectBrowser.getInstance().init(new File(input),new File(output), new File(output+"\\AntlrProjectOutput.xml"), filter);
 
 				AntlrParsingProcess.getInstance().execute();
 				
 				assertTrue(true);
 				
 			} catch (NotDirectoryException e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (FileNotFoundException e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (ParserConfigurationException e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (TransformerException e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (IOException e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			} catch (Exception e) {
-				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 				assertTrue(false);
 			}
