@@ -16,7 +16,7 @@ public class TestLauncher {
 		 */
 		junit.textui.TestRunner.run(AntlrParsingProcessTest.suite());
 		junit.textui.TestRunner.run(CodeSqualeXMLProcessTest.suite());
-		junit.textui.TestRunner.run(CodeSqualeMetricsProcessTest.suite());
+//		junit.textui.TestRunner.run(CodeSqualeMetricsProcessTest.suite());
 
 		
 	}

@@ -1,13 +1,15 @@
 package com.tests;
 
 
-import com.codesquale.metrics.*;
-
 import junit.framework.JUnit4TestAdapter;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.codesquale.metrics.IMetricsFactory;
+import com.codesquale.metrics.MetricsFactoryProvider;
+import com.codesquale.metrics.MetricsFactoryType;
 
 
 

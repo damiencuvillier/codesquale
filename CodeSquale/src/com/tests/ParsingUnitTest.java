@@ -1,6 +1,6 @@
 package com.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,8 +10,6 @@ import junit.framework.JUnit4TestAdapter;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-
-
 
 import com.codesquale.parser.IParsingUnit;
 import com.codesquale.parser.ParsingUnitFactory;
