@@ -1,4 +1,4 @@
- <project name="CodeSquale BuildFile" default="build" basedir="..">
+	 <project name="CodeSquale BuildFile" default="build" basedir="..">
 	<description>
 		Build File
 		
@@ -6,7 +6,7 @@
 	</description>
 	
 	<property name="tmpDir" value="tmp" />
- 	<property name="testDir" value="D:\tmp\" />
+ 	<property name="testDir" value="D:\test\" />
 	
 	<!-- Distributable Zip Building -->
 	<target name="build" depends="buildJar">
@@ -17,14 +17,15 @@
 		<copy todir="${tmpDir}/xml/" >
 			<fileset dir="xml">
 				<include name="X*/**"/>
-				<include name="style.css"/>				
+				<include name="style.css"/>	
+				<include name="AntScript.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmpDir}">
+		<!--<copy todir="${tmpDir}">
 			<fileset dir="xml">
 					<include name="AntScript.xml"/>
 			</fileset>
-		</copy>
+		</copy>-->
 		<mkdir dir="${tmpDir}/lib/" />
 		<copy todir="${tmpDir}/lib">
 			<fileset dir="libs">
@@ -65,12 +66,12 @@
 		<!-- if not exists, creating the jars directory in workspace
 		Warning : you should add this path to svn:ignore
 		-->
-		<mkdir dir="jars"/>
-		<jar destfile="jars/CodeSquale.jar" basedir="bin"
+		<mkdir dir="libs"/>
+		<jar destfile="libs/CodeSquale.jar" basedir="bin"
 			includes="com/codesquale/**"
 			excludes="com/codesquale/view/**"
 			/>
-		<jar destfile="jars/CodeSquale-gui.jar" basedir="bin"
+		<jar destfile="libs/CodeSquale-gui.jar" basedir="bin"
 			includes="com/codesquale/view/**"
 			
 			>
@@ -78,6 +79,12 @@
 				<attribute name="Main-Class" value="com.codesquale.view.gui.Launcher"/>
 			</manifest>
 		</jar>
+		
+		<jar destfile="libs/CodeSquale.jar" basedir="bin"
+			includes="com/codesquale/ant/**"
+		/>
+		
+		<!-- TODO Packager un Jar CodeSquale XSLT -->
 		
 	</target>
  	<!-- Helps for test the application -->
@@ -96,6 +103,21 @@
  		<exec dir="${testDir}" executable="launch.bat" />
  		
  	</target>
+ 	
+ 	
+ 	
+	<!--<target name="DeployJarInAnt" depends="buildJar">
+		<echo message="Generate Jars Files and deploy them in Ant Home" />
+		<property name="eclipse" value="$eclipse.home" />
+		<copy todir="${eclipse}/plugins/org.apache.ant_1.6.5/lib/" overwrite="true">
+			<fileset dir="jars">
+				<include name="CodeSquale-Ant.jar"/>
+			</fileset>
+			<fileset dir="libs">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+	</target>-->
 </project>
 
 
