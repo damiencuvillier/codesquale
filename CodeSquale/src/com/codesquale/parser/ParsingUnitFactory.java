@@ -1,6 +1,5 @@
 package com.codesquale.parser;
 
-import com.codesquale.metrics.MetricsFactoryProvider;
 
 public class ParsingUnitFactory {
 	private static ParsingUnitFactory _instance = null;

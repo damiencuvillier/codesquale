@@ -42,7 +42,7 @@ public class Process extends Thread{
 		try
 		{
 			HashMap myHash = new HashMap();
-			AntRunner.getInstance().init("AntScript.xml");
+			AntRunner.getInstance().init("xml/AntScript.xml");
 			
 			myHash.put("OutputDir", target.getAbsolutePath());
 			myHash.put("SourceDir",source.getAbsolutePath());

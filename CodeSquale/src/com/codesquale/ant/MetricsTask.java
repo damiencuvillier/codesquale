@@ -21,6 +21,7 @@ public class MetricsTask extends Task {
 	
     private String outputDir;
     private Vector filesets = new Vector();
+    private String queryFile;
 
 	private IMetricsFactory myFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(MetricsFactoryType.SAXON_FACTORY);
     
@@ -28,13 +29,16 @@ public class MetricsTask extends Task {
     {
     }
     
-    public void addFileset(FileSet fileset) {
+	public void addFileset(FileSet fileset) {
         filesets.add(fileset);
     }
 
     public void execute() {
     	logger.info("Launch MetricsProcess Ant Task");
-    	 validate();                                                             // 1
+    	// Ant Task Format validator
+    	 validate();         
+    	 
+    	 // Fileset Manager
          String foundLocation = null;
          for(Iterator itFSets = filesets.iterator(); itFSets.hasNext(); ) {      // 2
              FileSet fs = (FileSet)itFSets.next();
@@ -47,7 +51,8 @@ public class MetricsTask extends Task {
                      File base  = ds.getBasedir();                               // 5
                      File found = new File(base, includedFiles[i]);
                      foundLocation = found.getAbsolutePath();
-                     myFactory.CalculateCountersFromSourceFile(foundLocation, outputDir+found.getName());
+                     
+                     myFactory.CalculateCountersFromSourceFile(foundLocation, outputDir+found.getName(), super.getProject().getBaseDir().getAbsolutePath()+"/"+queryFile);
                 //}
              }
          }
@@ -70,6 +75,14 @@ public class MetricsTask extends Task {
 
 	public void setOutputDir(String outputDir) {
 		this.outputDir = outputDir;
+	}
+
+	public String getQueryFile() {
+		return queryFile;
+	}
+
+	public void setQueryFile(String queryFile) {
+		this.queryFile = queryFile;
 	} 
 	
 }
