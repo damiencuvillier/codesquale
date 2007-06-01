@@ -60,59 +60,96 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 				.ExecuteIntegerScaler(
 						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfClassesQueryObject());
-		int numberOfPrivateClasses = SaxonProcessor.getInstance()
+		int numberOfOtherClasses = SaxonProcessor.getInstance()
 				.ExecuteIntegerScaler(
 						SaxonQueryProvider.getInstance(queryFile)
-								.getNumberOfPrivateClassesQueryObject());
+								.getNumberOfOtherClassesQueryObject());
 		int numberOfPublicClasses = SaxonProcessor.getInstance()
 				.ExecuteIntegerScaler(
 						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfPublicClassesQueryObject());
-		int numberOfFiles = SaxonProcessor.getInstance()
+		
+		
+		int numberOfMethods = SaxonProcessor.getInstance()
 		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getNumberOfMethodsQueryObject());
+		int numberOfOtherMethods = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance(queryFile)
+								.getNumberOfOtherMethodsQueryObject());
+		int numberOfPublicMethods = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance(queryFile)
+								.getNumberOfPublicMethodsQueryObject());
+		
+		
+		
+		int numberOfFiles = SaxonProcessor.getInstance().ExecuteIntegerScaler(
 				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfFilesObject());
-		
-		int numberOfToli = SaxonProcessor.getInstance()
-		.ExecuteIntegerScaler(
+
+		int numberOfToli = SaxonProcessor.getInstance().ExecuteIntegerScaler(
 				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfToliQueryObject());
-		
-		int numberOfPloc = SaxonProcessor.getInstance()
-		.ExecuteIntegerScaler(
+
+		int numberOfPloc = SaxonProcessor.getInstance().ExecuteIntegerScaler(
 				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfPlocQueryObject());
-		
-		int numberOfBlli = SaxonProcessor.getInstance()
-		.ExecuteIntegerScaler(
+
+		int numberOfBlli = SaxonProcessor.getInstance().ExecuteIntegerScaler(
 				SaxonQueryProvider.getInstance(queryFile)
 						.getNumberOfBlliQueryObject());
+
+		double packageSize = SaxonProcessor.getInstance().ExecuteDecimalScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getPackageSizeQueryObject());
 
 		// TODO Rajouter logging si les compteurs sont == -1
 		// Incrementing the global project counters
 		if (numberOfClasses != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfClasses(
 					numberOfClasses);
-		if (numberOfPrivateClasses != -1)
+		
+		if (numberOfOtherClasses != -1)
 			ProjectGlobalCounters.getInstance()
-					.incrementNumberOfPrivateClasses(numberOfPrivateClasses);
+					.incrementNumberOfOtherClasses(numberOfOtherClasses);
+		
 		if (numberOfPublicClasses != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfPublicClasses(
 					numberOfPublicClasses);
 		
-		if(numberOfFiles!=-1)
-			ProjectGlobalCounters.getInstance().incrementNumberOfFiles(numberOfFiles);
+		if (numberOfMethods != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfMethods(
+					numberOfMethods);
 		
-		if(numberOfToli!=-1)
-			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfToli);
+		if (numberOfOtherMethods != -1)
+			ProjectGlobalCounters.getInstance()
+					.incrementNumberOfOtherMethods(numberOfOtherMethods);
 		
-		if(numberOfPloc!=-1)
-			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfPloc);
+		if (numberOfPublicMethods != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfPublicMethods(
+					numberOfPublicMethods);
 		
-		if(numberOfBlli!=-1)
-			ProjectGlobalCounters.getInstance().incrementNumberOfToli(numberOfBlli);
-			
-			
+		if (numberOfFiles != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfFiles(
+					numberOfFiles);
+
+		if (numberOfToli != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfToli(
+					numberOfToli);
+
+		if (numberOfPloc != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfPloc(
+					numberOfPloc);
+
+		if (numberOfBlli != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfBlli(
+					numberOfBlli);
+		
+		if(packageSize != -1)
+			ProjectGlobalCounters.getInstance().incrementProjectSize(packageSize);
+
 		logger.debug("Xquery counting process finished " + fullPathResultFile
 				+ " generated ...");
 	}
@@ -124,14 +161,17 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 	 * @param outFileFullPath
 	 *            Represents the full path of the counters file to be created.
 	 */
-	public void ExecuteSingleFileCountingQuery(String outFileFullPath, String queryFile) {
+	public void ExecuteSingleFileCountingQuery(String outFileFullPath,
+			String queryFile) {
 		Properties props = new Properties();
 		props.setProperty(OutputKeys.METHOD, "xml");
 		props.setProperty(OutputKeys.INDENT, "yes");
 
 		try {
-			SaxonQueryProvider.getInstance(queryFile).getSingleFileCountingQueryObject()
-					.run(SaxonProcessor.getInstance().getDynamicQueryContext(),
+			SaxonQueryProvider.getInstance(queryFile)
+					.getSingleFileCountingQueryObject().run(
+							SaxonProcessor.getInstance()
+									.getDynamicQueryContext(),
 							new StreamResult(new File(outFileFullPath)), props);
 		} catch (XPathException e) {
 			logger.fatal(e.getMessage());
