@@ -116,7 +116,6 @@ return
 									</attributeCount>
 									<implementedInterfaceCount>{count($class/implementedInterfaceSet/interface)}</implementedInterfaceCount>
 								</class>
-
 					}
 					</classSet>
 				</file>
