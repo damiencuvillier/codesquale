@@ -57,7 +57,7 @@ public class MetricsTask extends Task {
              }
          }
          
-         ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project_results.xml");
+         ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project.xml");
     }
     protected void validate() {
         if (filesets.size()<1) throw new BuildException("fileset not set");
