@@ -37,37 +37,36 @@ Antlr to CodeSquale XML transforming
 			</xsl:attribute>
 			
 			<modifierSet>
-				<xsl:for-each select="./*[@type=5]/*">
+				<xsl:choose>
 				
-				  <xsl:if test="@type = '88' or @type='89' or @type='90'">
-				      <visibility>
-							<xsl:attribute name="value">
-								<xsl:value-of select="@text" />
-							</xsl:attribute>
-						</visibility>
-				   </xsl:if>
-		  		   
-		  		   <xsl:if test="@type = ''">
-				    <visibility>
-							<xsl:attribute name="value">
-								<xsl:text>default</xsl:text>
-							</xsl:attribute> 
-					</visibility>	
-					</xsl:if>
-	
-	
-	
-			
-				<xsl:if test="@type = '65' or @type='91' or @type='92' or @type='93' or @type='94'  or @type='95'">	
-					<modifier>
-						<xsl:attribute name="value">
-							<xsl:value-of select="./@text" />
-						</xsl:attribute>
-					</modifier>
-				</xsl:if>
-				
+				   <xsl:when test="not(./*[@type=5]/*)">
+					    <visibility>
+								<xsl:attribute name="value">
+									<xsl:text>default</xsl:text>
+								</xsl:attribute> 
+						</visibility>	
+					</xsl:when>
 					
-				</xsl:for-each>
+					<xsl:otherwise>
+						<xsl:for-each select="./*[@type=5]/*">				
+							  <xsl:if test="@type = '88' or @type='89' or @type='90'">
+							      <visibility>
+										<xsl:attribute name="value">
+											<xsl:value-of select="@text" />
+										</xsl:attribute>
+									</visibility>
+							   </xsl:if>
+							  <xsl:if test="@type = '65' or @type='91' or @type='92' or @type='93' or @type='94'  or @type='95'">	
+								<modifier>
+									<xsl:attribute name="value">
+										<xsl:value-of select="./@text" />
+									</xsl:attribute>
+								</modifier>
+							</xsl:if>
+						</xsl:for-each>
+					</xsl:otherwise>
+					
+				</xsl:choose>
 			</modifierSet>
 
 		</attribute>
