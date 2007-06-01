@@ -96,6 +96,7 @@ return
 						</lineOfCode>
 					</globalMetrics>
 					<attributes>
+						<size unit="kB">{data($file/@filesize)}</size>
 						<lastmodified>{data($file/@lastmodified)}</lastmodified>
 					</attributes>
 					<classSet>
