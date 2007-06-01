@@ -64,9 +64,37 @@ Antlr to CodeSquale XML transforming
 			</xsl:attribute>
 			<!-- /method modifier -->
 	
+			<!-- Parameters --> 
+			<paramSet>
+				 <xsl:for-each select="./*[@type=20]">
+						<param>
+							<!--  var name -->
+							<xsl:attribute name="name">
+								<xsl:value-of select="@text" />
+							</xsl:attribute>
+							<!-- /var name -->
+							
+							<!-- var type -->
+							<xsl:attribute name="type"> 
+								<xsl:value-of select="./*[@type=13]/*/@text" />
+							</xsl:attribute>
+							<!-- /var type -->
+							
+							<!-- var modifier -->			
+							<xsl:attribute name="modifier">
+								<xsl:value-of select="./*[@type=5]/*/@text" />
+							</xsl:attribute>
+							<!-- /var modifier -->	
+						</param>
+				 </xsl:for-each>
+			</paramSet>
+			<!-- /Parameters -->
+		
+			
+			
 			<!-- Variables -->
 			<varSet>	
-				<xsl:call-template name="variables" />
+				<xsl:call-template name="methodVars" />
 			</varSet>	
 			<!-- /Variables -->
 	
@@ -74,12 +102,12 @@ Antlr to CodeSquale XML transforming
 	</xsl:template>
 	<!--  /Methods-->
 	
-	<xsl:template name="variables" match="antlr.CommonAST[@type=10]">
-	
-		
+	<!-- MethodVars -->
+	<xsl:template name="methodVars" match="antlr.CommonAST[@type=7]/antlr.CommonAST[@type=10]">		
 		<var>
-
-		
+		<!-- recursive -->
+		<xsl:apply-templates /> 
+			<xsl:if test="@type = '10'">
 			<!--  var name -->
 			<xsl:attribute name="name">
 				<xsl:value-of select="./*[@type=68]/@text" />
@@ -96,11 +124,9 @@ Antlr to CodeSquale XML transforming
 			<xsl:attribute name="modifier">
 				<xsl:value-of select="./*[@type=5]/*/@text" />
 			</xsl:attribute>
-			<!-- /var modifier -->
+			</xsl:if>
+			<!-- /var modifier -->	
 		</var>
-		<xsl:apply-templates  /> 	
 	</xsl:template>
-	
-
 	
 </xsl:stylesheet>
