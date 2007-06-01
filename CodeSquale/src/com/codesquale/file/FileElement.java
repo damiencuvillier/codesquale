@@ -56,7 +56,7 @@ public class FileElement extends AbstractElement
 		file = physicalFile;
 		// (0.0f) force convert long->float
 		float size = (0.0f+physicalFile.length())/1000;
-		fileSize = Math.floor(size*100+0.5)/100;
+		fileSize = Math.floor(size*100+0.05)/100;
 		lastModified = new Date(physicalFile.lastModified());
 
 	    //Open the file for reading
@@ -133,7 +133,6 @@ public class FileElement extends AbstractElement
 	 * @return last time the file was modified
 	 */
 	public String getLastModified() {
-		String date;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd '-' HH:mm:ss");
 		return sdf.format(lastModified);
 	}
