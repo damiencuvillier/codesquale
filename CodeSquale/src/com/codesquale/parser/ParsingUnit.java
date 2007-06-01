@@ -13,7 +13,6 @@ import antlr.CommonAST;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
-import antlr.collections.AST;
 
 import com.codesquale.parser.java.JavaLexer;
 import com.codesquale.parser.java.JavaRecognizer;
@@ -29,16 +28,9 @@ public class ParsingUnit implements IParsingUnit {
 	// Declaring the Lexer
 	private JavaLexer myJavaLexer = null;
 
-	private JavaLexer myLineLexer = null;
-
-	// Declaring a token unit
-	private Token currentToken = null;
-
 	private JavaRecognizer myJavaRecognizer = null;
 
 	private CommonAST abstractTree = null;
-
-	private int TypeCount[] = new int[1];
 
 	protected ParsingUnit() {
 
@@ -100,47 +92,7 @@ public class ParsingUnit implements IParsingUnit {
 		ParseCodeSourceStream(codeSourceFileStream);
 	}
 
-	/**
-	 * Find a child of the given AST that has the given type
-	 * 
-	 * @returns a child AST of the given type. If it can't find a child of the
-	 *          given type, return null.
-	 */
-	private AST getChild(AST ast, int childType) {
-		AST child = ast.getFirstChild();
-		while (child != null) {
-			if (child.getType() == childType) {
-				// debug.println("getChild: found:" + name(ast));
-				return child;
-			}
-			child = child.getNextSibling();
-		}
-		return null;
-	}
 
-	/**
-	 * Count the number of type occurence in the abstract tree
-	 * 
-	 * @param t
-	 *            the Abstract tree that contain the types
-	 * @param type
-	 *            the type you need to count
-	 * @param count
-	 *            in out parameter, give number of type occurence
-	 * 
-	 */
-	private void getTypeCount(AST t, int type, int count[]) {
-		if (t == null)
-			return;
 
-		if (t.getType() == type)
-			count[0]++;
 
-		AST child = t.getFirstChild();
-		getTypeCount(child, type, count);
-
-		AST next = t.getNextSibling();
-		getTypeCount(next, type, count);
-
-	}
 }
