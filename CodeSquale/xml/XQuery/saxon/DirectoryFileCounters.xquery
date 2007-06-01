@@ -26,6 +26,9 @@ let $packageToli := sum(data(//directory/fileSet/file/@toli))
 let $packagePloc := sum(data(//directory/fileSet/file/@ploc))
 let $packageBlli := sum(data(//directory/fileSet/file/@blli))
 
+(: package total size :)
+let $packageSize := sum(data(//directory/fileSet/file/@filesize))
+
 (: iterators :)
 let $files := //directory/fileSet/file
 
@@ -36,6 +39,7 @@ return
 <packageAnalysis>
 	<packageGlobalMetrics>
 		<files>{$packageFileCount}</files>
+		<totalSize unit="kB">{$packageSize}</totalSize>
 		<linesOfCode>
 			<toli>{$packageToli}</toli>
 			<ploc>{$packagePloc}</ploc>
@@ -92,7 +96,6 @@ return
 						</lineOfCode>
 					</globalMetrics>
 					<attributes>
-						<size>{data($file/@filesize)} kB</size>
 						<lastmodified>{data($file/@lastmodified)}</lastmodified>
 					</attributes>
 					<classSet>
