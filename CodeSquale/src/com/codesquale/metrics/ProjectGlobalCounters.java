@@ -51,6 +51,11 @@ public class ProjectGlobalCounters
 		        out.write("\t\t<public>"+ numberOfPublicMethods +"</public>\r\n");
 		        out.write("\t\t<others>"+ numberOfOtherMethods +"</others>\r\n");
 		        out.write("\t\t</methods>\r\n");
+		        out.write("\t\t<attributes>\r\n");
+		        out.write("\t\t<all>"+ numberOfAttributes +"</all>\r\n");
+		        out.write("\t\t<public>"+ numberOfPublicAttributes +"</public>\r\n");
+		        out.write("\t\t<others>"+ numberOfOtherAttributes +"</others>\r\n");
+		        out.write("\t\t</attributes>\r\n");
 		        out.write("\t</projectGlobalMetrics>\r\n");
 		        out.write("</projectResults>\r\n"); 
 		        

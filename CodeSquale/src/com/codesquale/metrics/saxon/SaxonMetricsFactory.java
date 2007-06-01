@@ -83,6 +83,18 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 						SaxonQueryProvider.getInstance(queryFile)
 								.getNumberOfPublicMethodsQueryObject());
 		
+		int numberOfAttributes = SaxonProcessor.getInstance()
+		.ExecuteIntegerScaler(
+				SaxonQueryProvider.getInstance(queryFile)
+						.getNumberOfAttributesQueryObject());
+		int numberOfOtherAttributes = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance(queryFile)
+								.getNumberOfOtherAttributesQueryObject());
+		int numberOfPublicAttributes = SaxonProcessor.getInstance()
+				.ExecuteIntegerScaler(
+						SaxonQueryProvider.getInstance(queryFile)
+								.getNumberOfPublicAttributesQueryObject());
 		
 		
 		int numberOfFiles = SaxonProcessor.getInstance().ExecuteIntegerScaler(
@@ -130,6 +142,18 @@ public class SaxonMetricsFactory implements IMetricsFactory {
 		if (numberOfPublicMethods != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfPublicMethods(
 					numberOfPublicMethods);
+		
+		if (numberOfAttributes != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfAttributes(
+					numberOfAttributes);
+		
+		if (numberOfOtherAttributes != -1)
+			ProjectGlobalCounters.getInstance()
+					.incrementNumberOfOtherAttributes(numberOfOtherAttributes);
+		
+		if (numberOfPublicAttributes != -1)
+			ProjectGlobalCounters.getInstance().incrementNumberOfPublicAttributes(
+					numberOfPublicAttributes);
 		
 		if (numberOfFiles != -1)
 			ProjectGlobalCounters.getInstance().incrementNumberOfFiles(
