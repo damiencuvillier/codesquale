@@ -30,14 +30,30 @@ Antlr to CodeSquale XML transforming
 	<xsl:template match="antlr.CommonAST[@type=6]/antlr.CommonAST[@type=10]">
 		<attribute>
 			<xsl:attribute name="name">
-				<xsl:value-of select="*/*[@type=68]/@text" />
+				<xsl:value-of select="./*[@type=68]/@text" />
 			</xsl:attribute>
 			<xsl:attribute name="type">
 				<xsl:value-of select="./*[@type=13]/*/@text" />
 			</xsl:attribute>
-			<xsl:attribute name="modifier">
-				<xsl:value-of select="./*[@type=5]/*/@text" />
-			</xsl:attribute>
+			
+			<modifierSet>
+				<xsl:for-each select="./*[@type=5]/*">
+					<xsl:if test="@type = '88' or @type='89' or @type='90'">	
+						<visibility>
+							<xsl:attribute name="value">
+								<xsl:value-of select="./@text" />
+							</xsl:attribute>
+						</visibility>
+					</xsl:if>
+					<xsl:if test="@type = '65' or @type='89' or @type='90'">	
+						<visibility>
+							<xsl:attribute name="value">
+								<xsl:value-of select="./@text" />
+							</xsl:attribute>
+						</visibility>
+					</xsl:if>
+				</xsl:for-each>
+			</modifierSet>
 
 		</attribute>
 	</xsl:template>
@@ -66,11 +82,11 @@ Antlr to CodeSquale XML transforming
 	
 			<!-- Parameters --> 
 			<paramSet>
-				 <xsl:for-each select="./*[@type=20]">
+				 <xsl:for-each select="./*[@type=20]/*[@type=21]">
 						<param>
 							<!--  var name -->
 							<xsl:attribute name="name">
-								<xsl:value-of select="@text" />
+								<xsl:value-of select="./*[@type=68]/@text" />
 							</xsl:attribute>
 							<!-- /var name -->
 							
