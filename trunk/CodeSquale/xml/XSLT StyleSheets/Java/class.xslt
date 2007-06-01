@@ -45,12 +45,12 @@ Antlr to CodeSquale XML transforming
 							</xsl:attribute>
 						</visibility>
 					</xsl:if>
-					<xsl:if test="@type = '65' or @type='89' or @type='90'">	
-						<visibility>
+					<xsl:if test="@type = '65' or @type='91' or @type='92' or @type='93' or @type='94'  or @type='95'">	
+						<access>
 							<xsl:attribute name="value">
 								<xsl:value-of select="./@text" />
 							</xsl:attribute>
-						</visibility>
+						</access>
 					</xsl:if>
 				</xsl:for-each>
 			</modifierSet>
