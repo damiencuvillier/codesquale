@@ -8,8 +8,11 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 
+import com.codesquale.file.AbstractElement;
+
 public class ProjectGlobalCounters 
 {
+	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ProjectGlobalCounters.class);
 	
 	private static ProjectGlobalCounters _instance = null;
 	
@@ -109,10 +112,10 @@ public class ProjectGlobalCounters
 		        out.close();
 		      }
 		      catch (UnsupportedEncodingException e) {
-		        System.out.println("This VM does not support the Latin-1 character set.");
+		        logger.fatal("This VM does not support the Latin-1 character set.");
 		      }
 		      catch (IOException e) {
-		        System.out.println(e.getMessage());        
+		       logger.fatal(e.getMessage());        
 		      }
 	}
 	
