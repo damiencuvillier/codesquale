@@ -40,6 +40,9 @@ Antlr to CodeSquale XML transforming
 			 	<xsl:attribute name="name">
 					<xsl:value-of select="directory/@value" />
 				</xsl:attribute>
+				<xsl:attribute name="completeName">
+					<xsl:value-of select="directory/@value" />
+				</xsl:attribute>
 				<xsl:attribute name="absolutePath">
 					<xsl:value-of select="directory/@href" />
 				</xsl:attribute>
