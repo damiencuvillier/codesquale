@@ -12,8 +12,8 @@ let $packagePublicMethodCount := count(//directory/fileSet/file/classSet/class/m
 
 (: counting number of attributes in package :)
 let $packageAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute)
-let $packageOtherAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier!="public"])
-let $packagePublicAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute[@modifier="public"])
+let $packageOtherAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute/modifierSet/visibility[@value!="public"])
+let $packagePublicAttributeCount := count(//directory/fileSet/file/classSet/class/attributeSet/attribute/modifierSet/visibility[@value="public"])
 
 (: counting number of interfaces in package :)
 let $packageInterfaceCount := count(//directory/fileSet/file/classSet/class/implementedInterfaceSet/interface)
@@ -95,10 +95,10 @@ return
 							<blli>{data($file/@blli)}</blli>
 						</lineOfCode>
 					</globalMetrics>
-					<attributes>
+					<fileProperties>
 						<size unit="kB">{data($file/@filesize)}</size>
 						<lastmodified>{data($file/@lastmodified)}</lastmodified>
-					</attributes>
+					</fileProperties>
 					<classSet>
 					{
 						for $class in //directory/fileSet/file[@name=data($file/@name)]/classSet/class
@@ -111,8 +111,8 @@ return
 									</methodCount>
 									<attributeCount>
 										<all>{count($class/attributeSet/attribute)}</all>
-										<public>{count($class/attributeSet/attribute[@modifier="public"])}</public>
-										<others>{count($class/attributeSet/attribute[@modifier!="public"])}</others>
+										<public>{count($class/attributeSet/attribute/modifierSet/visibility[@value="public"])}</public>
+										<others>{count($class/attributeSet/attribute/modifierSet/visibility[@value!="public"])}</others>
 									</attributeCount>
 									<implementedInterfaceCount>{count($class/implementedInterfaceSet/interface)}</implementedInterfaceCount>
 								</class>
