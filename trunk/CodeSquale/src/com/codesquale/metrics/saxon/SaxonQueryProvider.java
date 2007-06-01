@@ -39,6 +39,14 @@ public class SaxonQueryProvider {
 	private String numberOfOthersMethodsQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/methods/others";
 
 	private String numberOfPublicMethodsQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/methods/public";
+	
+	//	 Attributes counting query
+
+	private String numberOfAttributesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/attributes/all";
+
+	private String numberOfOthersAttributesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/attributes/others";
+
+	private String numberOfPublicAttributesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/attributes/public";
 
 	// Files and attributes counting
 	private String numberOfFilesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/files";
@@ -70,6 +78,12 @@ public class SaxonQueryProvider {
 
 	private XQueryExpression numberOfPublicMethods = null;
 
+	private XQueryExpression numberOfAttributes = null;
+
+	private XQueryExpression numberOfOtherAttributes = null;
+
+	private XQueryExpression numberOfPublicAttributes = null;
+	
 	private XQueryExpression numberOfFile = null;
 
 	private XQueryExpression numberOfToli;
@@ -123,6 +137,12 @@ public class SaxonQueryProvider {
 					.compileQuery(numberOfOthersMethodsQuery);
 			numberOfPublicMethods = context
 					.compileQuery(numberOfPublicMethodsQuery);
+			
+			numberOfAttributes = context.compileQuery(numberOfAttributesQuery);
+			numberOfOtherAttributes = context
+					.compileQuery(numberOfOthersAttributesQuery);
+			numberOfPublicAttributes = context
+					.compileQuery(numberOfPublicAttributesQuery);
 
 			numberOfToli = context.compileQuery(numberOfToliQuery);
 
@@ -168,6 +188,18 @@ public class SaxonQueryProvider {
 
 	public XQueryExpression getNumberOfPublicMethodsQueryObject() {
 		return numberOfPublicMethods;
+	}
+	
+	public XQueryExpression getNumberOfAttributesQueryObject() {
+		return numberOfAttributes;
+	}
+
+	public XQueryExpression getNumberOfOtherAttributesQueryObject() {
+		return numberOfOtherAttributes;
+	}
+
+	public XQueryExpression getNumberOfPublicAttributesQueryObject() {
+		return numberOfPublicAttributes;
 	}
 	
 
