@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 
 public class ProjectGlobalCounters 
 {
@@ -57,6 +58,51 @@ public class ProjectGlobalCounters
 		        out.write("\t\t<others>"+ numberOfOtherAttributes +"</others>\r\n");
 		        out.write("\t\t</attributes>\r\n");
 		        out.write("\t</projectGlobalMetrics>\r\n");
+		        
+		        if(numberOfClasses != 0)
+		        {
+		        	// Converting integer to float in order to obtain the decimal precision
+		        	float fnumberOfClasses = new Float(numberOfClasses);
+		        	
+		        	float fnumberOfMethods = Float.valueOf(numberOfMethods);
+		            float fnumberOfPublicMethods = Float.valueOf(numberOfPublicMethods);
+		        	float fnumberOfOtherMethods = Float.valueOf(numberOfOtherMethods);
+		        	
+		        	float fnumberOfAttributes = Float.valueOf(numberOfAttributes);
+		        	float fnumberOfPublicAttributes = Float.valueOf(numberOfPublicAttributes);
+		        	float fnumberOfOtherAttributes = Float.valueOf(numberOfOtherAttributes);
+		        	
+		        	// Calculating basic Ratios
+		        	float averageNumberOfMethodsPerClass =   fnumberOfMethods/fnumberOfClasses;
+		        	float averageNumberOfPublicMethodsPerClass =  fnumberOfPublicMethods/fnumberOfClasses;
+		        	float averageNumberOfOtherMethodsPerClass =  fnumberOfOtherMethods/fnumberOfClasses;
+		        	
+		        	float averageNumberOfAttributesPerClass =  fnumberOfAttributes/fnumberOfClasses ;
+		        	float averageNumberOfPublicAttributesPerClass = fnumberOfPublicAttributes/fnumberOfClasses;
+		        	float averageNumberOfOtherAttributesPerClass = fnumberOfOtherAttributes/fnumberOfClasses;
+
+		        	
+		        	DecimalFormat df = new DecimalFormat("#.###");
+		        	
+		        	out.write("\t<projectGlobalRatios>\r\n");
+		        	
+		        	out.write("\t\t<averageNumberMethodsPerClass>\r\n");
+			        out.write("\t\t\t<all>"+ df.format(averageNumberOfMethodsPerClass) +"</all>\r\n");
+			        out.write("\t\t\t<public>"+ df.format(averageNumberOfPublicMethodsPerClass) +"</public>\r\n");
+			        out.write("\t\t\t<others>"+ df.format(averageNumberOfOtherMethodsPerClass) +"</others>\r\n");
+		        	out.write("\t\t</averageNumberMethodsPerClass>\r\n");
+		        	
+		        	
+		        	out.write("\t\t<averageNumberAttributesPerClass>\r\n");
+			        out.write("\t\t\t<all>"+ df.format(averageNumberOfAttributesPerClass) +"</all>\r\n");
+			        out.write("\t\t\t<public>"+ df.format(averageNumberOfPublicAttributesPerClass) +"</public>\r\n");
+			        out.write("\t\t\t<others>"+ df.format(averageNumberOfOtherAttributesPerClass) +"</others>\r\n");
+		        	out.write("\t\t</averageNumberAttributesPerClass>\r\n");
+		        	
+		        	out.write("\t</projectGlobalRatios>\r\n");
+		        }
+		        
+		        
 		        out.write("</projectResults>\r\n"); 
 		        
 		        out.flush();  // Don't forget to flush!
