@@ -300,6 +300,7 @@ public class ConsoleGUI extends JFrame {
 			btn_cancel.setEnabled(false);
 			btn_cancel.setText("Cancel");
 			btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+				@SuppressWarnings("deprecation")
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					btn_ok.setEnabled(false);
 					if(process != null){
