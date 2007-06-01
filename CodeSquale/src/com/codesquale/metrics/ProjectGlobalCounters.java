@@ -35,6 +35,7 @@ public class ProjectGlobalCounters
 		        out.write("<projectResults>\r\n");  
 		        out.write("\t<projectGlobalMetrics>\r\n");
 		        out.write("\t\t<files>"+ numberOfFiles +"</files>\r\n");
+		        out.write("\t\t<size unit=\"kB\">"+ projectSize +"</size>\r\n");
 		        out.write("\t\t<linesOfCode>\r\n");
 		        out.write("\t\t\t<toli>"+numberOfToli+"</toli>\r\n");
 		        out.write("\t\t\t<ploc>"+numberOfPloc+"</ploc>\r\n");
@@ -43,8 +44,13 @@ public class ProjectGlobalCounters
 		        out.write("\t\t<classes>\r\n");
 		        out.write("\t\t<all>"+ numberOfClasses +"</all>\r\n");
 		        out.write("\t\t<public>"+ numberOfPublicClasses +"</public>\r\n");
-		        out.write("\t\t<others>"+ numberOfPrivateClasses +"</others>\r\n");
+		        out.write("\t\t<others>"+ numberOfOtherClasses +"</others>\r\n");
 		        out.write("\t\t</classes>\r\n");
+		        out.write("\t\t<methods>\r\n");
+		        out.write("\t\t<all>"+ numberOfMethods +"</all>\r\n");
+		        out.write("\t\t<public>"+ numberOfPublicMethods +"</public>\r\n");
+		        out.write("\t\t<others>"+ numberOfOtherMethods +"</others>\r\n");
+		        out.write("\t\t</methods>\r\n");
 		        out.write("\t</projectGlobalMetrics>\r\n");
 		        out.write("</projectResults>\r\n"); 
 		        
@@ -61,16 +67,16 @@ public class ProjectGlobalCounters
 	
 	
 	private int numberOfClasses=0;
-	private int numberOfPrivateClasses=0;
+	private int numberOfOtherClasses=0;
 	private int numberOfPublicClasses=0;
 	
 	private int numberOfMethods=0;
 	private int numberOfPublicMethods=0;
-	private int numberOfPrivateMethods=0;
+	private int numberOfOtherMethods=0;
 	
 	private int numberOfAttributes=0;
 	private int numberOfPublicAttributes=0;
-	private int numberOfPrivateAttributes=0;
+	private int numberOfOtherAttributes=0;
 	
 	private int numberOfInterfaces=0;
 	
@@ -80,17 +86,19 @@ public class ProjectGlobalCounters
 	private int numberOfPloc=0;
 	private int numberOfBlli=0;
 	
+	private double projectSize=0;
+	
 	public void incrementNumberOfClasses(int num) { this.numberOfClasses+=num; }
 	public void incrementNumberOfPublicClasses(int num) { this.numberOfPublicClasses+=num; }
-	public void incrementNumberOfPrivateClasses(int num) { this.numberOfPrivateClasses+=num; }
+	public void incrementNumberOfOtherClasses(int num) { this.numberOfOtherClasses+=num; }
 	
 	public void incrementNumberOfMethods(int num) { this.numberOfMethods+=num; }
 	public void incrementNumberOfPublicMethods(int num) { this.numberOfPublicMethods+=num; }
-	public void incrementNumberOfPrivateMethods(int num) { this.numberOfPrivateMethods+=num; }
+	public void incrementNumberOfOtherMethods(int num) { this.numberOfOtherMethods+=num; }
 
 	public void incrementNumberOfAttributes(int num) { this.numberOfAttributes+=num; }
 	public void incrementNumberOfPublicAttributes(int num) { this.numberOfPublicAttributes+=num; }
-	public void incrementNumberOfPrivateAttributes(int num) { this.numberOfPrivateAttributes+=num; }
+	public void incrementNumberOfOtherAttributes(int num) { this.numberOfOtherAttributes+=num; }
 	
 	public void incrementNumberOfInterfaces(int num) { this.numberOfInterfaces+=num; }
 	
@@ -99,5 +107,7 @@ public class ProjectGlobalCounters
 	public void incrementNumberOfToli(int num) {this.numberOfToli+=num;}
 	public void incrementNumberOfPloc(int num) {this.numberOfPloc+=num;}
 	public void incrementNumberOfBlli(int num) {this.numberOfBlli+=num;}
+	
+	public void incrementProjectSize(double num){this.projectSize +=num;}
 
 }

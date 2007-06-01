@@ -21,27 +21,54 @@ public class SaxonQueryProvider {
 
 	private static Logger logger = Logger.getLogger(SaxonProcessor.class);
 
+	// ////////////////////
+	// QUERY LITERRALS //
+	// ////////////////////
+
+	// Number of classes query
 	private String numberOfClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/all";
 
 	private String numberOfOthersClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/others";
 
 	private String numberOfPublicClassesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/classes/public";
 
+	// Methods counting query
+
+	private String numberOfMethodsQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/methods/all";
+
+	private String numberOfOthersMethodsQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/methods/others";
+
+	private String numberOfPublicMethodsQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/methods/public";
+
+	// Files and attributes counting
 	private String numberOfFilesQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/files";
 
+	private String packageSizeQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/totalSize";
+
+	// LOC query
 	private String numberOfToliQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/toli";
 
 	private String numberOfPlocQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/ploc";
 
 	private String numberOfBlliQuery = "//directoryResults/packageAnalysis/packageGlobalMetrics/linesOfCode/blli";
 
+	// ////////////////////////////
+	// QUERY EXPRESSION OBJECT //
+	// ////////////////////////////
+
 	private XQueryExpression singleFileCountingQuery = null;
 
 	private XQueryExpression numberOfClasses = null;
 
-	private XQueryExpression numberOfPrivateClasses = null;
+	private XQueryExpression numberOfOtherClasses = null;
 
 	private XQueryExpression numberOfPublicClasses = null;
+
+	private XQueryExpression numberOfMethods = null;
+
+	private XQueryExpression numberOfOtherMethods = null;
+
+	private XQueryExpression numberOfPublicMethods = null;
 
 	private XQueryExpression numberOfFile = null;
 
@@ -50,6 +77,8 @@ public class SaxonQueryProvider {
 	private XQueryExpression numberOfPloc;
 
 	private XQueryExpression numberOfBlli;
+
+	private XQueryExpression packageSize;
 
 	/**
 	 * Private instance of the class itselft needed by the singleton mechanism.
@@ -84,17 +113,25 @@ public class SaxonQueryProvider {
 			singleFileCountingQuery = context
 					.compileQuery(getSingleFileCountingQuery(queryFile));
 			numberOfClasses = context.compileQuery(numberOfClassesQuery);
-			numberOfPrivateClasses = context
+			numberOfOtherClasses = context
 					.compileQuery(numberOfOthersClassesQuery);
 			numberOfPublicClasses = context
 					.compileQuery(numberOfPublicClassesQuery);
-			numberOfFile = context.compileQuery(numberOfFilesQuery);
+
+			numberOfMethods = context.compileQuery(numberOfMethodsQuery);
+			numberOfOtherMethods = context
+					.compileQuery(numberOfOthersMethodsQuery);
+			numberOfPublicMethods = context
+					.compileQuery(numberOfPublicMethodsQuery);
 
 			numberOfToli = context.compileQuery(numberOfToliQuery);
 
 			numberOfPloc = context.compileQuery(numberOfPlocQuery);
 
 			numberOfBlli = context.compileQuery(numberOfBlliQuery);
+
+			numberOfFile = context.compileQuery(numberOfFilesQuery);
+			packageSize = context.compileQuery(packageSizeQuery);
 
 		} catch (XPathException ex) {
 			logger.fatal(ex.getMessage());
@@ -113,33 +150,46 @@ public class SaxonQueryProvider {
 		return numberOfClasses;
 	}
 
-	public XQueryExpression getNumberOfPrivateClassesQueryObject() {
-		return numberOfPrivateClasses;
+	public XQueryExpression getNumberOfOtherClassesQueryObject() {
+		return numberOfOtherClasses;
 	}
 
 	public XQueryExpression getNumberOfPublicClassesQueryObject() {
 		return numberOfPublicClasses;
 	}
+	
+	public XQueryExpression getNumberOfMethodsQueryObject() {
+		return numberOfMethods;
+	}
+
+	public XQueryExpression getNumberOfOtherMethodsQueryObject() {
+		return numberOfOtherMethods;
+	}
+
+	public XQueryExpression getNumberOfPublicMethodsQueryObject() {
+		return numberOfPublicMethods;
+	}
+	
 
 	public XQueryExpression getSingleFileCountingQueryObject() {
 		return singleFileCountingQuery;
 	}
-	
-	public XQueryExpression getNumberOfToliQueryObject()
-	{
+
+	public XQueryExpression getNumberOfToliQueryObject() {
 		return numberOfToli;
 	}
-	
-	public XQueryExpression getNumberOfPlocQueryObject()
-	{
+
+	public XQueryExpression getNumberOfPlocQueryObject() {
 		return numberOfPloc;
 	}
-	
-	public XQueryExpression getNumberOfBlliQueryObject()
-	{
+
+	public XQueryExpression getNumberOfBlliQueryObject() {
 		return numberOfBlli;
 	}
-	
+
+	public XQueryExpression getPackageSizeQueryObject() {
+		return packageSize;
+	}
 
 	private String getSingleFileCountingQuery(String queryFile) {
 		try {
@@ -150,5 +200,5 @@ public class SaxonQueryProvider {
 
 		return null;
 	}
-	
+
 }

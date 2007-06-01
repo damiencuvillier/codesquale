@@ -91,6 +91,27 @@ public class SaxonProcessor {
 		return -1;
 
 	}
+	
+	
+	public double ExecuteDecimalScaler(XQueryExpression scalarReturnExpression) {
+		try {
+			SequenceIterator classesIterator = scalarReturnExpression
+					.iterator(SaxonProcessor.getInstance()
+							.getDynamicQueryContext());
+
+			while (true && classesIterator != null) {
+				NodeInfo classesValue = (NodeInfo) classesIterator.next();
+				if (classesValue == null)
+					break;
+				return Double.parseDouble(classesValue.getStringValue());
+			}
+
+		} catch (XPathException e) {
+			logger.fatal(e.getMessage());
+		}
+		return -1;
+
+	}
 
 	/**
 	 * Provides the static query context of Saxon.
