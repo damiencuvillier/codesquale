@@ -35,10 +35,16 @@ public class ParsingUnit implements IParsingUnit {
 	protected ParsingUnit() {
 
 	}
-
-	// Enables the class to log errors
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
-			.getLogger(ParsingUnit.class);
+	private String filename = "";
+	private String xmlfilename ="";
+	
+	public String getFileName() {
+		return filename;
+	}
+	public String getXmlFileName(){
+		return xmlfilename;
+	}
+	
 
 	/**
 	 * Parse a fileStream and calculates counters
@@ -48,6 +54,7 @@ public class ParsingUnit implements IParsingUnit {
 	 *         metrics
 	 */
 	private void ParseCodeSourceStream(FileInputStream codeSourceFileStream) {
+		
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
 		// Initializing the parser
@@ -76,7 +83,11 @@ public class ParsingUnit implements IParsingUnit {
 	 * @throws IOException
 	 */
 	public FileOutputStream ASTToXML(String fileName) throws IOException {
+		
+		xmlfilename = fileName.substring(fileName.lastIndexOf("\\")+1);
+		
 		FileOutputStream output = new FileOutputStream(fileName);
+		
 		Writer writer = new OutputStreamWriter(output);
 		abstractTree.xmlSerialize(writer);
 		writer.flush();
@@ -85,10 +96,14 @@ public class ParsingUnit implements IParsingUnit {
 	}
 
 	public void DoParse(File codeSourceFile) throws FileNotFoundException {
+		
+		filename = codeSourceFile.getName();
+		
 		FileInputStream codeSourceFileStream = null;
 
 		codeSourceFileStream = new FileInputStream(codeSourceFile);
-
+	
+		
 		ParseCodeSourceStream(codeSourceFileStream);
 	}
 
