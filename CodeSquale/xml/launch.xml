@@ -13,25 +13,47 @@ Agence Nord
 <project name="CodeSquale Launcher" 
 	default="launch"
 	basedir="." >
+	
+	<!-- 
+		OutputDir : Where will be stored the full report ?
+		
+		Caution : all files included in this dir will be erased
+	-->
+	<property name="OutputDir" value="d:\tmp\out\" />
+	<!-- 
+		OutputDir : Where are stored the source files
+	-->
+	<property name="SourceDir" value="d:\tmp\src\" />	
+	<!-- 
+		Language : Analysed Technology. Value must be a XLST StyleSheets dir subdi
+	-->
+	<property name="Language" value="Java" />	
+	
+	
+	
 	<target name="launch">
 		<java classname="org.apache.tools.ant.launch.Launcher"
 	        fork="true"
 	        failonerror="true"
 	        dir="."
 	        timeout="4000000"
-	        taskname="startAnt"
+	        taskname="CodeSquale"
 		>
 			<classpath>
-		        <pathelement location="${ant.home}/lib/ant-launcher.jar"/>
+		        <pathelement location="../libs/ant-launcher.jar"/>
 		    </classpath>
 		    <arg value="-buildfile"/>
 		    <arg file="AntScript.xml"/>
-		<!-- TODO logger : LOG4J -->
 			<!--<arg value="-logger" />
 			<arg value="org.apache.tools.ant.listener.Log4jListener" />-->
 			<arg value="-lib"/>
 			<arg value="../libs"/>
-		    <arg value="CodeSqualeMetricsProcess"/>
+		    <arg value="CodeSqualeGlobalProcess"/>
+			
+			<!-- Arguments -->
+			<arg value="-DOutputDir=${OutputDir}" />
+			<arg value="-DSourceDir=${SourceDir}" />
+			<arg value="-DLanguage=Java" />			
 		</java>
 	</target>
 </project>
