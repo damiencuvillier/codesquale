@@ -18,6 +18,16 @@ public aspect TraceAspect {
 	TraceAspect() {
 	}
 
+	/**
+	 * Pointcuts
+	 */
+	pointcut infoParseFile(com.codesquale.parser.ParsingUnit u)
+		: target(u) && call(public void DoParse(java.io.File) ) && !within(TraceAspect);
+	
+	pointcut infoASTTransform(com.codesquale.parser.ParsingUnit u)
+	: target(u) && call(public FileOutputStream ASTToXML(String)) && !within(TraceAspect);
+	
+	
 	// pointcut exceptionLoggerMethods()
 	// : call (java.lang.Exception +.new(..)) && !within(TraceAspect);
 	//	
@@ -64,14 +74,6 @@ public aspect TraceAspect {
 	}
 
 
-	/**
-	 * Pointcuts
-	 */
-	pointcut infoParseFile(com.codesquale.parser.ParsingUnit u)
-		: target(u) && call(public void DoParse(java.io.File) ) && !within(TraceAspect);
-	
-	pointcut infoASTTransform(com.codesquale.parser.ParsingUnit u)
-	: target(u) && call(public FileOutputStream ASTToXML(String)) && !within(TraceAspect);
 
 //	pointcut infoAntlrTask(org.apache.tools.ant.Task t)
 //	: target(t) && call(public void execute() ) && !within(TraceAspect);
