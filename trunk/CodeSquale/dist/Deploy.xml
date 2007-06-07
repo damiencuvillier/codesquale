@@ -17,7 +17,7 @@
 		<copy todir="${tmpDir}/xml/" >
 			<fileset dir="xml">
 				<include name="X*/**"/>
-				<include name="report/**"/>
+				<include name="Report/**"/>
 				<include name="style.css"/>	
 				<include name="AntScript.xml" />
 				<include name="launch.xml" />
