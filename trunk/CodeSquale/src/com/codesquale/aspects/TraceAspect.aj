@@ -1,23 +1,34 @@
 package com.codesquale.aspects;
 
-import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
 
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.lang.reflect.SourceLocation;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
-import org.apache.tools.ant.BuildException;
 
+import org.apache.log4j.Logger;
+
+
+import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.IParsingUnit;
 
 public aspect TraceAspect {
-	Logger _logger = Logger.getLogger(TraceAspect.class);
-
+	
+	Logger _logger;
+	
 	TraceAspect() {
+		
 	}
-
+	
+	/**
+	 * Define a logger for the poincuted class
+	 */
+	pointcut loggerPoint() :execution(* *.*(..)) && !within(TraceAspect);;
+	after():loggerPoint()
+	{
+		_logger = Logger.getLogger(thisJoinPoint.getSignature().getDeclaringType());
+	}
+	
 	/**
 	 * Pointcuts
 	 */
@@ -28,18 +39,17 @@ public aspect TraceAspect {
 	: target(u) && call(public FileOutputStream ASTToXML(String)) && !within(TraceAspect);
 	
 	
-	// pointcut exceptionLoggerMethods()
-	// : call (java.lang.Exception +.new(..)) && !within(TraceAspect);
-	//	
-	// after() throwing : exceptionLoggerMethods() {
-	// SourceLocation src = thisJoinPointStaticPart.getSourceLocation();
-	// Logger logger = Logger.getLogger(src.getWithinType());
-	// logger.fatal("[Exception] - "+src.getWithinType()+"."+
-	// thisJoinPointStaticPart.getSignature().getName());
-	// }
+	 pointcut exceptionLoggerMethods()
+	 : call (java.lang.Exception +.new(..)) && !within(TraceAspect);
+		
+	 after() throwing : exceptionLoggerMethods() {
+	 SourceLocation src = thisJoinPointStaticPart.getSourceLocation();
+	 	_logger.fatal("[Exception] - "+src.getWithinType()+ "." +
+	 thisJoinPointStaticPart.getSignature().getName());
+	 }
 
 	/**
-	 * INFO Parsing process
+	 * ANTLR Parsing process logging
 	 * 
 	 */
 	pointcut infoParsingProcess(com.codesquale.parser.AntlrParsingProcess p): 
@@ -48,17 +58,35 @@ public aspect TraceAspect {
 	before(com.codesquale.parser.AntlrParsingProcess p) : infoParsingProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-
-		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "."+ sig.getName() + " start files analysis");
+		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " start files analysis");
 	}
 
 	after(com.codesquale.parser.AntlrParsingProcess p) : infoParsingProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
+		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
+	}
+	
+	
+	/**
+	 * ANTLR Description process 
+	 */
+	pointcut infoDescriptionProcess(com.codesquale.parser.AntlrParsingProcess p): 
+		target(p) && call(private void processDescription()) && !within(TraceAspect);
 
-		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "."+ sig.getName() + " finished");
+	before(com.codesquale.parser.AntlrParsingProcess p) : infoDescriptionProcess(p)
+	{
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " writing files description in "+ ProjectBrowser.getInstance().getProjectOutputFileName());
 	}
 
+	after(com.codesquale.parser.AntlrParsingProcess p) : infoDescriptionProcess(p)
+	{
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		_logger.info("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
+	}
+	
+	
 	/**
 	 * DEBUG Parsing unit factory unit instanciation
 	 */
@@ -68,13 +96,18 @@ public aspect TraceAspect {
 	before(com.codesquale.parser.ParsingUnitFactory f) : debugParsingUnitFactory(f)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-
-		_logger.debug("[Factory] "+ sig.getDeclaringTypeName() + "."+ sig.getName() + 
+		_logger.debug("[Factory] "+ sig.getDeclaringTypeName() + "." + sig.getName() + 
 				 "  call");
 	}
 
+	pointcut logAntTarget()
+	 : execution (org.apache.tools.ant.taskdefs.optional.TraXLiaison +.new(..)) && !within(TraceAspect);
 
-
+	before(): logAntTarget(){
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		_logger.debug("[Target] "+ sig.getDeclaringTypeName() + "." + sig.getName() + 
+				 "  call");
+	}
 //	pointcut infoAntlrTask(org.apache.tools.ant.Task t)
 //	: target(t) && call(public void execute() ) && !within(TraceAspect);
 //	
@@ -115,26 +148,20 @@ public aspect TraceAspect {
 				+ u.getXmlFileName());
 	}
 
-	// pointcut totalTrace()
-	// : execution(* *.*(..)) && !within(TraceAspect);
-	//	
-	// pointcut exceptionLoggerMethods()
-	// : call (java.lang.Exception +.new(..)) && !within(TraceAspect);
-	//
-	//	
-	//	
-	//	
-	// before() : totalTrace() {
-	// Signature sig = thisJoinPointStaticPart.getSignature();
-	// _logger.log(Level.TRACE, "[Entering - "
-	// + sig.getDeclaringType().getName() + "." + sig.getName() + "]");
-	// }
-	// after() : totalTrace() {
-	// Signature sig = thisJoinPointStaticPart.getSignature();
-	// _logger.log(Level.TRACE, "[Exiting - "
-	// + sig.getDeclaringType().getName() + "." + sig.getName() + "]");
-	// }
-	//	
+//	 pointcut totalTrace()
+//	 : execution(* *.*(..)) && !within(TraceAspect);
+//		
+//	 before() : totalTrace() {
+//	 Signature sig = thisJoinPointStaticPart.getSignature();
+//	 _logger.log(Level.TRACE, "[Entering - "
+//	 + sig.getDeclaringType().getName() + "." + sig.getName() + "]");
+//	 }
+//	 after() : totalTrace() {
+//	 Signature sig = thisJoinPointStaticPart.getSignature();
+//	 _logger.log(Level.TRACE, "[Exiting - "
+//	 + sig.getDeclaringType().getName() + "." + sig.getName() + "]");
+//	 }
+//		
 
 	// before(com.codesquale.parser.AntlrParsingProcess p) : parsers(p) {
 	// Signature sig = thisJoinPointStaticPart.getSignature();
