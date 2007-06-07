@@ -73,8 +73,6 @@ public class AntlrParsingProcess {
 	private void processAnalysis() throws IOException
 	{
 	
-		logger.debug("Processing project analysis...");
-
 		IParsingUnit parsingUnit = null;
 		
 		for(FileElement fileElement : ProjectBrowser.getInstance().getBasePath().getGlobalFileList())
@@ -88,17 +86,12 @@ public class AntlrParsingProcess {
 			
 			// set the XML filname path to the fileElement
 			fileElement.setXmlDescription(absolutePath);
-			
-			// Debug information about file being parsed
-			logger.debug("Parsing "+fileElement.getName());
-			
+				
 			parsingUnit = ParsingUnitFactory.getInstance().createInstance();
 			
 			parsingUnit.DoParse(fileElement.getIOElement());
 			
-			// Get the AST XML of the source file
-			logger.debug("AST Transform "+fileElement.getName());
-			
+			// TODO aspect exception logging
 			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
 			if(xmlFile==null)	logger.fatal(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
 		
@@ -181,14 +174,14 @@ public class AntlrParsingProcess {
 		idTransform.transform(input, output);
 	
 	}
-	public void execute() throws ParserConfigurationException, TransformerException, IOException
+	public void execute() throws Exception
 	{
 			if(ProjectBrowser.getInstance().isLoaded())
 			{
 					processAnalysis();
 					processDescription();
 			}else{
-				logger.fatal("ProjectBrowser initialization error");
+				throw new Exception("ProjectBrowser initialization error");
 			}
 		
 	}	
