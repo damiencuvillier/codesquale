@@ -17,7 +17,7 @@ import org.junit.Test;
 import com.codesquale.ant.AntRunner;
 import com.codesquale.file.FileFilter;
 import com.codesquale.file.NotDirectoryException;
-import com.codesquale.parser.AntlrParsingProcess;
+
 /**
  * 
  * @author mbourguignon
@@ -32,8 +32,6 @@ public class AntlrParsingProcessTest {
 	
 	private static Logger logger = Logger.getLogger(AntlrParsingProcessTest.class);
 	
-	private String input;
-	private String output;
 
 	private FileFilter filter;
 	
@@ -44,8 +42,6 @@ public class AntlrParsingProcessTest {
 	@Before
 	public void setUp()
 	{
-		input = "testfiles";
-		output = "testOutput\\XMLAntlr";
 		filter = new FileFilter();
 		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 	}
@@ -64,8 +60,6 @@ public class AntlrParsingProcessTest {
 				AntRunner.getInstance().runTarget("CodeSqualeAntlrProcess");
 				
 //				ProjectBrowser.getInstance().init(new File(input),new File(output), new File(output+"\\AntlrProjectOutput.xml"), filter);
-
-				AntlrParsingProcess.getInstance().execute();
 				
 				assertTrue(true);
 				
