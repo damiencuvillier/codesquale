@@ -1,36 +1,148 @@
-<!-- Parsing tasks -->
+<!-- 
 
-<!--
-	Ressources : 
-	http://ant.apache.org/manual/CoreTasks/style.html
+	CodeSquale 
+
+	Ajilon - June 2007
+	Damien Cuvillier
+	
+	http://CodeSquale.GooglePages.com
+	
+	
+	
+
+	CodeSquale is composed by several processes. 
+	All processes are linked by Ant
+	
+	This file contains all this mecanism
+	Each "target" is a CodeSqualeProcess
+	
+	Here are the different processes, in order of executing
+		00. InitProcess
+			It creates the output hierarchy
+
+			It copies all static ressources in right paths
+			It copies the src files in "01.Src" dir
+			
+		01. ParsingProcess
+			Eventually, we use AntLR lib. It could change. 
+			Anyway, it is used to analyse and to parse Source Code.
+			AntLR gives us an AST Tree, written in XML.
+			It is very usefull. Thanks to that, we can use it and to transform it with XML tools
+			
+			This Process gives the "02.Parsing" dir
+			
+		02. TransformationProcess
+			Transform AntLR XML AST to generic xml files
+			
+			We use the xalan XSLT processor
+									
+			This Process gives the "03.DataDescription" dir
+			
+		03. MetricsProcess
+			Creates Metrics file from generic xml files
+			
+			We use saxon xquery processor to runs this task
+		
+		04. ReportProcess
+			
+			From all generated data, we can create an HTML report. 
+			It allows to read easily project description
+	
+			We use XSLT technology to achieve this task
+	
+	There are two additional process
+
+	The first one is called "CodeSqualeGlobalProcess".
+		It launchs the full process and it includes additionally the following external tools :
+			* CheckStyle
+			* PMD
+			* FindBugs
+		Thanks to that, we are providing a full featured
+		
+		
+	The second one is called "CodeSqualeStaticElementsDeploy"
+		It copies all report static elements to the right path
+		
+		
+	*** Logging ***
+		All log messages are catched by AspectJ Tool. 
+		That is why there is no messages in this script
+
+
+	*** Ressources ***
+		CodeSquale doc 
+			* http://code.google.com/p/codesquale/w/list
+		
+		Ant Docs
+			* http://ant.apache.org
+			* http://checkstyle.sourceforge.net/anttask.html 
+			* http://ant.apache.org/manual/CoreTasks/style.html
+			* http://pmd.sourceforge.net/ant-task.html
+			* http://findbugs.sourceforge.net/manual/anttask.html
 -->
-<project name="CodeSquale Scripts" 
-	default="CodeSqualeMetricsProcess"
+
+
+<project 
+	name="CodeSquale Scripts" 
+	default="CodeSqualeGlobalProcess"
 	basedir="." >
 
-	<description>
-		Tests Scripts
+	<!-- 
+		Main Parameters
 		
-		For developers only
-	</description>
+		All these parameters values are default values. 
+		They must be used only for test purpose. 
+		
+		All other uses should set manually these values	
+	-->
 	
-	<!-- values are setted by programmation 
-		Values here are only used for test use -->
+	<!-- 
+		OutputDir : Where will be stored the full report ?
+		
+		Caution : all files included in this dir will be erased
+	-->
 	<property name="OutputDir" value="d:\tmp\out\" />
-	<property name="SourceDir" value="d:\tmp\src\" />
+	<!-- 
+		OutputDir : Where are stored the source files
+	-->
+	<property name="SourceDir" value="d:\tmp\src\" />	
+	<!-- 
+		Language : Analysed Technology. Value must be a XLST StyleSheets dir subdi
+	-->
+	<property name="Language" value="Java" />	
+
+
 	
-	<!-- Subdirs of outputdir -->
-	<property name="AntLRXMLdir" value="Data\01.Antlr\" />
-	<property name="CodeSqualeXMLdir" value="Data\02.ProjectData\" />
-	<property name="MetricsDir" value="Data\03.Metrics\" />
-	<property name="ReportDir" value="Report\" />
+	<!-- Report Hierarchy -->
+	<property name="OutputSourceDir" value="00.Sources\" />
+	<property name="ParsedDataDir" value="01.ParsedData\" />
+	<property name="StructuredProjectDataDir" value="02.StructuredProjectData\" />
+	<property name="MetricsDir" value="03.Metrics\" />
+	<property name="ReportDir" value="04.Report\" />
+	<property name="ReportDataDir" value="SourceDescription\" />
+	<property name="ReportMetricsDir" value="Metrics\" />
+	
+	
+	<!-- 
+		Configuration files path
+		Set the differents dirs for needed files
+	-->
 	
 	<property name="XSDdir" value="XSD Schemas/" />
-	<property name="XSLTdir" value="XSLT StyleSheets/Java/" />
+	<property name="TransformProcessDir" value="XSLT StyleSheets/" />
+	<property name="MetricsProcessDir" value="XQuery/" />
+	<property name="ReportProcessDir" value="Report/" />
+	<property name="ReportStaticElementsDir" value="Report/static/" />
 	 
-	<property name="antlrFile" value="" />
+	<!-- tmpfile will be deleted before the end -->
 	<property name="tmpFile" value="tmp" />
-
+	
+	
+	
+	<!-- CodeSquale special ant tasks definition -->
+	
+	
+	
 	<taskdef name="CodeSqualeAntlrProcess" 
 		classname="com.codesquale.ant.AntLRTask" 
 		/>
@@ -39,13 +151,16 @@
 		/>
 	
 
+	<!-- Targets -->
 	 
 	<target name="CodeSqualeInit" >
-		<echo message="********************************" />
-		<echo message="******** CodeSquale ***********" />
-		<echo message="********************************" />		
+		<echo message="CodeSquale Initialization..." />
 		
-		<!-- Environment initialization -->
+		<!-- Creates the output hierarchy
+
+			Copies all static ressources in right paths
+			Copies the src files in "01.Src" dir
+		-->
 		<echo message="Create Results dir" />
 		
 		<!-- Delete files if output dir already exists -->
@@ -57,21 +172,56 @@
 		
 		<!-- Create output dir -->
 		<mkdir dir="${OutputDir}" />
-		<mkdir dir="${OutputDir}/${CodeSqualeXMLdir}" />
+		<mkdir dir="${OutputDir}/${OutputSourceDir}" />
+		<mkdir dir="${OutputDir}/${ParsedDataDir}" />	
+		<mkdir dir="${OutputDir}/${ParsedDataDir}xmlOutput" />
+		<mkdir dir="${OutputDir}/${StructuredProjectDataDir}" />
+		<mkdir dir="${OutputDir}/${MetricsDir}" />	
 		<mkdir dir="${OutputDir}/${ReportDir}" />
-		<mkdir dir="${OutputDir}/${AntLRXMLdir}" />	
-		<mkdir dir="${OutputDir}/${AntLRXMLdir}xmlOutput" />
-		<mkdir dir="${OutputDir}/${MetricsDir}" />		
+		
+		<!-- Copy Source Files -->
+		<copy todir="${OutputDir}/${OutputSourceDir}">
+			<fileset dir="${SourceDir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
 		
 	</target>
-					
+	
+	
+	
+	<target name="CodeSqualeStaticElementsDeploy">
+		<echo message="Copying Report Static Elements" />
+		<copy todir="${OutputDir}/${ReportDir}">
+			<fileset dir="${ReportStaticElementsDir}">
+				<include name="**/*.css"/>
+				<include name="**/*.html"/>
+				<include name="**/*.js"/>
+				<exclude name="index.html" />
+			</fileset>
+		</copy>
+		<copy todir="${OutputDir}">
+			<fileset dir="${ReportStaticElementsDir}">
+				<include name="index.html" />
+			</fileset>
+		</copy>
+		<copy todir="${OutputDir}/${ReportDir}/img/">
+			<fileset dir="${ReportStaticElementsDir}">
+				<include name="**/*.gif"/>
+				<include name="**/*.png"/>
+				<include name="**/*.jpg"/>
+			</fileset>
+		</copy>
+	</target>				
+	
+	
 	
 	<target name="CodeSqualeAntlrProcess" 
 			depends="CodeSqualeInit">
 		<!-- Browse files and build a project file & antlr xml content -->
-		<echo message="Browsing source code" />
+		<echo message="Browsing and Parsing source code..." />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
-								target="${OutputDir}/${AntLRXMLdir}"
+								target="${OutputDir}/${ParsedDataDir}"
 		/>
 	</target>
 	
@@ -80,23 +230,22 @@
 		<!-- 
 			Transforming antlr files to codesquale format file
 		-->
-		<echo message="Parse xml files from antlr Format to CodeSquale Format" />
+		<echo message="Generating generic xml files..." />
 		
 		<!-- XSD Schemas files copy -->
-		<echo level="info" message="XSD SCHEMA COPYING..." />
-		<copy todir="${OutputDir}/${CodeSqualeXMLdir}">
+		<echo level="debug" message="XSD SCHEMA COPYING..." />
+		<copy todir="${OutputDir}/${StructuredProjectDataDir}">
 			<fileset dir="${basedir}/${XSDdir}" > 
 				<include name="**/*.xsd"/>
 			</fileset>
 		</copy>
 		
-		<echo message="Project exploring ... " />
 		<xslt basedir="." processor="trax" 
-			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
-			out="${OutputDir}/${CodeSqualeXMLdir}project.xml"
+			in="${OutputDir}/${ParsedDataDir}AntlrProjectOutput.xml"
+			out="${OutputDir}/${StructuredProjectDataDir}project.xml"
 			extension="xml" 
 			description="Project File parsing"
-			style="${XSLTdir}project.xslt"
+			style="${TransformProcessDir}${Language}/project.xslt"
 			>
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />	
 		</xslt>
@@ -104,39 +253,68 @@
 		<echo message="Directories Exploring ..." />
 		
 		<xslt basedir="." processor="trax"
-			in="${OutputDir}/${AntLRXMLdir}AntlrProjectOutput.xml"
-			out="${OutputDir}/${CodeSqualeXMLdir}/${tmpFile}"
-			extension="xml" 
+			in="${OutputDir}/${ParsedDataDir}AntlrProjectOutput.xml"
+			out="${OutputDir}/${StructuredProjectDataDir}/${tmpFile}"
+			extension=".xml" 
 			description="Directory files parsing"
-			style="${XSLTdir}directory.xslt"
+			style="${TransformProcessDir}${Language}/directory.xslt"
 			>
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
 		</xslt>
 		
 		
 		<!-- Delete Temporary File -->
-		<echo level="info" message="Deleting Temporary files" />
-		<delete file="${OutputDir}/${CodeSqualeXMLdir}/${tmpFile}" />
+		<echo level="debug" message="Deleting Temporary files" />
+		<delete file="${OutputDir}/${StructuredProjectDataDir}/${tmpFile}" />
 		
 		<echo message="AntLRtoCodeSqualeXML transition done"/>
 	</target>
 	
+	
+	
+	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXSLTProcess">
-		<echo message="Metrics are being calculating" />
-		<!-- FIXME Why metricsProcess does not work in eclipse ? -->
-		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}" queryFile="XQuery/saxon/DirectoryFileCounters.xquery">
-			<fileset dir="${OutputDir}\${CodeSqualeXMLdir}">
+		<echo message="Metrics are being calculating..." />
+		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}" queryFile="${MetricsProcessDir}saxon/DirectoryFileCounters.xquery">
+			<fileset dir="${OutputDir}/${StructuredProjectDataDir}">
 				<include name="*.xml"/>
 				<exclude name="project.xml" />
 			</fileset>
 		</CodeSqualeMetricsProcess>
 		
-		<echo message="CodeSquale has done his job" />
-		<echo message="You can read LoggingInfo.html file for more details" />
 	</target>
 
-	
-	
+	<target name="CodeSqualeReportProcess" depends="CodeSqualeMetricsProcess, CodeSqualeStaticElementsDeploy">
+		<echo message="Generating... Report From Data Files" />
+		
+		<xslt processor="trax" 
+			includes="*.xml"
+			basedir="${OutputDir}/${StructuredProjectDataDir}"
+			destdir="${OutputDir}/${ReportDir}${ReportDataDir}"
+			extension=".html" 
+			description="Creating report"
+			style="${ReportProcessDir}ReportingStructure.xslt"
+			>
+			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
+		</xslt>
+		
+		<echo message="Transform Metrics Files" />
+		<xslt processor="trax" 
+			includes="*.xml"
+			basedir="${OutputDir}/${MetricsDir}"
+			destdir="${OutputDir}/${ReportDir}${ReportMetricsDir}"
+			extension=".html" 
+			description="Creating report"
+			style="${ReportProcessDir}/ReportingMetrics.xslt"
+			>
+			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
+		</xslt>
+	</target>
+
+	<target name="CodeSqualeGlobalProcess">
+		<antcall target="CodeSqualeReportProcess" />
+		
+	</target>
 
 </project>
 
