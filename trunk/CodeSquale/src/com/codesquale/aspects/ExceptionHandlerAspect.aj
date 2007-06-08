@@ -1,24 +1,14 @@
 package com.codesquale.aspects;
 
-import org.apache.log4j.Logger;
+import java.io.File;
+
+import com.codesquale.file.FileFilter;
 
 public aspect ExceptionHandlerAspect {
-//	Logger _logger;
-//	
-//	/**
-//	 * Define a logger for the poincuted class
-//	 */
-//	pointcut loggerPoint() :execution(* *.*(..)) && !within(TraceAspect);
-//	after():loggerPoint()
-//	{
-//			_logger = Logger.getLogger(thisJoinPoint.getSignature().getDeclaringType());
-//		
-//	}
 
 	/**
 	 * Catching compilation unit exception
 	 */
-	declare soft : java.lang.Exception : call(void com.codesquale.parser.java.JavaRecognizer.compilationUnit());
 	void around() : call(* com.codesquale.parser.java.JavaRecognizer.compilationUnit()){
 		try
 		{
@@ -32,7 +22,6 @@ public aspect ExceptionHandlerAspect {
 	/**
 	 * Antlr Process analysis exception
 	 */
-	declare soft: java.lang.Exception : call(void com.codesquale.parser.AntlrParsingProcess.processAnalysis());
 	void around() : call(* com.codesquale.parser.AntlrParsingProcess.processAnalysis())
 	{
 		try
@@ -48,7 +37,6 @@ public aspect ExceptionHandlerAspect {
 	/**
 	 * Antlr Process description exception
 	 */
-	declare soft: java.lang.Exception : call(void com.codesquale.parser.AntlrParsingProcess.processDescription());
 	void around() : call(* com.codesquale.parser.AntlrParsingProcess.processDescription())
 	{
 		try
@@ -56,7 +44,43 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal("Errors were found during parsing: " + e.getMessage());
+			TraceAspect._logger.fatal("Errors were found while retreiving abstract syntaxic tree: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	void around() : call(void com.codesquale.parser.AntlrParsingProcess.execute())
+	{
+		try
+		{
+			proceed();
+		}catch(Exception e)
+		{
+			TraceAspect._logger.fatal(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * ProjectBrowser Initialisation exception checking
+	 */
+	void around() : call(void com.codesquale.file.ProjectBrowser.init(java.io.File,java.io.File,java.io.File,com.codesquale.file.FileFilter ))
+	{
+		try
+		{
+			proceed();
+		}catch(Exception e)
+		{
+			TraceAspect._logger.fatal(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	void around() : call( void com.codesquale.file.DirectoryElement.browseFiles(java.io.File)){
+		try
+		{
+			proceed();
+		}catch(Exception e)
+		{
+			TraceAspect._logger.fatal(e.getMessage());
 			e.printStackTrace();
 		}
 	}

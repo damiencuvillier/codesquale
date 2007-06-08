@@ -132,6 +132,17 @@ public aspect TraceAspect {
 		_logger.trace("[Parsing] writing description: "
 				+ u.getXmlFileName());
 	}
+	
+	
+	pointcut traceStatusTask (com.codesquale.ant.StatusTask s) : 
+		target(s) && execution(public void  execute()) && !within(TraceAspect);
+	
+	before(com.codesquale.ant.StatusTask s) : traceStatusTask(s){
+		_logger.trace(s.getMessage());
+	}
+	
+	
+	
 
 //	 pointcut totalTrace()
 //	 : execution(* *.*(..)) && !within(TraceAspect);
