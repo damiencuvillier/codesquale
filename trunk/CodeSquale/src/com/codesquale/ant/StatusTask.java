@@ -41,7 +41,4 @@ public class StatusTask extends Task {
 		
 	}
 }
-/** Defines all CodeSquale possible status.
- * @author DCUVILLIER
- *
- */
+

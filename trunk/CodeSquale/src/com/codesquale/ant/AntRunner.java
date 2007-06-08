@@ -28,7 +28,7 @@ import org.apache.tools.ant.listener.Log4jListener;
  * 
  */
 
-public class AntRunner {
+public final class AntRunner {
 
 	private AntRunner() {
 	}
@@ -39,9 +39,10 @@ public class AntRunner {
 	 * @return Single instance of antRunner
 	 */
 	public static AntRunner getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			// it's ok, we can call this constructor
 			instance = new AntRunner();
+		}
 		return instance;
 	}
 
@@ -74,7 +75,7 @@ public class AntRunner {
 		project = new Project();
 		try {
 			project.init();
-		} catch (BuildException e) {
+		} catch (final BuildException e) {
 			throw new Exception("The default task list could not be loaded.");
 		}
 		// project.setBasedir(".");
@@ -86,12 +87,13 @@ public class AntRunner {
 		// "or isn't a directory."); }
 
 		// Parse the given buildfile. If none is given, "build.xml" is used.
-		if (buildFile == null)
+		if (buildFile == null) {
 			buildFile = new String("build.xml");
+		}
 		try {
 			ProjectHelper.getProjectHelper().parse(project,
 					new File(buildFile));
-		} catch (BuildException e) {
+		} catch (final BuildException e) {
 			throw new Exception("Configuration file " + buildFile
 					+ " is invalid, or cannot be read.");
 		}
@@ -110,17 +112,19 @@ public class AntRunner {
 	 * @exception Exception
 	 *                Exceptions are self-explanatory (read their Message)
 	 */
-	public void setProperties(Map properties, boolean overridable)
+	public void setProperties(final Map properties, final boolean overridable)
 			throws Exception {
 		// Test if the project exists
-		if (project == null)
+		if (project == null) {
 			throw new Exception("Properties cannot be set"
 					+ "because the project has not been initialized. "
 					+ "Please call the 'init' methodfirst !");
+		}
 
 		// Property hashmap is null
-		if (properties == null)
+		if (properties == null) {
 			throw new Exception("The provided property map is null.");
+		}
 
 		// Loop through the property map
 		Set propertyNames = properties.keySet();
@@ -129,14 +133,16 @@ public class AntRunner {
 			// Get the property's name and value
 			String propertyName = (String) iter.next();
 			String propertyValue = (String) properties.get(propertyName);
-			if (propertyValue == null)
+			if (propertyValue == null) {
 				continue;
+			}
 
 			// Set the properties
-			if (overridable)
+			if (overridable) {
 				project.setProperty(propertyName, propertyValue);
-			else
+			} else {
 				project.setUserProperty(propertyName, propertyValue);
+			}
 		}
 	}
 
@@ -151,15 +157,17 @@ public class AntRunner {
 	 */
 	public boolean runTarget(String target) throws Exception {
 		// Test if the project exists
-		if (project == null)
+		if (project == null) {
 			throw new Exception("No target can be launched "
 					+ "because the project has not been initialized. "
 					+ "Please call the 'init' method first !");
+		}
 		project.addBuildListener(new Log4jListener());
 
 		// If no target is specified, run the default one.
-		if (target == null)
+		if (target == null) {
 			target = project.getDefaultTarget();
+		}
 
 		// Run the target
 		try {

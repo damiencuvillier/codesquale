@@ -1,7 +1,6 @@
 package com.codesquale.ant;
 
 import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -11,10 +10,21 @@ import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.AntlrParsingProcess;
 
-
+/** Ant Task for AntLR processing.<br />
+ * It is the first step in CodeSquale<br />
+ * This task use in particuler the project browser
+ * @author Damien Cuvillier
+ * @see com.codesquale.file
+ */
 public class AntLRTask extends Task {
+	/** Log4J Logger.
+	 */
 	private static Logger logger = Logger.getLogger(AntLRTask.class);
-	private String source, target;
+	
+	/** Path where is located the source files. */
+	private String source;
+	/** Path where will be stored the xml ast provided by AntLR. */
+	private String target;
 	
 	public void execute() throws BuildException {
 		logger.info("File Filter init");
