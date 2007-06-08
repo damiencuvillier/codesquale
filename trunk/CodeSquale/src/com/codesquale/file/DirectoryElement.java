@@ -26,12 +26,12 @@ public class DirectoryElement extends AbstractElement {
 	/**
 	 * 
 	 * @param dir
-	 * @throws NotDirectoryException
+	 * @throws Exception 
 	 */
-	public DirectoryElement(java.io.File dir) throws NotDirectoryException {
+	public DirectoryElement(java.io.File dir) throws Exception {
 		this(dir, null);
 	}
-	public DirectoryElement(java.io.File dir, FileFilter filter) throws NotDirectoryException {
+	public DirectoryElement(java.io.File dir, FileFilter filter) throws Exception {
 		super(dir);
 		
 		if (!dir.isDirectory())
@@ -48,21 +48,19 @@ public class DirectoryElement extends AbstractElement {
 	 * Browses all files with the specified filter
 	 * 
 	 * @param dir
+	 * @throws Exception s
 	 */
-	private void browseFiles(java.io.File dir) {
+	private void browseFiles(java.io.File dir) throws Exception {
 		File[] list = dir.listFiles();
 		for (int i = 0; i < list.length; i++) {
 			File file = list[i];
 			if(!file.getName().subSequence(0, 1).equals("."))
 			{
-				if (file.isDirectory())
-					try {
+				if (file.isDirectory()){
 	 					DirectoryElement directoryElement = new DirectoryElement(file,filter);
 						globalList.add(directoryElement);
 						directoriesList.add(directoryElement);
-					} catch (NotDirectoryException e) {
-						logger.error(e.getMessage());
-					}
+				}
 				if (file.isFile()) {
 					FileElement fileElement = new FileElement(file);
 					if (filter == null
