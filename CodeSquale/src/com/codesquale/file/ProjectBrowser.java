@@ -66,12 +66,11 @@ public class ProjectBrowser
 	 * @throws NotDirectoryException 
 	 * @throws FileNotFoundException 
 	 */
-	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws NotDirectoryException, FileNotFoundException{
+	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws Exception{
 		if( ! InputPath.isDirectory() ){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
 			 * */
-			logger.fatal("Specified path is not a directory");
 			init = false;
 			throw new NotDirectoryException(InputPath);
 		}
@@ -82,14 +81,10 @@ public class ProjectBrowser
 		/*
 		 * Initialize outputFile
 		 */
-		try {
-			setProjectOutputFile(new FileOutputStream(outputFile));
-			init = true;
-		} catch (FileNotFoundException e) {
-			init = false;
-			logger.fatal("Output file cannot be opened");
-			throw e;
-		}
+		setProjectOutputFile(new FileOutputStream(outputFile));
+		
+		init = true;
+
 	
 	}
 	
