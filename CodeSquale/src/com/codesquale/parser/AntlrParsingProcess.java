@@ -70,7 +70,7 @@ public class AntlrParsingProcess {
 	 * @throws IOException 
 	 * 
 	 */
-	private void processAnalysis() throws IOException
+	private void processAnalysis() throws Exception
 	{
 	
 		IParsingUnit parsingUnit = null;
