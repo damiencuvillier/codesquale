@@ -8,8 +8,6 @@
 	http://CodeSquale.GooglePages.com
 	
 	
-	
-
 	CodeSquale is composed by several processes. 
 	All processes are linked by Ant
 	
@@ -149,19 +147,22 @@
 	<taskdef name="CodeSqualeMetricsProcess" 
 		classname="com.codesquale.ant.MetricsTask"
 		/>
+	<taskdef name="status" 
+			classname="com.codesquale.ant.StatusTask"
+			/>
 	
 
 	<!-- Targets -->
 	 
 	<target name="CodeSqualeInit" >
-		<echo message="CodeSquale Initialization..." />
+		<status step="1" message="CodeSquale Initialization..." />
 		
 		<!-- Creates the output hierarchy
 
 			Copies all static ressources in right paths
 			Copies the src files in "01.Src" dir
 		-->
-		<echo message="Create Results dir" />
+		<status message="Create Results dir"/>
 		
 		<!-- Delete files if output dir already exists -->
 		<delete failonerror="false">
@@ -191,7 +192,7 @@
 	
 	
 	<target name="CodeSqualeStaticElementsDeploy">
-		<echo message="Copying Report Static Elements" />
+		<status message="Copying Report Static Elements" />
 		<copy todir="${OutputDir}/${ReportDir}">
 			<fileset dir="${ReportStaticElementsDir}">
 				<include name="**/*.css"/>
@@ -219,7 +220,7 @@
 	<target name="CodeSqualeAntlrProcess" 
 			depends="CodeSqualeInit">
 		<!-- Browse files and build a project file & antlr xml content -->
-		<echo message="Browsing and Parsing source code..." />
+		<status step="2" message="Browsing and Parsing source code..." />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
 								target="${OutputDir}/${ParsedDataDir}"
 		/>
@@ -230,10 +231,10 @@
 		<!-- 
 			Transforming antlr files to codesquale format file
 		-->
-		<echo message="Generating generic xml files..." />
+		<status step="3" message="Generating generic xml files..." />
 		
 		<!-- XSD Schemas files copy -->
-		<echo level="debug" message="XSD SCHEMA COPYING..." />
+		<status message="XSD SCHEMA COPYING..." />
 		<copy todir="${OutputDir}/${StructuredProjectDataDir}">
 			<fileset dir="${basedir}/${XSDdir}" > 
 				<include name="**/*.xsd"/>
@@ -250,7 +251,6 @@
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />	
 		</xslt>
 		<!-- Directory Parsing -->
-		<echo message="Directories Exploring ..." />
 		
 		<xslt basedir="." processor="trax"
 			in="${OutputDir}/${ParsedDataDir}AntlrProjectOutput.xml"
@@ -264,17 +264,16 @@
 		
 		
 		<!-- Delete Temporary File -->
-		<echo level="debug" message="Deleting Temporary files" />
+		<status message="Deleting Temporary files" />
 		<delete file="${OutputDir}/${StructuredProjectDataDir}/${tmpFile}" />
 		
-		<echo message="AntLRtoCodeSqualeXML transition done"/>
 	</target>
 	
 	
 	
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXSLTProcess">
-		<echo message="Metrics are being calculating..." />
+		<status step="4" message="Metrics are being calculating..." />
 		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}" queryFile="${MetricsProcessDir}saxon/DirectoryFileCounters.xquery">
 			<fileset dir="${OutputDir}/${StructuredProjectDataDir}">
 				<include name="*.xml"/>
@@ -285,7 +284,7 @@
 	</target>
 
 	<target name="CodeSqualeReportProcess" depends="CodeSqualeMetricsProcess, CodeSqualeStaticElementsDeploy">
-		<echo message="Generating... Report From Data Files" />
+		<status step="5" message="Generating Report From Data Files... " />
 		
 		<xslt processor="trax" 
 			includes="*.xml"
@@ -298,7 +297,7 @@
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
 		</xslt>
 		
-		<echo message="Transform Metrics Files" />
+		<status message="Transform Metrics Files" />
 		<xslt processor="trax" 
 			includes="*.xml"
 			basedir="${OutputDir}/${MetricsDir}"
@@ -312,8 +311,9 @@
 	</target>
 
 	<target name="CodeSqualeGlobalProcess">
+		<status step="0" message="CodeSqualing..."/>
 		<antcall target="CodeSqualeReportProcess" />
-		
+		<status step="6" message="Process done." />
 	</target>
 
 </project>
