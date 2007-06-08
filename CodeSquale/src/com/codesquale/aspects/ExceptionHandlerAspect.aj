@@ -3,17 +3,17 @@ package com.codesquale.aspects;
 import org.apache.log4j.Logger;
 
 public aspect ExceptionHandlerAspect {
-	Logger _logger;
-	
-	/**
-	 * Define a logger for the poincuted class
-	 */
-	pointcut loggerPoint() :execution(* *.*(..)) && !within(TraceAspect);
-	after():loggerPoint()
-	{
-			_logger = Logger.getLogger(thisJoinPoint.getSignature().getDeclaringType());
-		
-	}
+//	Logger _logger;
+//	
+//	/**
+//	 * Define a logger for the poincuted class
+//	 */
+//	pointcut loggerPoint() :execution(* *.*(..)) && !within(TraceAspect);
+//	after():loggerPoint()
+//	{
+//			_logger = Logger.getLogger(thisJoinPoint.getSignature().getDeclaringType());
+//		
+//	}
 
 	/**
 	 * Catching compilation unit exception
@@ -25,7 +25,7 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			_logger.fatal("Abstract syntaxic tree errors were found: " + e.getMessage());
+			TraceAspect._logger.fatal("Abstract syntaxic tree errors were found: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -40,7 +40,7 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			_logger.fatal("Errors were found during parsing: " + e.getMessage());
+			TraceAspect._logger.fatal("Errors were found during parsing: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -56,7 +56,7 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			_logger.fatal("Errors were found during parsing: " + e.getMessage());
+			TraceAspect._logger.fatal("Errors were found during parsing: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
