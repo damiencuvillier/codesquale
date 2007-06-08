@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import antlr.ANTLRException;
 import antlr.ASTFactory;
 import antlr.CommonAST;
 import antlr.RecognitionException;
@@ -52,8 +53,9 @@ public class ParsingUnit implements IParsingUnit {
 	 * @param codeSourceFileStream
 	 * @return returns a RawMetricsData class necessary to build the final
 	 *         metrics
+	 * @throws ANTLRException 
 	 */
-	private void ParseCodeSourceStream(FileInputStream codeSourceFileStream) {
+	private void ParseCodeSourceStream(FileInputStream codeSourceFileStream) throws Exception, TokenStreamException{
 		
 		// Initializing the Lexer
 		myJavaLexer = new JavaLexer(codeSourceFileStream);
@@ -61,19 +63,13 @@ public class ParsingUnit implements IParsingUnit {
 		myJavaRecognizer = new JavaRecognizer(myJavaLexer);
 
 		// do AST Metrics
-		try {
-			myJavaRecognizer.compilationUnit();
+		myJavaRecognizer.compilationUnit();
+	
+		ASTFactory factory = new ASTFactory();
+		abstractTree = (CommonAST) factory.create(0, "ROOT");
 
-			ASTFactory factory = new ASTFactory();
-			abstractTree = (CommonAST) factory.create(0, "ROOT");
+		abstractTree.setFirstChild(myJavaRecognizer.getAST());
 
-			abstractTree.setFirstChild(myJavaRecognizer.getAST());
-
-		} catch (RecognitionException e1) {
-			e1.printStackTrace();
-		} catch (TokenStreamException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	/**
@@ -95,16 +91,19 @@ public class ParsingUnit implements IParsingUnit {
 		return output;
 	}
 
-	public void DoParse(File codeSourceFile) throws FileNotFoundException {
+	public void DoParse(File codeSourceFile) throws Exception {
 		
 		filename = codeSourceFile.getName();
 		
 		FileInputStream codeSourceFileStream = null;
 
+
 		codeSourceFileStream = new FileInputStream(codeSourceFile);
+		ParseCodeSourceStream(codeSourceFileStream);
+		
 	
 		
-		ParseCodeSourceStream(codeSourceFileStream);
+	
 	}
 
 
