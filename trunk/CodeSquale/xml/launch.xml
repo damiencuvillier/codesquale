@@ -44,12 +44,15 @@ Agence Nord
 		    </classpath>
 		    <arg value="-buildfile"/>
 		    <arg file="AntScript.xml"/>
-			<!--<arg value="-logger" />
-			<arg value="org.apache.tools.ant.listener.Log4jListener" />-->
+			<arg value="-listener" />
+			<arg value="org.apache.tools.ant.listener.Log4jListener" />
+			<!--<arg value="-logfile" />
+			<arg value="${OutputDir}process.log" />-->
 			<arg value="-lib"/>
-			<arg value="../libs"/>
+			<arg value="../libs;."/>
 		    <arg value="CodeSqualeGlobalProcess"/>
-			
+			<!--<arg value="-debug" />-->
+
 			<!-- Arguments -->
 			<arg value="-DOutputDir=${OutputDir}" />
 			<arg value="-DSourceDir=${SourceDir}" />
