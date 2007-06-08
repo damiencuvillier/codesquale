@@ -14,7 +14,7 @@ import com.codesquale.parser.IParsingUnit;
 
 public aspect TraceAspect {
 	
-	Logger _logger;
+	static Logger _logger;
 	
 	TraceAspect() {
 		
