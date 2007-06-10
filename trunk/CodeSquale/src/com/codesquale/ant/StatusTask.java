@@ -25,7 +25,7 @@ public class StatusTask extends Task {
 	/** AspectJ Log
 	 */
 	public void execute() {
-		System.out.println(message);
+		// TraceAspect is logging here
 	}
 	/** Step Variable setter. */
 	public void setStep(int step) {
@@ -39,6 +39,10 @@ public class StatusTask extends Task {
 	
 	public void setLevelLogger(int levelLogger){
 		
+	}
+	public String getMessage()
+	{
+		return message;
 	}
 }
 
