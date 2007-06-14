@@ -3,8 +3,16 @@ package com.codesquale.aspects;
 import java.io.File;
 
 import com.codesquale.file.FileFilter;
-
+/**
+ * Simple exceptions handler aspect
+ * 
+ * TODO: Implement softened exceptions
+ */
 public aspect ExceptionHandlerAspect {
+	
+	/***************************************************************************/
+	/***************** Browsing & Parsing Exception Logging ******************************/
+	/***************************************************************************/
 	
 	/**
 	 * Catching JavaRecognizer.compilationUnit() exception
@@ -90,6 +98,11 @@ public aspect ExceptionHandlerAspect {
 			e.printStackTrace();
 		}
 	}
+	/***************************************************************************/
+	/***************** /Browsing & Parsing Exception Logging ******************************/
+	/***************************************************************************/
+	
+	
 	
 	/***************************************************************************/
 	/***************** Ant Task Exception Logging ******************************/
@@ -108,4 +121,9 @@ public aspect ExceptionHandlerAspect {
 			e.printStackTrace();
 		}
 	}
+
+	/***************************************************************************/
+	/***************** /Ant Task Exception Logging ******************************/
+	/***************************************************************************/
+	
 }
