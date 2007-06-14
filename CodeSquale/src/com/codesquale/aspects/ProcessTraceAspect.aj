@@ -5,6 +5,11 @@ import org.aspectj.lang.Signature;
 import com.codesquale.file.ProjectBrowser;
 
 public aspect ProcessTraceAspect {
+	
+	/************************************************************************/
+	/********************   ANTLRParsingProcess Logging poincuts  ***********/
+	/************************************************************************/
+	
 	/**
 	 * ANTLR Parsing process logging
 	 * 
@@ -56,4 +61,8 @@ public aspect ProcessTraceAspect {
 		Signature sig = thisJoinPointStaticPart.getSignature();
 		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
 	}
+	
+	/************************************************************************/
+	/********************   /ANTLRParsingProcess    **************************/
+	/************************************************************************/
 }

@@ -91,4 +91,21 @@ public aspect ExceptionHandlerAspect {
 		}
 	}
 	
+	/***************************************************************************/
+	/***************** Ant Task Exception Logging ******************************/
+	/***************************************************************************/
+	
+	/**
+	 * MetricsTask exception catching
+	 */
+	void around() : call( void com.codesquale.ant.MetricsTask.validate()){
+		try
+		{
+			proceed();
+		}catch(Exception e)
+		{
+			ParsingTraceAspect._logger.fatal(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
