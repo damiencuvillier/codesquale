@@ -7,7 +7,7 @@ import com.codesquale.file.FileFilter;
 public aspect ExceptionHandlerAspect {
 
 	/**
-	 * Catching compilation unit exception
+	 * Catching JavaRecognizer.compilationUnit() exception
 	 */
 	void around() : call(* com.codesquale.parser.java.JavaRecognizer.compilationUnit()){
 		try
@@ -15,12 +15,12 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal("Abstract syntaxic tree errors were found: " + e.getMessage());
+			ParsingTraceAspect._logger.fatal("Abstract syntaxic tree errors were found: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	/**
-	 * Antlr Process analysis exception
+	 * Catching AntlrProcess.analysis() exception
 	 */
 	void around() : call(* com.codesquale.parser.AntlrParsingProcess.processAnalysis())
 	{
@@ -29,13 +29,13 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal("Errors were found during parsing: " + e.getMessage());
+			ParsingTraceAspect._logger.fatal("Errors were found during parsing: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Antlr Process description exception
+	 * Catching AntlrProcess.description() exception
 	 */
 	void around() : call(* com.codesquale.parser.AntlrParsingProcess.processDescription())
 	{
@@ -44,10 +44,13 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal("Errors were found while retreiving abstract syntaxic tree: " + e.getMessage());
+			ParsingTraceAspect._logger.fatal("Errors were found while retreiving abstract syntaxic tree: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Catching AntlrProcess.execute() exception
+	 */
 	void around() : call(void com.codesquale.parser.AntlrParsingProcess.execute())
 	{
 		try
@@ -55,7 +58,7 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal(e.getMessage());
+			ParsingTraceAspect._logger.fatal(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -69,18 +72,21 @@ public aspect ExceptionHandlerAspect {
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal(e.getMessage());
+			ParsingTraceAspect._logger.fatal(e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Catching DirectoryElement.browseFiles()
+	 */
 	void around() : call( void com.codesquale.file.DirectoryElement.browseFiles(java.io.File)){
 		try
 		{
 			proceed();
 		}catch(Exception e)
 		{
-			TraceAspect._logger.fatal(e.getMessage());
+			ParsingTraceAspect._logger.fatal(e.getMessage());
 			e.printStackTrace();
 		}
 	}
