@@ -26,7 +26,7 @@ public aspect AntTaskAspect {
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 		
-		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "."+ sig.getName() + " starting ");
+		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "."+ sig.getName() + " starting");
 	}
 	after(org.apache.tools.ant.Task t): traceAntTask(t)
 	{

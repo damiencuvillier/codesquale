@@ -17,8 +17,6 @@ import com.codesquale.metrics.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
 	
-	private static Logger logger = Logger.getLogger(MetricsTask.class);
-	
     private String outputDir;
     private Vector filesets = new Vector();
     private String queryFile;
@@ -34,7 +32,7 @@ public class MetricsTask extends Task {
     }
 
     public void execute() {
-    	logger.info("Launch MetricsProcess Ant Task");
+   
     	// Ant Task Format validator
     	 validate();         
     	 
@@ -62,7 +60,6 @@ public class MetricsTask extends Task {
     protected void validate() {
         if (filesets.size()<1) throw new BuildException("fileset not set");
         if(outputDir == null || outputDir.equals("")) throw new BuildException("outputdir not set");
-        logger.debug("Metrics Task is valid");
     }
 
 	public Vector getFilesets() {
