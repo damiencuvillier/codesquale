@@ -1,4 +1,4 @@
-package com.codesquale.metrics;
+package com.codesquale.metrics.deprecated;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
