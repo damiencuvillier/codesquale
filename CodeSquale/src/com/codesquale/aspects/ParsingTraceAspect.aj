@@ -12,98 +12,89 @@ import org.apache.log4j.Logger;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.IParsingUnit;
 
-public aspect TraceAspect {
+public aspect ParsingTraceAspect {
 	
 	static Logger _logger;
 	
-	TraceAspect() {
+	ParsingTraceAspect() {
 		
 	}
 
 	/**
 	 * Define a logger for the poincuted class
 	 */
-	pointcut loggerPoint() :execution(* *.*(..)) && !within(TraceAspect);
+	pointcut loggerPoint() :
+		execution(* *.*(..)) 
+		//&& !execution(* *.set*(..)) 
+		//&& !execution(* *.get*(..)) 
+		&& !within(TraceAspect);
+	
 	after():loggerPoint()
 	{
 			_logger = Logger.getLogger(thisJoinPoint.getSignature().getDeclaringType());
 		
 	}
 
-	/**
-	 * ANTLR Parsing process logging
-	 * 
-	 */
-	pointcut traceParsingProcess(com.codesquale.parser.AntlrParsingProcess p): 
-		target(p) && call(private void processAnalysis()) && !within(TraceAspect);
-
-	/**
-	 * ANTLR XML Description process 
-	 */
-	pointcut traceDescriptionProcess(com.codesquale.parser.AntlrParsingProcess p): 
-		target(p) && call(private void processDescription()) && !within(TraceAspect);
 
 	
 	/**
 	 * Pointcut for Parsing unit factory unit instanciation
 	 */
 	pointcut debugParsingUnitFactory(com.codesquale.parser.ParsingUnitFactory f):
-		target(f) && call(public IParsingUnit createInstance()) && !within(TraceAspect);
+		target(f) 
+		&& call(public IParsingUnit createInstance()) 
+		&& !within(TraceAspect);
 
 	/**
 	 * Pointcuts for ParsingUnit
 	 */
 	pointcut traceParseFile(com.codesquale.parser.ParsingUnit u)
-		: target(u) && call(public void DoParse(java.io.File) ) && !within(TraceAspect);
+		: target(u) 
+		&& call(public void DoParse(java.io.File) ) 
+		&& !within(TraceAspect);
 	
 	pointcut traceASTTransform(com.codesquale.parser.ParsingUnit u)
-	: target(u) && call(public FileOutputStream ASTToXML(String)) && !within(TraceAspect);
+		: target(u) 
+		&& call(public FileOutputStream ASTToXML(String)) 
+		&& !within(TraceAspect);
 	
+	/**
+	 * FileFilter init pointcut
+	 */
+	pointcut traceFileFilterInit(com.codesquale.file.FileFilter f)
+		: target(f)
+		&& call (public void addFileType(int))
+		&& !within(TraceAspect);
 
-
-	/**
-	 * Before Intercepting AntlrParsingProcess
-	 */
-	before(com.codesquale.parser.AntlrParsingProcess p) : traceParsingProcess(p)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		_logger.trace("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " start files analysis");
-	}
-	/**
-	 * After Intercepting AntlrParsingProcess
-	 */
-	after(com.codesquale.parser.AntlrParsingProcess p) : traceParsingProcess(p)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		_logger.trace("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
-	}
 	
 	
-	/**
-	 * Before Intercepting AntlrParsingProcess
-	 */
-	before(com.codesquale.parser.AntlrParsingProcess p) : traceDescriptionProcess(p)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		_logger.trace("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " writing files description in "+ ProjectBrowser.getInstance().getProjectOutputFileName());
-	}
-	/**
-	 * After Intercepting AntlrParsingProcess
-	 */
-	after(com.codesquale.parser.AntlrParsingProcess p) : traceDescriptionProcess(p)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		_logger.trace("[Process] " +  sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
-	}
 	
 	
+	before(com.codesquale.file.FileFilter f) : traceFileFilterInit(f)
+	{
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " Filter initialisation" );
+	}
+	/**
+	 * ProjectBrowser Initialisation pointcut
+	 */
+	pointcut traceProjectBrowser(com.codesquale.file.ProjectBrowser p)
+		: target(p)
+		&& call (public void init(java.io.File,java.io.File,java.io.File,com.codesquale.file.FileFilter))
+		&& !within(TraceAspect);
+	
+	before(com.codesquale.file.ProjectBrowser p) : traceProjectBrowser(p)
+	{
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " Browsing project files" );
+	}
 	/**
 	 * Before parsing unit by factory instanciation  
 	 */
 	before(com.codesquale.parser.ParsingUnitFactory f) : debugParsingUnitFactory(f)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-		_logger.debug("[Factory] "+ sig.getDeclaringTypeName() + "." + sig.getName() + 
+		ParsingTraceAspect._logger.debug(sig.getDeclaringTypeName() + "." + sig.getName() + 
 				 "  call");
 	}
 	
@@ -114,9 +105,9 @@ public aspect TraceAspect {
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 
-		_logger.debug("[Parsing] " +  sig.getDeclaringTypeName() + "."+ sig.getName()+ " parse: "
+		ParsingTraceAspect._logger.debug( sig.getDeclaringTypeName() + "."+ sig.getName()+ " parse: "
 				+ u.getFileName());
-		_logger.trace("[Parsing] file: "
+		ParsingTraceAspect._logger.trace("parsing file: "
 				+ u.getFileName());
 	}
 
@@ -127,19 +118,14 @@ public aspect TraceAspect {
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 		
-		_logger.debug("[Parsing] " + sig.getDeclaringTypeName() + "."+ sig.getName() + " transform: "
+		ParsingTraceAspect._logger.debug(sig.getDeclaringTypeName() + "."+ sig.getName() + " transform: "
 				+ u.getXmlFileName());
-		_logger.trace("[Parsing] writing description: "
+		ParsingTraceAspect._logger.trace("writing description: "
 				+ u.getXmlFileName());
 	}
 	
 	
-	pointcut traceStatusTask (com.codesquale.ant.StatusTask s) : 
-		target(s) && execution(public void  execute()) && !within(TraceAspect);
-	
-	before(com.codesquale.ant.StatusTask s) : traceStatusTask(s){
-		_logger.trace(s.getMessage());
-	}
+
 	
 	
 	
