@@ -31,5 +31,10 @@ public class Utilities {
         reader.close();
         return fileData.toString();
     }
+	
+	public static void ManageException(Exception e)
+	{
+		
+	}
 
 }
