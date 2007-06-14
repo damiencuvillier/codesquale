@@ -28,8 +28,6 @@ import com.codesquale.utils.Utilities;
 
 public class AntlrParsingProcess {
 
-	private static Logger logger = Logger.getLogger(AntlrParsingProcess.class);
-	
 	//private ProjectBrowser project = null;
 	// XML project file linking AST files 
 	private Document doc = null;
@@ -91,9 +89,8 @@ public class AntlrParsingProcess {
 			
 			parsingUnit.DoParse(fileElement.getIOElement());
 			
-			// TODO aspect exception logging
 			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
-			if(xmlFile==null)	logger.fatal(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
+			if(xmlFile==null)	throw new Exception(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
 		
 		}
 	}
@@ -132,8 +129,6 @@ public class AntlrParsingProcess {
 	private void processDescription() throws ParserConfigurationException, TransformerException
 	{
 	
-		logger.debug("Processing project description in "+ ProjectBrowser.getInstance().getProjectOutputFileName() + "...");
-
 	    //Create instance of DocumentBuilderFactory
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    //Get the DocumentBuilder
