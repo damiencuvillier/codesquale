@@ -4,32 +4,50 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
-import com.codesquale.metrics.IMetricsFactory;
-import com.codesquale.metrics.MetricsFactoryProvider;
-import com.codesquale.metrics.MetricsFactoryType;
+import com.codesquale.metrics.MetricsCollection;
+import com.codesquale.metrics.MetricsResultFileBuilder;
 import com.codesquale.metrics.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
-	
-    private String outputDir;
-    private Vector filesets = new Vector();
-    private String queryFile;
 
-	private IMetricsFactory myFactory = MetricsFactoryProvider.getInstance().GetMetricsFactory(MetricsFactoryType.SAXON_FACTORY);
-    
-    public MetricsTask()
-    {
-    }
-    
+	private String outputDir;
+
+	private Vector filesets = new Vector();
+
+	private MetricsCollection myMetricsCollection = null;
+
+	private MetricsResultFileBuilder myMetricsResultFileBuilder = null;
+
+	// TODO : Remove the queryFile attribute from this class and from the
+	// antTask.xml
+	private String queryFile;
+
+	// private IMetricsFactory myFactory =
+	// MetricsFactoryProvider.getInstance().GetMetricsFactory(MetricsFactoryType.SAXON_FACTORY);
+
+	public MetricsTask() {
+		String myConfigurationPath = "xml/XQuery/MetricsCollection.xml";
+		String myResultFileTemplatePath = "xml/XQuery/MetricsResultFileConfiguration.xml";
+
+		// Init the metrics collection reader
+		myMetricsCollection = new MetricsCollection();
+		myMetricsCollection.ReadAvailableMetricsCollection(myConfigurationPath);
+
+		// Init the result builder
+		myMetricsResultFileBuilder = new MetricsResultFileBuilder(
+				myMetricsCollection.getCollection(), myResultFileTemplatePath);
+	}
+
 	public void addFileset(FileSet fileset) {
-        filesets.add(fileset);
-    }
+		filesets.add(fileset);
+	}
+
 
     public void execute() {
    
@@ -45,13 +63,12 @@ public class MetricsTask extends Task {
              for(int i=0; i<includedFiles.length; i++) {
                  String filename = includedFiles[i].replace('\\','/');           // 4
                  filename = filename.substring(filename.lastIndexOf("/")+1);
-                 //if (foundLocation==null) {
+
                      File base  = ds.getBasedir();                               // 5
                      File found = new File(base, includedFiles[i]);
                      foundLocation = found.getAbsolutePath();
                      
-                     myFactory.CalculateCountersFromSourceFile(foundLocation, outputDir+found.getName(), super.getProject().getBaseDir().getAbsolutePath()+"/"+queryFile);
-                //}
+                     myMetricsResultFileBuilder.BuildMetricsResultFile(foundLocation, outputDir+found.getName());	
              }
          }
          
@@ -61,6 +78,7 @@ public class MetricsTask extends Task {
         if (filesets.size()<1) throw new BuildException("fileset not set");
         if(outputDir == null || outputDir.equals("")) throw new BuildException("outputdir not set");
     }
+
 
 	public Vector getFilesets() {
 		return filesets;
@@ -80,6 +98,5 @@ public class MetricsTask extends Task {
 
 	public void setQueryFile(String queryFile) {
 		this.queryFile = queryFile;
-	} 
-	
+	}
 }
