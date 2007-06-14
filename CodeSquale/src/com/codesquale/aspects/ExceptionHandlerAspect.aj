@@ -126,4 +126,12 @@ public aspect ExceptionHandlerAspect {
 	/***************** /Ant Task Exception Logging ******************************/
 	/***************************************************************************/
 	
+	pointcut traceManagedException(Exception e) 
+		: execution(public static void com.codesquale.utils.Utilities.ManageException(Exception))
+		&& args(e);
+	
+	void around(Exception e): traceManagedException(e) {
+		ParsingTraceAspect._logger.fatal(e.getMessage());
+		e.printStackTrace();
+	}
 }
