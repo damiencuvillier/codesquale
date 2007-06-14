@@ -4,6 +4,10 @@ import org.aspectj.lang.Signature;
 
 import com.codesquale.file.ProjectBrowser;
 
+/**
+ * Aspect that log every codesquale processes
+ * @author mbourguignon
+ */
 public aspect ProcessTraceAspect {
 	
 	/************************************************************************/
@@ -17,7 +21,7 @@ public aspect ProcessTraceAspect {
 	pointcut traceParsingProcess(com.codesquale.parser.AntlrParsingProcess p): 
 		target(p) 
 		&& call(private void processAnalysis()) 
-		&& !within(TraceAspect);
+		&& !within(ProcessTraceAspect);
 
 	/**
 	 * ANTLR XML Description process 
@@ -25,7 +29,7 @@ public aspect ProcessTraceAspect {
 	pointcut traceDescriptionProcess(com.codesquale.parser.AntlrParsingProcess p): 
 		target(p) 
 		&& call(private void processDescription()) 
-		&& !within(TraceAspect);
+		&& !within(ProcessTraceAspect);
 	
 	/**
 	 * Before Intercepting AntlrParsingProcess
