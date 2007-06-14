@@ -1,0 +1,1 @@
+count(//directory/fileSet/file/classSet/class/attributeSet/attribute)

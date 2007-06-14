@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<resultFile>
+	<sizeMetrics>
+		<filesProperties>
+			<numberOfFiles>NFIL</numberOfFiles>
+			<weightOfFiles>WGHT</weightOfFiles>
+		</filesProperties>
+		<numberOfLines>
+			<numberOfTotalLines>TOLI</numberOfTotalLines>
+			<numberOfPhysicalLines>PLOC</numberOfPhysicalLines>
+			<numberOfBlankLines>BLLI</numberOfBlankLines>
+		</numberOfLines>
+		<numberOfClasses>
+			<all>NTLA</all>
+			<public>NPCL</public>
+			<others>NOCL</others>
+		</numberOfClasses>
+		<numberOfMethods>
+			<all>NOME</all>
+			<public>NOPM</public>
+			<others>NOOM</others>
+		</numberOfMethods>
+		<numberOfAttributes>
+			<all>NOAT</all>
+			<public>NOPA</public>
+			<others>NOOA</others>
+		</numberOfAttributes>
+		<numberOfImplementedInterfaces>NINT</numberOfImplementedInterfaces>
+	</sizeMetrics>
+	<ratioMetrics>
+		<averageMethodNumberPerClass>
+			<all>MEPC</all>
+			<public>PMPC</public>
+			<others>OMPC</others>
+		</averageMethodNumberPerClass>
+	</ratioMetrics>
+	<fileUnitMetrics>FIUM</fileUnitMetrics>
+</resultFile>

@@ -1,0 +1,1 @@
+sum(data(//directory/fileSet/file/@blli))
