@@ -12,9 +12,7 @@ import java.util.Vector;
  * 
  */
 public class DirectoryElement extends AbstractElement {
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
-			.getLogger(DirectoryElement.class);
-
+	
 	/**
 	 * List of included files & directories
 	 */
