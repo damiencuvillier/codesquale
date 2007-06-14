@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <resultFile>
-	<sizeMetrics>
-		<filesProperties>
+	<analysisInformations>
+		<packageProperties>
+			<packageName>PANA</packageName>
+			<packageAbsolutePath>PAPA</packageAbsolutePath>
 			<numberOfFiles>NFIL</numberOfFiles>
 			<weightOfFiles>WGHT</weightOfFiles>
-		</filesProperties>
+		</packageProperties>	
+	</analysisInformations>
+	<sizeMetrics>
 		<numberOfLines>
 			<numberOfTotalLines>TOLI</numberOfTotalLines>
 			<numberOfPhysicalLines>PLOC</numberOfPhysicalLines>
@@ -34,5 +38,5 @@
 			<others>OMPC</others>
 		</averageMethodNumberPerClass>
 	</ratioMetrics>
-	<fileUnitMetrics>FIUM</fileUnitMetrics>
+	<fileSetAnalysis>FIUM</fileSetAnalysis>
 </resultFile>
