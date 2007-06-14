@@ -1,12 +1,10 @@
 package com.codesquale.ant;
 
 import java.io.File;
-import org.apache.log4j.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import com.codesquale.file.FileFilter;
-import com.codesquale.file.NotDirectoryException;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.parser.AntlrParsingProcess;
 
@@ -17,9 +15,7 @@ import com.codesquale.parser.AntlrParsingProcess;
  * @see com.codesquale.file
  */
 public class AntLRTask extends Task {
-	/** Log4J Logger.
-	 */
-	private static Logger logger = Logger.getLogger(AntLRTask.class);
+
 	
 	/** Path where is located the source files. */
 	private String source;
@@ -27,28 +23,21 @@ public class AntLRTask extends Task {
 	private String target;
 	
 	public void execute() throws BuildException {
-		logger.info("File Filter init");
 		
 		FileFilter filter = new FileFilter();
 		filter.addFileType(FileFilter.JAVA_SOURCEFILE);
 		
-		logger.info("Browsing project files...");
-		
+
+		// Need to init the project browser
 		try {
-			
-			// Need to init the project browser
 			ProjectBrowser.getInstance().init(new File(source),new File(target), new File(target+"AntlrProjectOutput.xml"), filter);
-			
-			// Now we can run the AntlrProcess
+
 			AntlrParsingProcess.getInstance().execute();
 			
-		} catch (NotDirectoryException e) {
-			logger.error("File is not valid");
-		} catch (Exception e)
-		{
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw new BuildException(e);
 		}
-		
+
 	}
 
 	public String getSource() {
