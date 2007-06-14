@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <metricsConfiguration>
+	<analysisInformations>
+		<metric>
+		    <metricLongName>Package Name</metricLongName>
+		    <metricShortName>PANA</metricShortName>
+            <metricDescription>Provides the name of package being analyzed.</metricDescription>
+		    <associatedXQueryPath>xml/XQuery/infos/pana.xquery</associatedXQueryPath>
+		    <enabled>true</enabled>
+			<returnValueType>single</returnValueType>
+	    </metric>
+	    <metric>
+		    <metricLongName>Package Absolute Path</metricLongName>
+		    <metricShortName>PAPA</metricShortName>
+            <metricDescription>Provides the absolute path of package being analyzed.</metricDescription>
+		    <associatedXQueryPath>xml/XQuery/infos/papa.xquery</associatedXQueryPath>
+		    <enabled>true</enabled>
+			<returnValueType>single</returnValueType>
+	    </metric>
+	</analysisInformations>
 	<unitFileMetrics>
 		<metric>
 			    <metricLongName>File Unit Metrics</metricLongName>

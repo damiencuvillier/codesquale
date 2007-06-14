@@ -1,36 +1,61 @@
-<fileSet> {
-for $file in //directory/fileSet/file
-	return
-		<file name="{$file/@name}">
-			<globalMetrics>
-				<lineOfCode>
-					<toli>{data($file/@toli)}</toli>
-					<ploc>{data($file/@ploc)}</ploc>
-					<blli>{data($file/@blli)}</blli>
-				 </lineOfCode>
-			</globalMetrics>
-			<fileProperties>
-				<size unit="kB">{data($file/@filesize)}</size>
-				<lastmodified>{data($file/@lastmodified)}</lastmodified>
-			</fileProperties>
-			<classSet>
-			{
-				for $class in //directory/fileSet/file[@name=data($file/@name)]/classSet/class
-				return
-						<class name="{$class/@name}">
-							<methodCount>
-								<all>{count($class/methodSet/method)}</all>
-								<public>{count($class/methodSet/method[@modifier="public"])}</public>
-								<others>{count($class/methodSet/method[@modifier!="public"])}</others>
-							</methodCount>
-							<attributeCount>
-								<all>{count($class/attributeSet/attribute)}</all>
-								<public>{count($class/attributeSet/attribute/modifierSet/visibility[@value="public"])}</public>
-								<others>{count($class/attributeSet/attribute/modifierSet/visibility[@value!="public"])}</others>
-							</attributeCount>
-							<implementedInterfaceCount>{count($class/implementedInterfaceSet/interface)}</implementedInterfaceCount>
-						</class>
-			}
-			</classSet>
-		</file>
-}</fileSet>
+<fileSetAnalysis>
+{for $file in //directory/fileSet/file
+		return
+			<fileAnalysis>
+				<fileProperties>
+					<fileName>{$file/@name}</fileName>
+					<fileSize unit="KB">{data($file/@filesize)}</fileSize>
+					<fileLastmodification>{data($file/@lastmodified)}</fileLastmodification>
+				</fileProperties>
+				<sizeMetrics>
+					<numberOfLines>
+						<numberOfTotalLines>{data($file/@toli)}</numberOfTotalLines>
+						<numberOfPhysicalLines>{data($file/@ploc)}</numberOfPhysicalLines>
+						<numberOfBlankLines>{data($file/@blli)}</numberOfBlankLines>
+					</numberOfLines>
+					<numberOfClasses>
+						<all>{count($file/classSet/class)}</all>
+						<public>{count($file/classSet/class[@modifier="public"])}</public>
+						<others>{count($file/classSet/class[@modifier!="public"])}</others>
+					</numberOfClasses>
+					<numberOfMethods>
+						<all>{count(//directory/fileSet/file/classSet/class/methodSet/method)}</all>
+						<public>{count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier="public"])}</public>
+						<others>{count(//directory/fileSet/file/classSet/class/methodSet/method[@modifier!="public"])}</others>
+					</numberOfMethods>
+					<numberOfAttributes>
+						<all>{count($file/classSet/class/attributeSet/attribute)}</all>
+						<public>{count($file/classSet/class/attributeSet/attribute/modifierSet/visibility[@value="public"])}</public>
+						<others>{count($file/classSet/class/attributeSet/attribute/modifierSet/visibility[@value!="public"])}</others>
+					</numberOfAttributes>
+					<numberOfImplementedInterfaces>{count($file/classSet/class/implementedInterfaceSet/interface)}</numberOfImplementedInterfaces>
+				</sizeMetrics>
+				
+				<classSetAnalysis>
+				{
+					for $class in //directory/fileSet/file[@name=data($file/@name)]/classSet/class
+					return
+							<classAnalysis>
+								<classProperties>
+									<classProperties>{data($class/@name)}</classProperties>
+								</classProperties>
+								
+								<sizeMetrics>
+									<numberOfMethods>
+										<all>{count($class/methodSet/method)}</all>
+										<public>{count($class/methodSet/method[@modifier="public"])}</public>
+										<others>{count($class/methodSet/method[@modifier!="public"])}</others>
+									</numberOfMethods>
+									<numberOfAttributes>
+										<all>{count($class/attributeSet/attribute)}</all>
+										<public>{count($class/attributeSet/attribute/modifierSet/visibility[@value="public"])}</public>
+										<others>{count($class/attributeSet/attribute/modifierSet/visibility[@value!="public"])}</others>
+									</numberOfAttributes>
+									<numberOfImplementedInterfaces>{count($class/implementedInterfaceSet/interface)}</numberOfImplementedInterfaces>
+								</sizeMetrics>
+							</classAnalysis>
+				}
+				</classSetAnalysis>
+			</fileAnalysis>
+}
+</fileSetAnalysis>
