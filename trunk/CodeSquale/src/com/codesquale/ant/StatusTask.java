@@ -1,7 +1,5 @@
 package com.codesquale.ant;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.tools.ant.Task;
 /** <h1>Progress Ant Task </h1><BR>
  * 
@@ -25,7 +23,9 @@ public class StatusTask extends Task {
 	/** AspectJ Log
 	 */
 	public void execute() {
+
 		// TraceAspect is logging here
+
 	}
 	/** Step Variable setter. */
 	public void setStep(int step) {
@@ -37,12 +37,13 @@ public class StatusTask extends Task {
 		this.message = message;
 	}
 	
-	public void setLevelLogger(int levelLogger){
-		
-	}
 	public String getMessage()
 	{
 		return message;
+	}
+	
+	public void setLevelLogger(int levelLogger){
+		
 	}
 }
 
