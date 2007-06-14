@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<metricsConfiguration>
+	<unitFileMetrics>
+		<metric>
+			    <metricLongName>File Unit Metrics</metricLongName>
+			    <metricShortName>FIUM</metricShortName>
+                <metricDescription>Provides units metrics by files and by classes</metricDescription>
+			    <associatedXQueryPath>xml/XQuery/unitFileMetrics/unitFileMetrics.xquery</associatedXQueryPath>
+			    <enabled>true</enabled>
+				<returnValueType>list</returnValueType>
+		    </metric>
+	</unitFileMetrics>
+	<sizeMetrics>
+		<filesMetrics>
+			<metric>
+			    <metricLongName>Number of source files</metricLongName>
+			    <metricShortName>NFIL</metricShortName>
+                <metricDescription>The total number of sources files included in the project</metricDescription>
+			    <associatedXQueryPath>xml/XQuery/sizeMetrics/files/nfil.xquery</associatedXQueryPath>
+			    <enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+		    </metric>
+			<metric>
+			    <metricLongName>Weight of source files</metricLongName>
+			    <metricShortName>WGHT</metricShortName>
+                <metricDescription>The weight in KB of the source files</metricDescription>
+			    <associatedXQueryPath>xml/XQuery/sizeMetrics/files/wght.xquery</associatedXQueryPath>
+			    <enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+		    </metric>
+		</filesMetrics>
+		<classesMetrics>
+			<metric>
+				<metricLongName>Number of classes</metricLongName>
+				<metricShortName>NTLA</metricShortName>
+				<metricDescription>NTLA provides the total number of classes without any exception</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/classes/ntla.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of public classes</metricLongName>
+				<metricShortName>NPCL</metricShortName>
+				<metricDescription>NPCL provides the total number of public class (suffixed by the keyword public)</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/classes/npcl.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of classes others than public</metricLongName>
+				<metricShortName>NOCL</metricShortName>
+				<metricDescription>NOCL provides the total number of others classes (not suffixed by the keyword public)</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/classes/nocl.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+		</classesMetrics>
+		<methodsMetrics>
+			<metric>
+				<metricLongName>Number of methods</metricLongName>
+				<metricShortName>NOME</metricShortName>
+				<metricDescription>Total number of methods in the project (without counting the class constructors)</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/methods/nome.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of public methods</metricLongName>
+				<metricShortName>NOPM</metricShortName>
+				<metricDescription>Total number of public methods in the project (without counting the class constructors)</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/methods/nopm.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of others methods</metricLongName>
+				<metricShortName>NOOM</metricShortName>
+				<metricDescription>Total number of others methods different than public in the project</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/methods/noom.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+		</methodsMetrics>
+		<attributesMetrics>
+			<metric>
+				<metricLongName>Number of attributes</metricLongName>
+				<metricShortName>NOAT</metricShortName>
+				<metricDescription>Total number of attributes in the project. Attributes are class variables</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/attributes/noat.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of public attributes</metricLongName>
+				<metricShortName>NOPA</metricShortName>
+				<metricDescription>Total number of public attributes in the project</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/attributes/nopa.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of others attributes</metricLongName>
+				<metricShortName>NOOA</metricShortName>
+				<metricDescription>Total number of others attributes in the project different than public</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/attributes/nooa.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+		</attributesMetrics>
+		<linesOfCodesMetrics>
+			<metric>
+				<metricLongName>Top Lines</metricLongName>
+				<metricShortName>TOLI</metricShortName>
+				<metricDescription>Number of line of source code without any exception.</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/linesOfCode/toli.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Number of physical line of code</metricLongName>
+				<metricShortName>PLOC</metricShortName>
+				<metricDescription>Count all line of source code except blank lines</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/linesOfCode/ploc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Blank Lines</metricLongName>
+				<metricShortName>BLLI</metricShortName>
+				<metricDescription>Count only blank lines</metricDescription>
+				<associatedXQueryPath>xml/XQuery/sizeMetrics/linesOfCode/blli.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+		</linesOfCodesMetrics>
+		<metric>
+			<metricLongName>Number of interfaces</metricLongName>
+			<metricShortName>NINT</metricShortName>
+			<metricDescription>Total number of interfaces(public and private).</metricDescription>
+			<associatedXQueryPath>xml/XQuery/sizeMetrics/interfaces/nint.xquery</associatedXQueryPath>
+			<enabled>true</enabled>
+			<returnValueType>single</returnValueType>
+		</metric>
+	</sizeMetrics>
+	<ratioMetrics>
+		<methods>
+			<metric>
+				<metricLongName>Average number of methods per class</metricLongName>
+				<metricShortName>MEPC</metricShortName>
+				<metricDescription>Average number of methods per class</metricDescription>
+				<associatedXQueryPath>xml/XQuery/ratioMetrics/methods/mepc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Average number of public methods per class</metricLongName>
+				<metricShortName>PMPC</metricShortName>
+				<metricDescription>Average number of public methods per class</metricDescription>
+				<associatedXQueryPath>xml/XQuery/ratioMetrics/methods/pmpc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+			<metric>
+				<metricLongName>Average number of others methods per class</metricLongName>
+				<metricShortName>OMPC</metricShortName>
+				<metricDescription>Average number of others methods (different than public) per class</metricDescription>
+				<associatedXQueryPath>xml/XQuery/ratioMetrics/methods/ompc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+			</metric>
+		</methods>
+	</ratioMetrics>
+</metricsConfiguration>
