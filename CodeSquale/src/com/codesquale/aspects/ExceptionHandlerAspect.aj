@@ -5,7 +5,7 @@ import java.io.File;
 import com.codesquale.file.FileFilter;
 
 public aspect ExceptionHandlerAspect {
-
+	
 	/**
 	 * Catching JavaRecognizer.compilationUnit() exception
 	 */

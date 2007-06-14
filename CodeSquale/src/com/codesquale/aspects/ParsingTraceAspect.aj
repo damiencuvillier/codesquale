@@ -65,16 +65,6 @@ public aspect ParsingTraceAspect {
 		: target(f)
 		&& call (public void addFileType(int))
 		&& !within(TraceAspect);
-
-	
-	
-	
-	
-	before(com.codesquale.file.FileFilter f) : traceFileFilterInit(f)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " Filter initialisation" );
-	}
 	/**
 	 * ProjectBrowser Initialisation pointcut
 	 */
@@ -83,6 +73,18 @@ public aspect ParsingTraceAspect {
 		&& call (public void init(java.io.File,java.io.File,java.io.File,com.codesquale.file.FileFilter))
 		&& !within(TraceAspect);
 	
+	
+	/**
+	 * Tracing File Filter initialisation
+	 */
+	before(com.codesquale.file.FileFilter f) : traceFileFilterInit(f)
+	{
+		Signature sig = thisJoinPointStaticPart.getSignature();
+		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " Filter initialisation" );
+	}
+	/**
+	 * ProjectBrowser Initialisation ptracing 
+	 */
 	before(com.codesquale.file.ProjectBrowser p) : traceProjectBrowser(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
@@ -99,9 +101,9 @@ public aspect ParsingTraceAspect {
 	}
 	
 	/**
-	 * After parsing file 
+	 * before parsing file 
 	 */
-	after(com.codesquale.parser.ParsingUnit u) : traceParseFile(u)
+	before(com.codesquale.parser.ParsingUnit u) : traceParseFile(u)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 
@@ -112,9 +114,9 @@ public aspect ParsingTraceAspect {
 	}
 
 	/**
-	 * After writing XML AST Transformation 
+	 * before writing XML AST Transformation 
 	 */
-	after(com.codesquale.parser.ParsingUnit u) : traceASTTransform(u)
+	before(com.codesquale.parser.ParsingUnit u) : traceASTTransform(u)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 		
