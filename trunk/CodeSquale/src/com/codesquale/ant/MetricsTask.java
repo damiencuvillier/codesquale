@@ -12,7 +12,7 @@ import org.apache.tools.ant.types.FileSet;
 
 import com.codesquale.metrics.MetricsCollection;
 import com.codesquale.metrics.MetricsResultFileBuilder;
-import com.codesquale.metrics.ProjectGlobalCounters;
+import com.codesquale.metrics.deprecated.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
 
