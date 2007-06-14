@@ -1,4 +1,4 @@
-package com.codesquale.metrics.saxon;
+package com.codesquale.metrics.deprecated.saxon;
 
 import java.io.File;
 import java.util.Properties;

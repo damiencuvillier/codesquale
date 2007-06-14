@@ -1,4 +1,4 @@
-package com.codesquale.metrics;
+package com.codesquale.metrics.deprecated;
 
 import com.codesquale.metrics.saxon.SaxonMetricsFactory;
 
@@ -22,7 +22,7 @@ public class MetricsFactoryProvider
 	public IMetricsFactory GetMetricsFactory(MetricsFactoryType type) 
 	{
 		if(type == MetricsFactoryType.SAXON_FACTORY)
-			return new SaxonMetricsFactory();
+			return (IMetricsFactory)new SaxonMetricsFactory();
 		
 		return null;	
 	}

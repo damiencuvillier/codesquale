@@ -1,4 +1,5 @@
-package com.codesquale.metrics.exist;
+package com.codesquale.metrics.deprecated.exist;
+
 import com.codesquale.metrics.IMetricsFactory;
 
 public class ExistMetricsFactory implements IMetricsFactory 
