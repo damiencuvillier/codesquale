@@ -8,9 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileElement extends AbstractElement 
-{
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FileElement.class);
-	
+{	
 	/**
 	 * File informations
 	 */

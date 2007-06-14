@@ -15,9 +15,7 @@ import org.apache.log4j.Logger;
  * @TODO Implement a initialization checker
  */
 public class ProjectBrowser 
-{
-	private static Logger logger = Logger.getLogger(ProjectBrowser.class);
-	
+{	
 	private DirectoryElement basePath = null;
 	private FileOutputStream projectOutputFile = null;
 	private String XMLoutputPath = "";
