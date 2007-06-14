@@ -26,6 +26,11 @@ import com.codesquale.file.FileElement;
 import com.codesquale.file.ProjectBrowser;
 import com.codesquale.utils.Utilities;
 
+/**
+ * Process that run antlr parsing and ast description from a source file list
+ * @author mbourguignon
+ *
+ */
 public class AntlrParsingProcess {
 
 	//private ProjectBrowser project = null;
@@ -86,7 +91,8 @@ public class AntlrParsingProcess {
 			fileElement.setXmlDescription(absolutePath);
 				
 			parsingUnit = ParsingUnitFactory.getInstance().createInstance();
-			
+			parsingUnit.setFileName(fileElement.getName());
+			parsingUnit.setXmlFileName(absolutePath.substring(absolutePath.lastIndexOf("\\")+1));
 			parsingUnit.DoParse(fileElement.getIOElement());
 			
 			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
@@ -139,8 +145,8 @@ public class AntlrParsingProcess {
 	    doc = parser.newDocument();
 	
 	    // Include a stylesheet
-//		    ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
-//		    doc.appendChild(pi);
+		//	ProcessingInstruction pi = (ProcessingInstruction) doc.createProcessingInstruction("xml-stylesheet", "href=\"style.css\" type=\"text/css\"");
+		//  doc.appendChild(pi);
 	    
 	    // Insert the root element node
 	    Element element = doc.createElement("root");

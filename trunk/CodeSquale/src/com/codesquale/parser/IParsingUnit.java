@@ -11,4 +11,9 @@ public interface IParsingUnit {
 //	AST getChild(AST ast, int childType);
 	void DoParse(File codeSourceFile) throws FileNotFoundException, Exception;
 	FileOutputStream ASTToXML(String fileName) throws IOException;
+	String getFileName() ;
+	String getXmlFileName();
+	void setFileName(String fileName);
+	void setXmlFileName(String fileName);
+	
 }

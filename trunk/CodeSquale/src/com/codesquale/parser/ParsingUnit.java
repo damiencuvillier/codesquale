@@ -42,8 +42,16 @@ public class ParsingUnit implements IParsingUnit {
 	public String getFileName() {
 		return filename;
 	}
+	public void setFileName(String fileName)
+	{
+		filename = fileName;
+	}
 	public String getXmlFileName(){
 		return xmlfilename;
+	}
+	public void setXmlFileName(String fileName)
+	{
+		xmlfilename = fileName;
 	}
 	
 
@@ -79,9 +87,7 @@ public class ParsingUnit implements IParsingUnit {
 	 * @throws IOException
 	 */
 	public FileOutputStream ASTToXML(String fileName) throws IOException {
-		
-		xmlfilename = fileName.substring(fileName.lastIndexOf("\\")+1);
-		
+				
 		FileOutputStream output = new FileOutputStream(fileName);
 		
 		Writer writer = new OutputStreamWriter(output);
@@ -92,11 +98,8 @@ public class ParsingUnit implements IParsingUnit {
 	}
 
 	public void DoParse(File codeSourceFile) throws Exception {
-		
-		filename = codeSourceFile.getName();
-		
+			
 		FileInputStream codeSourceFileStream = null;
-
 
 		codeSourceFileStream = new FileInputStream(codeSourceFile);
 		ParseCodeSourceStream(codeSourceFileStream);
