@@ -56,7 +56,7 @@ To give us a maximun of flexibility, we set up an extensive and modular mechanis
 
 *The metrics collection*
 
-CS contains an xml file which contains a list of all the metrics available in CS. These file provides these informations : 
+CS contains an xml file which contains a list of all the metrics available in CS. This config file provides those informations mentionned above : 
  * Short name of the metric (It is also the ID which identify the metric)
  * Long name
  * Description
