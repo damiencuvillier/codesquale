@@ -4,19 +4,19 @@
 
 CodeSquale developpement is essentially based upon the XML technology associated to the so sexy Java.
 
-Let me remind you how CodeSquale works to provide metrics and indicators on static code source.
+The aim of CodeSquale is to provide the end user a data file containing plenty of useful indicators and metrics build from the analysis of the desired code source. 
 
-1. The first step is the lexing and parsing of a selected file set of source code. ANTLR is responsible for accomplsihing this vital task. ANTLR takes as input source code files and deliver as output a XML tree representative of our source code.
+Let me explain you how CodeSquale works to provide these data.
 
-2. As this tree is overloaded by useless data (in sense of these data are not useful for CS), we manage to transform this tree with help of XSLT. The result of the transformantion is a freshly generated light XML tree also representative of the code source structure.
+First of all, let us remind what are the main steps of the code source analysis process operated by CodeSquale :
 
-3. The next step is what interest us : how metrics are being collected and calculated ?
+# The first step is the lexing and parsing of a selected file set of source code. ANTLR is responsible for accomplsihing this vital task. ANTLR takes as input source code files and deliver as output a XML tree representative of our source code.
+
+# As this tree is overloaded by useless data (in sense of these data are not useful for CS), we manage to transform this tree with help of XSLT. The result of the transformantion is a freshly generated light XML tree also representative of the code source structure.
+
+# The next step is what interest us : how metrics are being collected and calculated ?
 
 
-= Details =
+= General working =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
 
