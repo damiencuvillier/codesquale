@@ -110,14 +110,3 @@ It gives the user the abilty to modify the tag name, reorder them, and add new s
 === How the MCE constructs the result file ===
 
 [http://codesquale.googlepages.com/MetricsCollectorEngine.jpeg]
-
-1. The MCE loads the metrics collection.
-
-2. The MCE, for each XML data file generated at the step 2 of the process, will generate result file from the template result file.
-
- * 2.1 The input file is set as the source XML file to analyze
- * 2.2 The MCE parses the template result file
-   * 2.2.1 MCE begins the construction of the result file
-   * 2.2.2 For each metric ID detected in the template, the metric is processed with Xquery on the source XML file
-   * 2.2.3 The returned value is appended to the result file
- * The operation is repeated as much as there is XML source files and stopped when there is no more XML source file.
