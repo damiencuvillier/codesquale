@@ -119,3 +119,5 @@ It gives the user the abilty to modify the tag name, reorder them, and add new s
    * 2.2.2 For each metric ID detected in the template, the metric is processed with Xquery on the source XML file
    * 2.2.3 The returned value is appended to the result file
  * The operation is repeated as much as there is XML source files and stopped when there is no more XML source file.
+
+[http://codesquale.googlepages.com/MetricsCollectorEngine.jpeg]
