@@ -62,9 +62,9 @@ public class FileFilter {
 	}
 	
 	public static int getType(String extension){
-		if( extension.equals("java")) return FileFilter.JAVA_SOURCEFILE;
-		if( extension.equals("class")) return FileFilter.JAVA_BINARYFILE;
-		if( extension.equals("xml")) return FileFilter.XML_FILE;
+		if(extension.equals("java")) return FileFilter.JAVA_SOURCEFILE;
+		if(extension.equals("class")) return FileFilter.JAVA_BINARYFILE;
+		if(extension.equals("xml")) return FileFilter.XML_FILE;
 		return -1;
 	}
 	
