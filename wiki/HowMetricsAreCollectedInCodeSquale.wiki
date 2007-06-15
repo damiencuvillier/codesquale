@@ -10,6 +10,8 @@ Let me explain you how CodeSquale works to provide these data.
 
 First of all, let us remind what are the main steps of the code source analysis process operated by CodeSquale :
 
+[http://codesquale.googlepages.com/FunctionnalArchitecture_Small.JPG]
+
 # The first step is the lexing and parsing of a selected file set of source code. ANTLR is responsible for accomplsihing this vital task. ANTLR takes as input source code files and deliver as output a XML tree representative of our source code.
 
 # As this tree is overloaded by useless data (in sense of these data are not useful for CS), we manage to transform this tree with help of XSLT. The result of the transformantion is a freshly generated light XML tree also representative of the code source structure.
@@ -18,5 +20,8 @@ First of all, let us remind what are the main steps of the code source analysis 
 
 
 = General working =
+
+
+
 
 
