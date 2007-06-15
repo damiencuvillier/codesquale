@@ -53,13 +53,13 @@ pointcut statusTask() : execution(public void com.codesquale.ant.StatusTask.exec
 
 == Advice ==
 
-An advice is the code that will executed at a jointpoint defined in a pointcut. Advice can be executed of 3 ways : 
+An advice is the code that will executed at a jointpoint defined by a pointcut. Advice can be executed in 3 ways : 
   * before the joinpoint
   * after the jointpoint
   * around the jointpoint
 
 The around advice allow developers to modify the execution of a jointpoint, he can modify the execution of the code, or replace totally. 
-For example you log a message before executing the defined in the jointpoint. 
+For example you log a message before executing the code of a jointpoint. 
 
 {{{
 
@@ -69,6 +69,11 @@ before(com.codesquale.ant.StatusTask s) : traceStatusTask(s){
 }
 
 }}} 
+
+= Logging with AspectJ in Codesquale =
+
+
+
 
 
 
