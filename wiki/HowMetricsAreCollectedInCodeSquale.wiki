@@ -65,4 +65,5 @@ CS contains an xml file which contains a list of all the metrics available in CS
 - The metric is enabled ?
 - The return value type of the metric : atomic value (single) or a sequence (list)
 
-This file is loaded into memory 
+This file is loaded into memory and provides the user the ability to select which final data will be collected.
+Added to that, it gives the capacity to extend simply the functionnality of CodeSquale by adding element metric in the collection file and write the xquery associated.
