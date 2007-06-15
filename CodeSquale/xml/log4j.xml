@@ -1,26 +1,182 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!--  
+
+Logging Configuration 
+
+See doc\logging.dia for more information
+
+Damien Cuvillier
+Ajilon IT - Lille 
+2007
+ -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	 threshold="all" debug="false">
+	 threshold="debug" debug="false">
     
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+    
+    <!-- 
+    	Appenders
+    -->
+    
+    <!-- Console Appender - Contains main log -->
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
 	 	<param name="Target" value="System.out"/>
 	     <layout class="org.apache.log4j.PatternLayout">
 	     	 <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
 	     </layout>
 	 </appender>
-	 <appender name="fileinfoup" class="org.apache.log4j.FileAppender">
-	     <param name="file" value="LoggingInfo.html"/>
+	 
+	 <!-- File appenders
+		 HTML Format
+		 
+	  	GlobalProcessFileAppender : Contains only main data (same than ConsoleAppender)
+	  	FullFileAppender : Contains debug data
+  	 -->
+	 <appender name="GlobalFileAppender" class="org.apache.log4j.FileAppender">
+	     <param name="file" value="../logs/GlobdebugoggingInfo.html"/>
 	     <layout class="org.apache.log4j.HTMLLayout"/>
 	 </appender>
- 	 <appender name="filedebug" class="org.apache.log4j.FileAppender">
-	     <param name="file" value="debug.log"/>
-	     <layout class="org.apache.log4j.PatternLayout">
-	     	 <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
-	     </layout>
+ 	 <appender name="FullFileAppender" class="org.apache.log4j.FileAppender">
+	     <param name="file" value="../logs/FullLoggingInfo.html"/>
+	     <layout class="org.apache.log4j.HTMLLayout"/>
  	</appender>
+ 	
+ 	<!--  
+ 		Socket Appenders
+ 		
+ 	-->
+ 	<appender name="GlobalSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22020"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+    <appender name="AntLRSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22021"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+ 	<appender name="XSLTSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22022"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+   	<appender name="MetricsSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22023"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+   	<appender name="ReportingSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22024"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+    <appender name="DebuggingSocketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="Port" value="22025"/>
+        <param name="RemoteHost" value="localhost"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
+    
+    
+ 	<!--  Loggers - debugows to filter debug logging process -->
+ 	
+ 	<!--  Global Process -->
+ 	<logger name="org.apache.tools.ant.Task" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="GlobalSocketAppender" />
+ 		<appender-ref ref="ConsoleAppender" />
+ 		<appender-ref ref="GlobalFileAppender" /> 	
+ 	</logger> 
+ 	<logger name="com.codesquale.ant.StatusTask">
+ 		 <level value="debug" />
+ 		<appender-ref ref="GlobalSocketAppender" />
+ 		<appender-ref ref="ConsoleAppender" />
+ 		<appender-ref ref="GlobalFileAppender" /> 	
+ 	</logger>
+ 	 <logger name="GlobalCodeSqualeProcess">
+ 		 <level value="debug" />
+ 		<appender-ref ref="GlobalSocketAppender" />
+ 		<appender-ref ref="ConsoleAppender" />
+ 		<appender-ref ref="GlobalFileAppender" /> 	
+ 	</logger>
+ 	
+ 	
+ 	<!-- Specific Processes -->
+ 	
+ 	<!-- AntLR Process & ProjectBrowser-->
+ 	<logger name="com.codesquale.ant.AntLRTask" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="AntLRSocketAppender" />
+ 	</logger>
+ 	<logger name="com.codesquale.file" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="AntLRSocketAppender" />
+ 	</logger>
+  	<logger name="com.codesquale.parser" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="AntLRSocketAppender" />
+ 	</logger>
+  	<logger name="ParsingCodeSqualeProcess" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="AntLRSocketAppender" />
+ 	</logger>
+ 	
+ 	<!--  XSLT & Transforming Process -->
+ 	<logger name="TransformingCodeSqualeProcess" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="XSLTSocketAppender" />
+ 	</logger>
+ 	
+ 	 <!-- Metrics Process -->
+ 	 <logger name="com.codesquale.metrics" additivity="true">
+ 		<level value="debug" />
+ 		<appender-ref ref="MetricsSocketAppender" />
+ 	</logger>
+  	<logger name="com.codesquale.ant.MetricsTask" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="MetricsSocketAppender" />
+ 	</logger>
+  	<logger name="MetricsCodeSqualeProcess" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="MetricsSocketAppender" />
+ 	</logger>
+ 	
+ 	<!-- Reporting Process -->
+ 	<logger name="ReportingCodeSqualeProcess" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ReportingSocketAppender" />
+ 	</logger>
+ 	<!-- // Specific Processes -->
+ 	
+ 	
+ 	
+ 	<!-- Technical Logger -->
+ 	<logger name="TechnicalCodeSquale" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+ 	<logger name="com.codesquale.view" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+  	<logger name="com.codequale.launcher" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+  	<logger name="com.codesquale.aspects" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+ 	<logger name="com.codesquale.utils" additivity="true">
+ 		<level value="debug"/>
+ 		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+ 	
+ 	<!-- Root Logger
+ 		 Log only global fatal errors to console and GeneralLog.html -->
 	<root>
-	 	<level value="all" />
-	 	<appender-ref ref="console" />
+	 	<level value="DEBUG" />
+	 	<appender-ref ref="DebuggingSocketAppender" />
+	 	<appender-ref ref="FullFileAppender" />
 	</root>
 </log4j:configuration>
