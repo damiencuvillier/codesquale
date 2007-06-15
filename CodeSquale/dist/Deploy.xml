@@ -19,8 +19,7 @@
 				<include name="X*/**"/>
 				<include name="Report/**"/>
 				<include name="style.css"/>	
-				<include name="AntScript.xml" />
-				<include name="launch.xml" />
+				<include name="*.xml" />
 			</fileset>
 		</copy>
 		<!--<copy todir="${tmpDir}">
@@ -32,7 +31,6 @@
 		<copy todir="${tmpDir}/libs">
 			<fileset dir="libs">
 				<include name="*.jar" />
-				
 			</fileset>
 		</copy>
 		<copy todir="${tmpDir}">
@@ -51,6 +49,7 @@
 				<include name="**/*.bat" />
 				<include name="**/*.exe" />				
 				<include name="**/*.txt" />
+				<include name="**/*.xml" />
 			</fileset>
 		</zip>
 		<!-- Deleting temporary directory -->
@@ -97,7 +96,7 @@
  		<echo message="Unzip CodeSquale.zip" />
  		<unzip src="CodeSquale.zip" dest="${testDir}" />
  		<echo message="Execute CodeSquale GUI" />
- 		<exec dir="${testDir}" executable="launch.bat" />
+ 		<exec dir="${testDir}" executable="CodeSquale.bat" />
  		
  	</target>
  	
