@@ -70,8 +70,38 @@ before(com.codesquale.ant.StatusTask s) : traceStatusTask(s){
 
 }}} 
 
+== What is an aspect ==
+
+Aspects are the AspectJ core units. Pointcuts, advices, and other AspectJ features are contained in an Aspect file. In addition to the AspectJ element, an aspect file can contains method, data, and other element. An aspect behave like a normal Java class.
+
+Here is a complete sample og aspect file
+
+{{{
+
+public aspect SampleAspect 
+{
+  pointcut statusTask() : execution(public void com.codesquale.ant.StatusTask.execute(..));
+
+  before() : statusTask()
+  {
+     logger.info("Status ok");
+  }
+
+}
+
+}}}
+
+For more informations about AspectJ and OAP concept please visit :
+http://www.eclipse.org/aspectj/
+http://aosd.net/
+http://www.dotnetguru.org/articles/dossiers/aop/aop.htm (french)
+
+
 = Logging with AspectJ in Codesquale =
 
+Every processes in CodeSquale (Parsing, Transformation, Metrics) can provides informations about status execution, possible errors,... to the Codesquale user.
+
+Log
 
 
 
