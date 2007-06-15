@@ -31,6 +31,7 @@ public aspect ParsingTraceAspect {
 		// FIXME: fix setters & getters exclusion
 		//&& !execution(* *.set*(..)) 
 		//&& !execution(* *.get*(..)) 
+		&& !within(com.codesquale.view.*.*)
 		&& !within(ParsingTraceAspect);
 	
 	/**
