@@ -37,15 +37,23 @@ public class A
 A pointcut is used to select one or more jointpoint and the associated context. For example you define a pointcut on a method call, the result is that you can intercept this method call and also capture the context (args, exceptions, ...)
 
 {{{
-// Here we define a pointcut that will catch
+// Here we define a pointcut that will catch every method call in the software
 pointcut total() : execution(* *.*(..));
+
+// These pointcuts will only catch the execute method in StatusTask
+pointcut traceStatusTask (com.codesquale.ant.StatusTask s) : 
+		target(s) 
+		&& execution(public void  execute()) 
+// equal to traceStatusTask
+pointcut statusTask() : execution(public void com.codesquale.ant.StatusTask.execute(..));
+
+
 }}}
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
-
 
 
 
