@@ -65,7 +65,7 @@ public class ProjectBrowser
 	 * @throws FileNotFoundException 
 	 */
 	public void init(File InputPath,File outputPath, File outputFile, FileFilter fileFilter) throws Exception{
-		if( ! InputPath.isDirectory() ){
+		if(!InputPath.isDirectory()){
 			/* if the param is not a directory, 
 			 * throws NotDirectoryException
 			 * */

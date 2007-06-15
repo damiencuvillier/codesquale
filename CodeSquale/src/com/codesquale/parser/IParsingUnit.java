@@ -9,8 +9,8 @@ public interface IParsingUnit {
 
 //	void getTypeCount(AST t, int type, int count[]);
 //	AST getChild(AST ast, int childType);
-	void DoParse(File codeSourceFile) throws FileNotFoundException, Exception;
-	FileOutputStream ASTToXML(String fileName) throws IOException;
+	void doParse(File codeSourceFile) throws FileNotFoundException, Exception;
+	FileOutputStream astToXml(String fileName) throws IOException;
 	String getFileName() ;
 	String getXmlFileName();
 	void setFileName(String fileName);

@@ -37,11 +37,9 @@ public class AntlrParsingProcess {
 	// XML project file linking AST files 
 	private Document doc = null;
 	
-	public AntlrParsingProcess(ProjectBrowser p)
-	{
-		//project = ProjectBrowser.getInstance();
-	}
-	
+    // Static instance  
+    private static AntlrParsingProcess instance;
+    
 	private AntlrParsingProcess()
     {
     }
@@ -63,11 +61,7 @@ public class AntlrParsingProcess {
     {
       throw new CloneNotSupportedException(); 
     }
-    // Static instance  
-    private static AntlrParsingProcess instance;
-	
-	
-	
+
 	/**
 	 * Browse javaFiles and serialize the antlr AST to the project XMLoutputPath 
 	 * @throws IOException 
@@ -93,9 +87,9 @@ public class AntlrParsingProcess {
 			parsingUnit = ParsingUnitFactory.getInstance().createInstance();
 			parsingUnit.setFileName(fileElement.getName());
 			parsingUnit.setXmlFileName(absolutePath.substring(absolutePath.lastIndexOf("\\")+1));
-			parsingUnit.DoParse(fileElement.getIOElement());
+			parsingUnit.doParse(fileElement.getIOElement());
 			
-			FileOutputStream xmlFile = parsingUnit.ASTToXML(absolutePath);
+			FileOutputStream xmlFile = parsingUnit.astToXml(absolutePath);
 			if(xmlFile==null)	throw new Exception(Utilities.getCurrentTime()+"AST encoutered fatal error. Impossible to serialize AST to XML File.");
 		
 		}
@@ -175,6 +169,11 @@ public class AntlrParsingProcess {
 		idTransform.transform(input, output);
 	
 	}
+	
+	/**
+	 * Launch AntlrParsing process (Analysis and Description)
+	 * @throws Exception
+	 */
 	public void execute() throws Exception
 	{
 			if(ProjectBrowser.getInstance().isLoaded())

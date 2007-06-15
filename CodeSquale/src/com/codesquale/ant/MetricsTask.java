@@ -56,7 +56,7 @@ public class MetricsTask extends Task {
     	 
     	 // Fileset Manager
          String foundLocation = null;
-         for(Iterator itFSets = filesets.iterator(); itFSets.hasNext(); ) {      // 2
+         for(Iterator itFSets = filesets.iterator(); itFSets.hasNext();) {      // 2
              FileSet fs = (FileSet)itFSets.next();
              DirectoryScanner ds = fs.getDirectoryScanner(getProject());         // 3
              String[] includedFiles = ds.getIncludedFiles();
