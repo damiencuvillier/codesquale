@@ -26,6 +26,6 @@ The first language to be implemented in code squale will be Java. So, we will ex
 
 ANTLR generates all the needed java files to provides an efficient parsing system :
 
- * JavaLexer: Defines the lexer, a Token.java inherited class 
- * JavaRecognizer: Wich is the implementation for the parser
- * JavaTokenTypes: An interface wich defines all the Java language Tokens
+ * JavaLexer : Defines the lexer, a Token.java inherited class 
+ * JavaRecognizer : Wich is the implementation for the parser
+ * JavaTokenTypes : An interface wich defines all the Java language Tokens
