@@ -1,3 +1,4 @@
+#labels Featured,Phase-Design
 #This page describes the mechanism of the metrics collector engine.
 
 = Introduction =
@@ -10,16 +11,30 @@ Let me explain you how CodeSquale works to provide these data.
 
 First of all, let us remind what are the main steps of the code source analysis process operated by CodeSquale :
 
-[http://codesquale.googlepages.com/FunctionnalArchitecture_Small.JPG]
+[http://codesquale.googlepages.com/FunctionnalArchitecture_Small.jpeg]
 
-# The first step is the lexing and parsing of a selected file set of source code. ANTLR is responsible for accomplsihing this vital task. ANTLR takes as input source code files and deliver as output a XML tree representative of our source code.
+Main steps of CodeSquale processing.
 
-# As this tree is overloaded by useless data (in sense of these data are not useful for CS), we manage to transform this tree with help of XSLT. The result of the transformantion is a freshly generated light XML tree also representative of the code source structure.
+1. The first step is the lexing and parsing of a selected file set of source code. ANTLR is responsible for accomplishing this vital task. ANTLR takes as input source code files and deliver as output a XML tree representative of our source code.
 
-# The next step is what interest us : how metrics are being collected and calculated ?
+2. As this tree is overloaded by useless data (in sense of these data are not useful for CS), we manage to transform this tree with help of XSLT. The result of the transformation is a light XML tree represention of the code source structure. For each source file, a XML file of this type is generated. Last, a XML file describing the project hierarchy is also delivered. These files arer vital for the next step.
+
+3. The next step is what interest us : how metrics are being collected and calculated ?
+
+= The metrics collector engine (MCE) =
+
+== General working ==
+
+As described below, the step 2 (ANTLR Tree is transformed to CS Tree by XSLT) provides to the MCE a XML data file (contains the class, attributes, methods, instructions description ans so on.) representative of a directory of a project.
+
+MCE takes as input the described XML file below and delivers as output a metrics result file corresponding. See the SoftwareMetricsExplanation wiki page to see the metrics calculated. Sooner, we'll document and explain the XML generated file structure.
+
+This process is repeated unitary for each input data file. So after, each input files have been processed : we have a set of result file representative of each package of the project.
 
 
-= General working =
+
+
+
 
 
 
