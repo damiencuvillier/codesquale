@@ -58,5 +58,13 @@ Agence Nord
 			<arg value="-DSourceDir=${SourceDir}" />
 			<arg value="-DLanguage=Java" />			
 		</java>
+		<!-- Copy Log files -->
+		<mkdir dir="${OutputDir}\.logs" />
+		<move todir="${OutputDir}\.logs">
+			<fileset dir="../logs">
+				<include name="**/*"/>
+			</fileset>
+		</move>
+		<delete includeemptydirs="true" dir="../logs"/>
 	</target>
 </project>
