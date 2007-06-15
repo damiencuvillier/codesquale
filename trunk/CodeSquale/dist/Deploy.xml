@@ -49,7 +49,7 @@
 				<include name="**/*.bat" />
 				<include name="**/*.exe" />				
 				<include name="**/*.txt" />
-				<include name="**/*.xml" />
+				<include name="**/log4j.xml" />
 			</fileset>
 		</zip>
 		<!-- Deleting temporary directory -->
