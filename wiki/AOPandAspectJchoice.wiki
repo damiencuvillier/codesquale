@@ -1,0 +1,53 @@
+#summary Description of the Oriented Aspect Programmation and AspectJ Usage in Codesquale
+
+= Introduction =
+
+Logging is one of most common techniques to understand a process behaviour. By examining the log, a developer can check unexpected system behavior and correct it. A log also helps the developer see the interaction between different process of a system in order to detect exactly where the problem might be. In CodeSquale, log are used to trace process execution. 
+
+There's a lot of effecient logging system such as the standard java logging or log4j (wich is used in codesquale) but you always need logging statements everywhere needed in your code.
+
+Generally, the logging system is implemented in the application core logic. Result is that logging statements are present in all modules of your project. The problem is when you need to change your logging strategy, it will be required to modify every module containing log expression. 
+
+To avoid crosscuting problem, we use aspect-oriented programming and AspectJ, the java extension for AOP concept. Using aspectj allow the development of a logging system independent of the application core and provides a modular logging mechanism.
+
+In this page we won't deal the aspect-oriented programming concept, but we will introduce an aspectj overview and the usage in codesquale.
+
+= The AspectJ Language =
+
+== What is a jointpoint ==
+
+A jointpoint is an indentifiable point in the execution of an application. It can be assimilated to method call or the assignment of an object member.
+Here is a sample of jointpoint
+
+{{{
+// The jointpoint here is the method B and the amount assignment
+public class A
+{
+   ...
+   public void B(int x)
+   {
+        amount += x;
+   }
+}
+
+}}}
+
+== Pointcut ==
+
+A pointcut is used to select one or more jointpoint and the associated context. For example you define a pointcut on a method call, the result is that you can intercept this method call and also capture the context (args, exceptions, ...)
+
+{{{
+// Here we define a pointcut that will catch
+pointcut total() : execution(* *.*(..));
+}}}
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+
+
+
+
+
