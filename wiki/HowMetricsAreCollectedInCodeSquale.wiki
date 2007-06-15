@@ -1,5 +1,5 @@
+#summary This page describes the mechanism of the metrics collector engine.
 #labels Featured,Phase-Design
-#This page describes the mechanism of the metrics collector engine.
 
 = Introduction =
 
@@ -21,22 +21,48 @@ Main steps of CodeSquale processing.
 
 3. The next step is what interest us : how metrics are being collected and calculated ?
 
-= The metrics collector engine (MCE) =
+= The Metrics Collector Rngine (MCE) =
 
 == General working ==
 
-As described below, the step 2 (ANTLR Tree is transformed to CS Tree by XSLT) provides to the MCE a XML data file (contains the class, attributes, methods, instructions description ans so on.) representative of a directory of a project.
+As described below, the step 2 (ANTLR Tree is transformed to CS Tree by XSLT) provides to the MCE a XML data file representative of a directory of a project (containing the class, attributes, methods and instructions description, and more ...).
 
 MCE takes as input the described XML file below and delivers as output a metrics result file corresponding. See the SoftwareMetricsExplanation wiki page to see the metrics calculated. Sooner, we'll document and explain the XML generated file structure.
 
-This process is repeated unitary for each input data file. So after, each input files have been processed : we have a set of result file representative of each package of the project.
+This process is repeated unitary for each input data file. So after, each input files have been processed : we have a set of result file representative of each package of the project providing for example number of classes, some ratios , etc...
 
 
+Now, we can focus on the technical way the MCE is realized ...
 
+== Technical specification and design ==
 
+=== Did you say XQuery ? ===
 
+As mentionned previously, CS strongly used XML and all around stuff. MCE component is heavily based on the XQuery langague.
 
+*Why did we choose XQuery ?*
 
+XQuery seems to be the right choice in the developpement of CS because we need a technology that allow to focus quickly on the functionnal specifation and avoid to spend too much time on the technical of it.
 
+XQuery appears to us as the solution : we only have to preoccupate about the scripting of the XQ request and forgot how to execute them.
 
+*The XQuery implementation*
 
+The reality was slightly different of what is said below. In order to integrate XQuery in CodeSquale, we choose the SAXONB XQuery implementation. It demands us some efforts of developpment because XQ is a recent standard and there are few open source robust implementation of it.
+
+=== Extensive and modular ===
+
+To give us a maximun of flexibility, we set up an extensive and modular mechanism.
+
+*The metrics collection*
+
+CS contains an xml file which contains a list of all the metrics available in CS. These file provides these informations : 
+- Short name of the metric
+- Long name
+- Description
+- How it is collected or calculated ?
+- An associated XQuery file
+- The metric is enabled ?
+- The return value type of the metric : atomic value (single) or a sequence (list)
+
+This file is loaded into memory 
