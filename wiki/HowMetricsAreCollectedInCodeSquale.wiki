@@ -7,7 +7,7 @@ CodeSquale developpement is essentially based upon the XML technology associated
 
 The aim of CodeSquale is to provide the end user a data file containing plenty of useful indicators and metrics build from the analysis of the desired code source. 
 
-Let me explain you how CodeSquale works to provide these data.
+Let me explain you how CodeSquale works to provide this data.
 
 First of all, let us remind what are the main steps of the code source analysis process operated by CodeSquale :
 
@@ -115,7 +115,7 @@ It gives the user the abilty to modify the tag name, reorder them, and add new s
 
  * 2.1 The input file is set as the source XML file to analyze
  * 2.2 The MCE parses the template result file
- * 2.2.1 MCE begins the construction of the result file
- * 2.2.2 For each metric ID detected in the template, the metric is processed with Xquery on the source XML file
- * 3.2.3 The returned value is appended to the result file
- * The operation is returned as soon as there is no more XML source file.
+   * 2.2.1 MCE begins the construction of the result file
+   * 2.2.2 For each metric ID detected in the template, the metric is processed with Xquery on the source XML file
+   * 2.2.3 The returned value is appended to the result file
+ * The operation is repeated as much as there is XML source files and stopped when there is no more XML source file.
