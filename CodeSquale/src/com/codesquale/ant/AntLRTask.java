@@ -35,6 +35,7 @@ public class AntLRTask extends Task {
 			AntlrParsingProcess.getInstance().execute();
 			
 		} catch (Exception e) {
+			// TODO exception manager
 			throw new BuildException(e);
 		}
 
