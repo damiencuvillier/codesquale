@@ -1,4 +1,5 @@
 #summary Technical specifications of codeSquale
+#labels Deprecated
 
 === Based on open source standard ===
 
