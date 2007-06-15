@@ -1,8 +1,12 @@
 package com.codesquale.aspects;
 
+import java.util.Hashtable;
+
 import org.aspectj.lang.Signature;
 
 import org.w3c.dom.Node;
+
+import com.codesquale.metrics.Metric;
 
 public aspect MetricsTraceAspect {
 	
@@ -19,11 +23,11 @@ public aspect MetricsTraceAspect {
 	pointcut traceMetricsResultConstructor()
 			: preinitialization(com.codesquale.metrics.MetricsResultFileBuilder.new(..));
 	
-	pointcut traceMetricsResultFile(com.codesquale.metrics.MetricsResultFileBuilder b)
-			: target(b)
-			&& call(public void BuildMetricsResultFile(String,String))
+	pointcut traceMetricsResultFile(String input,String output)
+			: execution(public void com.codesquale.metrics.MetricsResultFileBuilder.BuildMetricsResultFile(String,String))
+			&& args(input,output)
 			&& !within(MetricsTraceAspect);
-	
+
 	pointcut traceMetricsNodeParsing(com.codesquale.metrics.MetricsResultFileBuilder b)
 			: target(b)
 			&& call(private org.w3c.dom.Element ProcessNodeParsing( org.w3c.dom.Node))
@@ -37,9 +41,15 @@ public aspect MetricsTraceAspect {
 
 	
 	
-	before(com.codesquale.metrics.MetricsCollection c) : traceMetricsCollectionInit(c)
+	after(com.codesquale.metrics.MetricsCollection c) : traceMetricsCollectionInit(c)
 	{
-		doLog(thisJoinPointStaticPart.getSignature(),"Initialising Metrics collections");
+		doLog(thisJoinPointStaticPart.getSignature(),"Metrics collection initialized");
+		Hashtable<String,Metric> metrics = c.getCollection();
+		for(String key : metrics.keySet())
+		{
+			Metric m = (Metric)metrics.get(key);
+			ParsingTraceAspect._logger.info(key+ " ["+m.getMetricLongName()+"] " + m.getMetricDescription());
+		}
 	}
 	
 	
@@ -48,16 +58,16 @@ public aspect MetricsTraceAspect {
 		doLog(thisJoinPointStaticPart.getSignature(), "");	
 	}
 	
-	before(com.codesquale.metrics.MetricsResultFileBuilder b) : traceMetricsResultFile(b)
+	after(String input, String output) : traceMetricsResultFile(input,output)
 	{
-		doLog(thisJoinPointStaticPart.getSignature(), "parsing configuration file to generate the results");	
+		doLog(thisJoinPointStaticPart.getSignature(), output );	
 	}
 	
-	before(com.codesquale.metrics.MetricsResultFileBuilder b) : traceMetricsNodeParsing(b)
-	{
-		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.debug( sig.getDeclaringTypeName() + "."+ sig.getName()+ "calculating metric ");	
-	}
+//	before(com.codesquale.metrics.MetricsResultFileBuilder b) : traceMetricsNodeParsing(b)
+//	{
+//		Signature sig = thisJoinPointStaticPart.getSignature();
+//		ParsingTraceAspect._logger.debug( sig.getDeclaringTypeName() + "."+ sig.getName()+ "calculating metric ");	
+//	}
 	
 	public void doLog(Signature sig, String message)
 	{
