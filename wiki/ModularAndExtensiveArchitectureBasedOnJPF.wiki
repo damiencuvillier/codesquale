@@ -1,4 +1,5 @@
 #summary Description of JPF and the use of it in codesquale.
+#labels Deprecated
 
 =What is JPF ?=
 JPF provides a runtime engine that dynamically discovers and loads "plug-ins". A plug-in is a structured component that describes itself to JPF using a "manifest". JPF maintains a registry of available plug-ins and the functions they provide (via extension points and extensions).
