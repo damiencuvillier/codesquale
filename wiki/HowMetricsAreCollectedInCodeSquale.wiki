@@ -44,7 +44,7 @@ As mentionned previously, CS strongly used XML and all around stuff. MCE compone
 
 XQuery seems to be the right choice in the developpement of CS because we need a technology that allow to focus quickly on the functionnal specifation and avoid to spend too much time on the technical of it.
 
-XQuery appears to us as the solution : we only have to preoccupate about the scripting of the XQ request and forgot how to execute them.
+XQuery appears to us as the solution : we only have to preoccupate about the scripting of the XQ query and forgot how to execute them.
 
 *The XQuery implementation*
 
