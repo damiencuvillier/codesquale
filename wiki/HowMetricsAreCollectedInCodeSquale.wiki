@@ -110,3 +110,4 @@ It gives the user the abilty to modify the tag name, reorder them, and add new s
 === How the MCE constructs the result file ===
 
 [http://codesquale.googlepages.com/MetricsCollectorEngine.jpeg]
+
