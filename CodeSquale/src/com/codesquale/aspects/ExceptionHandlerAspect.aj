@@ -3,6 +3,7 @@ package com.codesquale.aspects;
 import java.io.File;
 
 import com.codesquale.file.FileFilter;
+import com.codesquale.utils.ExceptionLevel;
 /**
  * Simple exceptions handler aspect
  * 
@@ -131,12 +132,32 @@ public aspect ExceptionHandlerAspect {
 	/***************** Managed Exception Logging *******************************/
 	/***************************************************************************/
 	
-	pointcut traceManagedException(Exception e) 
-		: execution(public static void com.codesquale.utils.Utilities.ManageException(Exception))
-		&& args(e);
+	pointcut traceManagedException(Exception e,ExceptionLevel level) 
+		: execution(public static void com.codesquale.utils.Utilities.ManageException(Exception,ExceptionLevel))
+		&& args(e,level);
 	
-	void around(Exception e): traceManagedException(e) {
-		ParsingTraceAspect._logger.fatal(e.getMessage());
+	void around(Exception e, ExceptionLevel level): traceManagedException(e,level) {
+		switch(level)
+		{
+		case INFO: 
+			ParsingTraceAspect._logger.info(e.getMessage());
+			break;
+		case DEBUG:
+			ParsingTraceAspect._logger.debug(e.getMessage());
+			break;
+		case TRACE:
+			ParsingTraceAspect._logger.trace(e.getMessage());
+			break;
+		case FATAL:
+			ParsingTraceAspect._logger.fatal(e.getMessage());
+			break;
+		case WARN:
+			ParsingTraceAspect._logger.warn(e.getMessage());
+			break;
+		default:
+			ParsingTraceAspect._logger.fatal(e.getMessage());
+			break;
+		}
 		e.printStackTrace();
 	}
 	
