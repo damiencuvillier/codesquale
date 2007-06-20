@@ -31,14 +31,6 @@ public class Utilities {
         reader.close();
         return fileData.toString();
     }
-	/**
-	 * Manage exception with Aspectj
-	 * Exception is logged by traceManagedException pointcut
-	 * @param e
-	 */
-	public static void manageException(Exception e)
-	{
-		
-	}
+
 
 }
