@@ -116,8 +116,9 @@ public class MetricsCollection {
 		String associatedXqueryPath = getTextValue(e, "associatedXQueryPath");
 		String enabled = getTextValue(e, "metricEnabled");
 		String type = getTextValue(e, "returnValueType");
+		String populated = getTextValue(e, "populationLevel");
 		boolean metricEnabled = Boolean.parseBoolean(enabled);
-
+		int populationLevel = Integer.parseInt(populated);
 		String literalXQueryExpression = null;
 
 		try {
@@ -139,7 +140,7 @@ public class MetricsCollection {
 
 		Metric m = new Metric(associatedXqueryPath, metricDecription,
 				metricLongName, metricShortName, metricEnabled, type,
-				compiledQuery);
+				compiledQuery,populationLevel);
 
 		return m;
 	}

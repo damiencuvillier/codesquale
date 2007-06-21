@@ -48,6 +48,12 @@ public class Metric {
 	private XQueryExpression compiledQuery;
 
 	/**
+	 * Indicates if the metric have to be cumulated for package level. Can take
+	 * the value 0 or 1.
+	 */
+	private int populationLevel;
+
+	/**
 	 * Specialized constructor.
 	 * 
 	 * @param queryExpression
@@ -64,11 +70,14 @@ public class Metric {
 	 *            Gives the type of the metric
 	 * @param aCompiledQuery
 	 *            It is the compiled query object
+	 * @param popLevel
+	 *            Indicates if the metric have to be populated
 	 */
 	public Metric(final String queryExpression,
 			final String aMetricDescription, final String aMetricLongName,
 			final String aMetricShortName, final boolean enabled,
-			final String aMetricType, final XQueryExpression aCompiledQuery) {
+			final String aMetricType, final XQueryExpression aCompiledQuery,
+			final int popLevel) {
 		this.metricXQueryExpression = queryExpression;
 		this.metricDescription = aMetricDescription;
 		this.metricLongName = aMetricLongName;
@@ -76,10 +85,12 @@ public class Metric {
 		this.metricEnabled = enabled;
 		this.metricType = aMetricType;
 		this.compiledQuery = aCompiledQuery;
+		this.populationLevel = popLevel;
 	}
 
 	/**
 	 * Returns if metric is enabled.
+	 * 
 	 * @return true if enabled
 	 */
 	public final boolean isMetricEnabled() {
@@ -88,7 +99,9 @@ public class Metric {
 
 	/**
 	 * Set the metricEnabled to true or false.
-	 * @param isMetricEnabled Set to true if you want to enale the metric
+	 * 
+	 * @param isMetricEnabled
+	 *            Set to true if you want to enale the metric
 	 */
 	public final void setMetricEnabled(final boolean isMetricEnabled) {
 		this.metricEnabled = isMetricEnabled;
@@ -96,6 +109,7 @@ public class Metric {
 
 	/**
 	 * Returns the metric description.
+	 * 
 	 * @return A string representing the metric description.
 	 */
 	public final String getMetricDescription() {
@@ -104,6 +118,7 @@ public class Metric {
 
 	/**
 	 * Returns the metric long name.
+	 * 
 	 * @return String that is the metric long name
 	 */
 	public final String getMetricLongName() {
@@ -112,6 +127,7 @@ public class Metric {
 
 	/**
 	 * Returns the metric short name.
+	 * 
 	 * @return String that is the metric short name.
 	 */
 	public final String getMetricShortName() {
@@ -120,6 +136,7 @@ public class Metric {
 
 	/**
 	 * Returns the XQuery as String.
+	 * 
 	 * @return String that is the XQuery.
 	 */
 	public final String getMetricXQueryExpression() {
@@ -128,6 +145,7 @@ public class Metric {
 
 	/**
 	 * Returns the XQuery as a compiled object.
+	 * 
 	 * @return The compiled XQuery expression
 	 */
 	public final XQueryExpression getCompiledQuery() {
@@ -136,10 +154,19 @@ public class Metric {
 
 	/**
 	 * Returns the type of the metric as string.
+	 * 
 	 * @return Metric type as a string
 	 */
 	public final String getMetricType() {
 		return metricType;
+	}
+
+	/**
+	 * Indicates if the metric have to be populated.
+	 * @return The population code.
+	 */
+	public final int getPopulationLevel() {
+		return populationLevel;
 	}
 
 }
