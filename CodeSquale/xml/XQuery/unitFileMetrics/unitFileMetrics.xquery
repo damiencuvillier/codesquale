@@ -37,7 +37,7 @@
 					return
 							<classAnalysis>
 								<classProperties>
-									<classProperties>{data($class/@name)}</classProperties>
+									<className>{data($class/@name)}</className>
 								</classProperties>
 								
 								<sizeMetrics>
