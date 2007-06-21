@@ -58,6 +58,10 @@ public class MetricsResultFileBuilder {
 	 */
 	private String resultFileConfigurationPath;
 
+	private PackageMetricsResults thePackageMetricsResults;
+	private ProjectMetricsResults projectResults;
+	private ResultFileBuildType currentBuildType;
+
 	/**
 	 * This constructor sets the metrics collection available to build the
 	 * results.
@@ -75,6 +79,8 @@ public class MetricsResultFileBuilder {
 		this.metricsHashTable = aMetricsHashTable;
 		// Set the path of the template result file
 		this.resultFileConfigurationPath = aResultFileConfigurationPath;
+		
+		projectResults = new ProjectMetricsResults();
 
 		try {
 			documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -104,19 +110,27 @@ public class MetricsResultFileBuilder {
 	 * @param outputFileFullPath
 	 *            full path of the destination result file
 	 */
-	public final void buildMetricsResultFile(final String inputPathFile,
-			final String outputFileFullPath) {
+	public final void buildMetricsResultFile(
+			final String inputPathFile, final String outputFileFullPath, ResultFileBuildType type) {
 
+		thePackageMetricsResults = new PackageMetricsResults();
 		theResultFile = new MetricsResultFile();
-
-		// Specify the file to analyze
-		SaxonProcessor.getInstance().setXMLSourceDocument(inputPathFile);
+		currentBuildType = type;
+		
+		if(currentBuildType==ResultFileBuildType.ProjectFile)
+			projectResults.populateMetrics();
+		else
+			// Specify the file to analyze
+			SaxonProcessor.getInstance().setXMLSourceDocument(inputPathFile);
 
 		// Starts the parsing process
 		parseResultFileConfiguration(templateResultFile, null);
 
 		// Generating the results file filled with the query value
 		theResultFile.writeToFile(outputFileFullPath);
+
+		if(currentBuildType==ResultFileBuildType.UnitFile)
+		 projectResults.addPackageMetricsResults(thePackageMetricsResults);
 	}
 
 	/**
@@ -228,92 +242,115 @@ public class MetricsResultFileBuilder {
 	private void appendMetricsResultsToElement(final Metric myMetric,
 			final Element myElement) {
 
-		// the metric has an atomic value return
-		if (myMetric.getMetricType().equals("single")) {
-
-			Object results = null;
-			try {
-				// Processing the desired XQuery
-				results = myMetric.getCompiledQuery().evaluateSingle(
-						SaxonProcessor.getInstance().getDynamicQueryContext());
-			} catch (XPathException e) {
-				// TODO Bloc catch auto-généré
-				e.printStackTrace();
-			}
-
-			if (results != null) {
+		
+		if(currentBuildType==ResultFileBuildType.UnitFile)
+		{
+		
+			// the metric has an atomic value return
+			if (myMetric.getMetricType().equals("single")) {
+	
+				Object results = null;
+				try {
+					// Processing the desired XQuery
+					results = myMetric.getCompiledQuery().evaluateSingle(
+							SaxonProcessor.getInstance().getDynamicQueryContext());
+				} catch (XPathException e) {
+					// TODO Bloc catch auto-généré
+					e.printStackTrace();
+				}
+	
+				// Stop the process if results are null
+				if (results == null)
+					return;
+				
+				// The metric have to be populated over all package level
+				if(myMetric.getPopulationLevel()==1) {
+					thePackageMetricsResults.setMetricsResults(myMetric.getMetricShortName(), results);
+				}
+				
 				// Set the value to the element
-				Text textValue = theResultFile.createTextNode(results
-						.toString());
+				Text textValue = theResultFile.createTextNode(results.toString());
 				myElement.appendChild(textValue);
+	
+				return;
 			}
-
-			return;
-		}
-
-		if (myMetric.getMetricType().equals("list")) {
-			try {
-
-				SequenceIterator iteratorResults = myMetric.getCompiledQuery()
-						.iterator(
-								SaxonProcessor.getInstance()
-										.getDynamicQueryContext());
-
-				QueryResult.serializeSequence(iteratorResults, SaxonProcessor
-						.getInstance().getConfig(), new PrintWriter(
-						new FileOutputStream(new File("temp.xml"))),
-						SaxonProcessor.getInstance().getProperties());
-
-				// Creates the XML Document
-				DocumentBuilder db = documentBuilderFactory
-						.newDocumentBuilder();
-				// Read the metrics configuration file
-				Document doc = db.parse("temp.xml");
-
-				Element rootElement = doc.getDocumentElement();
-
-				// Starting the parsing process
-				if (rootElement != null && rootElement.hasChildNodes()) {
-					// Fetching the child nodes
-					NodeList nodeList = rootElement.getChildNodes();
-					int cpt = 0;
-					// Stepping trough the child node
-					while (nodeList.getLength() > 0
-							&& cpt < nodeList.getLength()) {
-						Node childNode = nodeList.item(cpt++);
-						// Process the node to check his validity and generates
-						// the
-						// output element
-						Element generatedElementFromNode = processNodeParsing(childNode);
-						// Appending the new element to our document
-						if (generatedElementFromNode != null) {
-							myElement.appendChild(generatedElementFromNode);
-						}
-						// Continue to iterate over the xml tree
-						if (childNode.hasChildNodes()) {
-							parseXMLRecursively(childNode,
-									generatedElementFromNode);
+	
+			if (myMetric.getMetricType().equals("list")) {
+				try {
+	
+					SequenceIterator iteratorResults = myMetric.getCompiledQuery()
+							.iterator(
+									SaxonProcessor.getInstance()
+											.getDynamicQueryContext());
+	
+					QueryResult.serializeSequence(iteratorResults, SaxonProcessor
+							.getInstance().getConfig(), new PrintWriter(
+							new FileOutputStream(new File("temp.xml"))),
+							SaxonProcessor.getInstance().getProperties());
+	
+					// Creates the XML Document
+					DocumentBuilder db = documentBuilderFactory
+							.newDocumentBuilder();
+					// Read the metrics configuration file
+					Document doc = db.parse("temp.xml");
+	
+					Element rootElement = doc.getDocumentElement();
+	
+					// Starting the parsing process
+					if (rootElement != null && rootElement.hasChildNodes()) {
+						// Fetching the child nodes
+						NodeList nodeList = rootElement.getChildNodes();
+						int cpt = 0;
+						// Stepping trough the child node
+						while (nodeList.getLength() > 0
+								&& cpt < nodeList.getLength()) {
+							Node childNode = nodeList.item(cpt++);
+							// Process the node to check his validity and generates
+							// the output element
+							Element generatedElementFromNode = processNodeParsing(childNode);
+							// Appending the new element to our document
+							if (generatedElementFromNode != null) {
+								myElement.appendChild(generatedElementFromNode);
+							}
+							// Continue to iterate over the xml tree
+							if (childNode.hasChildNodes()) {
+								parseXMLRecursively(childNode,
+										generatedElementFromNode);
+							}
 						}
 					}
+	
+				} catch (FileNotFoundException e1) { // TODO Bloc catch
+					// auto-généré
+					e1.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Bloc catch auto-généré
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Bloc catch auto-généré
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Bloc catch auto-généré
+					e.printStackTrace();
+				} catch (XPathException e) {
+					// TODO Bloc catch auto-généré
+					e.printStackTrace();
 				}
-
-			} catch (FileNotFoundException e1) { // TODO Bloc catch
-				// auto-généré
-				e1.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Bloc catch auto-généré
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Bloc catch auto-généré
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Bloc catch auto-généré
-				e.printStackTrace();
-			} catch (XPathException e) {
-				// TODO Bloc catch auto-généré
-				e.printStackTrace();
+				return;
 			}
-			return;
+		}
+		
+		if(currentBuildType==ResultFileBuildType.ProjectFile)
+		{
+			double result=0.00;
+			if(myMetric.getPopulationLevel()==1) {
+				result=projectResults.getValueFromMetricID(myMetric.getMetricShortName());
+				// Set the value to the element
+				Text textValue = theResultFile.createTextNode( Double.toString(result));
+				myElement.appendChild(textValue);
+			}
+			
+			
 		}
 	}
 
@@ -367,6 +404,10 @@ public class MetricsResultFileBuilder {
 				parseXMLRecursively(node, generatedElementFromNode);
 			}
 		}
+	}
+
+	public ProjectMetricsResults getProjectResults() {
+		return projectResults;
 	}
 
 }
