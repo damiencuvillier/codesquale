@@ -31,6 +31,8 @@
 		<copy todir="${tmpDir}/libs">
 			<fileset dir="libs">
 				<include name="*.jar" />
+				<include name="*.dll" />
+				<include name="*.exe" />
 			</fileset>
 		</copy>
 		<copy todir="${tmpDir}">
