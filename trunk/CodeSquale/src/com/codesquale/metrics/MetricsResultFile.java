@@ -15,6 +15,11 @@ import org.w3c.dom.Text;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
+/**
+ * Represents the generated results file
+ * @author dwillier
+ *
+ */
 public class MetricsResultFile {
 
 	/**
@@ -23,31 +28,45 @@ public class MetricsResultFile {
 	private Document newDocument;
 	
 	
-	public MetricsResultFile()
-	{
+	/**
+	 * Constructor by default. Creates a new xml document.
+	 *
+	 */
+	public MetricsResultFile(){
 		// Preparing a new document to store the results
 		createDocument();
 	}
 	
-	
-	public Text createTextNode(String value)
-	{
+	/**
+	 * Creates for a text node for the document.
+	 * @param value Value from which to create text node
+	 * @return Text element
+	 */
+	public final Text createTextNode(final String value){
 		return newDocument.createTextNode(value);
 	}
 	
-	public void appendChild(Element e)
+	/**
+	 * Append the element to the document.
+	 * @param e Element to append
+	 */
+	public final void appendChild(final Element e)
 	{
 		newDocument.appendChild(e);
 	}
 	
-	public Element createElement(String elementName)
-	{
+	/**
+	 * Creates an element.
+	 * @param elementName Name of the element to create
+	 * @return The created element
+	 */
+	public final Element createElement(final String elementName){
 		return newDocument.createElement(elementName);
 	}
 	
 	
 	/**
-	 * Creates the output results document
+	 * Creates the output results document.
 	 * 
 	 */
 	private void createDocument() {
@@ -70,9 +89,9 @@ public class MetricsResultFile {
 	
 	/**
 	 * Saving the ouptut data stream to an XML file by serialization.
+	 * @param pathOutput The path where the file has to be saved
 	 */
-
-	public void writeToFile(final String pathOutput) {
+	public final void writeToFile(final String pathOutput) {
 
 		try {
 			// print

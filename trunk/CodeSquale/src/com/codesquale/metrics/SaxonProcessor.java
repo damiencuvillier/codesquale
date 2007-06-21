@@ -23,35 +23,64 @@ import org.apache.log4j.Logger;
  * @author dwillier
  * 
  */
-public class SaxonProcessor {
+public final class SaxonProcessor {
+
+	/**
+	 * It is the unique logger of the class.
+	 */
 	private static Logger logger = Logger.getLogger(SaxonProcessor.class);
 
-	private static SaxonProcessor _instance = null;
+	/**
+	 * It is the singleton attribute of the class.
+	 */
+	private static SaxonProcessor uniqueInstance = null;
 
+	/**
+	 * Represents the SAXONB XQuery Configuration. Contains some informations
+	 * about the XQuery configuration.
+	 */
 	private Configuration config = null;
 
+	/**
+	 * Contains the informations about the Query context such as the
+	 * DefaultNamespace or the BaseURI.
+	 */
 	private StaticQueryContext staticContext = null;
 
+	/**
+	 * Provides the dynamic context to process the execution of the XQuery.
+	 */
 	private DynamicQueryContext dynamicContext = null;
 
+	/**
+	 * Represents the properties of the produced XML output.
+	 */
 	private Properties properties;
 
+	/**
+	 * Gives the unique instance of the SaxonProcessor.
+	 * 
+	 * @return An unique instance of SaxonProcessor
+	 */
 	public static SaxonProcessor getInstance() {
-		if (_instance == null)
-			_instance = new SaxonProcessor();
+		if (uniqueInstance == null) {
+			uniqueInstance = new SaxonProcessor();
+		}
 
-		return _instance;
+		return uniqueInstance;
 	}
 
 	/**
-	 * Compile a XqueryExpression from a literal string request
+	 * Compile a XqueryExpression from a literal query string.
 	 * 
 	 * @param expr
-	 *            the XQuery literal strign to compile
+	 *            the literal XQuery string to compile
 	 * @return the compiled expression
 	 * @throws XPathException
+	 *             Throw XPathException if the query cannot be compiled.
 	 */
-	public XQueryExpression compileXquery(String expr) throws XPathException {
+	public XQueryExpression compileXquery(final String expr)
+			throws XPathException {
 		return staticContext.compileQuery(expr);
 	}
 
@@ -62,7 +91,7 @@ public class SaxonProcessor {
 	 *            Full path of the XML file.
 	 */
 	@SuppressWarnings("deprecation")
-	public void setXMLSourceDocument(String inputFilePath) {
+	public void setXMLSourceDocument(final String inputFilePath) {
 		// Preparing the single file to analyze
 		File inputFile = null;
 		StreamSource inputStreamSource = null;
@@ -98,6 +127,11 @@ public class SaxonProcessor {
 		return dynamicContext;
 	}
 
+	/**
+	 * Default constructor. Private because the class is singleton. It
+	 * initializes the XQueryEngine.
+	 * 
+	 */
 	private SaxonProcessor() {
 		initProcessor();
 	}
@@ -119,10 +153,18 @@ public class SaxonProcessor {
 		properties.setProperty(OutputKeys.INDENT, "yes");
 	}
 
+	/**
+	 * Get the XQuery configuration.
+	 * @return Xquery Configuration
+	 */
 	public Configuration getConfig() {
 		return config;
 	}
 
+	/**
+	 * Get the XML formatting properties.
+	 * @return Properties describing indent and other output formating
+	 */
 	public Properties getProperties() {
 		return properties;
 	}
