@@ -18,6 +18,7 @@
 			<fileset dir="xml">
 				<include name="X*/**"/>
 				<include name="Report/**"/>
+				<include name="ExtTools/**" />
 				<include name="style.css"/>	
 				<include name="*.xml" />
 			</fileset>
