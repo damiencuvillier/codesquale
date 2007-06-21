@@ -155,7 +155,7 @@
 	<!-- Targets -->
 	 
 	<target name="CodeSqualeInit" >
-		<status step="1" message="CodeSquale Initialization..." />
+		<status step="0" message="CodeSquale Initialization..." />
 		
 		<!-- Creates the output hierarchy
 
@@ -220,7 +220,7 @@
 	<target name="CodeSqualeAntlrProcess" 
 			depends="CodeSqualeInit">
 		<!-- Browse files and build a project file & antlr xml content -->
-		<status step="2" message="Browsing and Parsing source code..." />
+		<status step="1" message="Browsing and Parsing source code..." />
 		<CodeSqualeAntlrProcess source="${SourceDir}"
 								target="${OutputDir}/${ParsedDataDir}"
 		/>
@@ -231,7 +231,7 @@
 		<!-- 
 			Transforming antlr files to codesquale format file
 		-->
-		<status step="3" message="Generating generic xml files..." />
+		<status step="2" message="Generating generic xml files..." />
 		
 		<!-- XSD Schemas files copy -->
 		<status message="XSD SCHEMA COPYING..." />
@@ -273,7 +273,7 @@
 	
 	
 	<target name="CodeSqualeMetricsProcess" depends="CodeSqualeXSLTProcess">
-		<status step="4" message="Metrics are being calculating..." />
+		<status step="3" message="Metrics are being calculating..." />
 		<CodeSqualeMetricsProcess outputDir="${OutputDir}\${MetricsDir}" queryFile="${MetricsProcessDir}saxon/DirectoryFileCounters.xquery">
 			<fileset dir="${OutputDir}/${StructuredProjectDataDir}">
 				<include name="*.xml"/>
@@ -284,7 +284,7 @@
 	</target>
 
 	<target name="CodeSqualeReportProcess" depends="CodeSqualeMetricsProcess, CodeSqualeStaticElementsDeploy">
-		<status step="5" message="Generating Report From Data Files... " />
+		<status step="4" message="Generating Report From Data Files... " />
 		
 		<xslt processor="trax" 
 			includes="*.xml"
@@ -313,7 +313,7 @@
 	<target name="CodeSqualeGlobalProcess">
 		<status step="0" message="CodeSqualing..."/>
 		<antcall target="CodeSqualeReportProcess" />
-		<status step="6" message="Process done." />
+		<status step="5" message="Process done." />
 	</target>
 
 </project>
