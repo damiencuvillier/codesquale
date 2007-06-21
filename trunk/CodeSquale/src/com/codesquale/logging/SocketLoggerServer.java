@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.codesquale.utils.ExceptionLevel;
+import com.codesquale.utils.ExceptionManager;
 import com.codesquale.utils.Utilities;
 /** SocketLoggerServer. Uses Log4J Socket Appender. <br />
  * Message receiver. <br />
@@ -31,7 +33,7 @@ public class SocketLoggerServer extends Thread {
 			server = new ServerSocket(port);
 //			mReceiver.sendMessage("Init Console");
 		}catch (IOException e){
-			Utilities.ManageException(e);
+			ExceptionManager.aspectManagedException(e, ExceptionLevel.ERROR);
 		}
 		super.start();
 	}
@@ -43,7 +45,7 @@ public class SocketLoggerServer extends Thread {
 				client = server.accept();
 			} catch (IOException e) {
 				mReceiver.sendMessage("Technical Error : Unable Finding a client");
-				Utilities.ManageException(e);
+				ExceptionManager.aspectManagedException(e, ExceptionLevel.ERROR);
 			}
 			
             Thread t = new SocketLoggerClient(client,mReceiver);
