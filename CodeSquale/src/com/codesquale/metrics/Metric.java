@@ -90,7 +90,7 @@ public class Metric {
 	 * Set the metricEnabled to true or false.
 	 * @param isMetricEnabled Set to true if you want to enale the metric
 	 */
-	public final void setMetricEnabled(boolean isMetricEnabled) {
+	public final void setMetricEnabled(final boolean isMetricEnabled) {
 		this.metricEnabled = isMetricEnabled;
 	}
 

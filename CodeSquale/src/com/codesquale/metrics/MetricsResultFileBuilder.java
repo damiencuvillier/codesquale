@@ -22,9 +22,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-
 /**
  * Class in charge of building the results file from a configuration skeleton
  * file. It parses the input skeleton file and in the same time recopy its
@@ -37,58 +34,54 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 public class MetricsResultFileBuilder {
 
 	/**
-	 * Represents the output metrics results XML file
+	 * Represents the XML template results file.
 	 */
-	private Document newDocument;
+	private Document templateResultFile;
 
 	/**
-	 * Needed to build the resuslts output file
+	 * Represents the generated results file.
+	 */
+	private MetricsResultFile theResultFile;
+
+	/**
+	 * Needed to build the results output file.
 	 */
 	private DocumentBuilderFactory documentBuilderFactory;
 
+	/**
+	 * Available collection of metrics.
+	 */
 	private Hashtable<String, Metric> metricsHashTable;
 
-	
+	/**
+	 * Path of the template results file.
+	 */
 	private String resultFileConfigurationPath;
+
 	/**
 	 * This constructor sets the metrics collection available to build the
-	 * results
+	 * results.
 	 * 
-	 * @param metricsHashTable
+	 * @param aMetricsHashTable
+	 *            Set the metrics collection available
+	 * @param aResultFileConfigurationPath
+	 *            That is the path to the template results file
 	 */
-	public MetricsResultFileBuilder(Hashtable<String, Metric> metricsHashTable, String resultFileConfigurationPath) {
+	public MetricsResultFileBuilder(
+			final Hashtable<String, Metric> aMetricsHashTable,
+			final String aResultFileConfigurationPath) {
+
 		// Set the entire collection metrics
-		this.metricsHashTable = metricsHashTable;
-
-		this.resultFileConfigurationPath = resultFileConfigurationPath;
-		
-		documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-	}
-
-	/**
-	 * This method parses the configuration file needed to generate the result
-	 * file
-	 * 
-	 * @param inputPathFile
-	 *            full path to the configuration file
-	 */
-	public void BuildMetricsResultFile(String inputPathFile, String outputFileFullPath) {
+		this.metricsHashTable = aMetricsHashTable;
+		// Set the path of the template result file
+		this.resultFileConfigurationPath = aResultFileConfigurationPath;
 
 		try {
-			// Preparing a new document to store the results
-			createDocument();
+			documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			// Creates Document Builder needed to parse the desired XML file
 			DocumentBuilder db = documentBuilderFactory.newDocumentBuilder();
 			// Read the metrics configuration file
-			Document doc = db.parse(resultFileConfigurationPath);
-			// Specify the file to analyze
-			SaxonProcessor.getInstance().setXMLSourceDocument(inputPathFile);
-			// Starts the parsing process
-			ParseMetricsResulFileConfiguration(doc, null);
-			// Generating the results file filled with the query value
-			printToFile(outputFileFullPath);
-
+			templateResultFile = db.parse(resultFileConfigurationPath);
 		} catch (ParserConfigurationException e) {
 			// TODO Bloc catch auto-généré
 			e.printStackTrace();
@@ -99,11 +92,36 @@ public class MetricsResultFileBuilder {
 			// TODO Bloc catch auto-généré
 			e.printStackTrace();
 		}
+
+	}
+
+	/**
+	 * This method parses the configuration file needed to generate the result
+	 * file.
+	 * 
+	 * @param inputPathFile
+	 *            full path to the configuration file
+	 * @param outputFileFullPath
+	 *            full path of the destination result file
+	 */
+	public final void buildMetricsResultFile(final String inputPathFile,
+			final String outputFileFullPath) {
+
+		theResultFile = new MetricsResultFile();
+
+		// Specify the file to analyze
+		SaxonProcessor.getInstance().setXMLSourceDocument(inputPathFile);
+
+		// Starts the parsing process
+		parseResultFileConfiguration(templateResultFile, null);
+
+		// Generating the results file filled with the query value
+		theResultFile.writeToFile(outputFileFullPath);
 	}
 
 	/**
 	 * Process the entire content of the XML document with recursivity and call
-	 * the adapted method when recognizing ID metrics tag
+	 * the adapted method when recognizing ID metrics tag.
 	 * 
 	 * @param documentToRead
 	 *            It is the XML content to parses and interpret
@@ -111,9 +129,8 @@ public class MetricsResultFileBuilder {
 	 *            It is the element where the results elements generated have to
 	 *            be append
 	 */
-	// TODO Remove Node when is SequenceValue or Sequence
-	private void ParseMetricsResulFileConfiguration(Document documentToRead,
-			Element elementToWrite) {
+	private void parseResultFileConfiguration(final Document documentToRead,
+			final Element elementToWrite) {
 
 		// This element is used as the node appender further in the process
 		Element mainAppender;
@@ -125,14 +142,14 @@ public class MetricsResultFileBuilder {
 		String rootElementName = sourceDocumentRootElement.getNodeName();
 
 		// Creating a parent node into the results file generated
-		Element newDocumentRootElement = newDocument
+		Element newDocumentRootElement = theResultFile
 				.createElement(rootElementName);
 
 		// null element passed in parameter means that we have to append the
 		// root element as root element to the result file metrics
 		if (elementToWrite == null) {
 			// Appending the root node the destination file
-			newDocument.appendChild(newDocumentRootElement);
+			theResultFile.appendChild(newDocumentRootElement);
 			mainAppender = newDocumentRootElement;
 		} else {
 			mainAppender = elementToWrite;
@@ -150,13 +167,15 @@ public class MetricsResultFileBuilder {
 				Node childNode = nodeList.item(cpt++);
 				// Process the node to check his validity and generates the
 				// output element
-				Element generatedElementFromNode = ProcessNodeParsing(childNode);
+				Element generatedElementFromNode = processNodeParsing(childNode);
 				// Appending the new element to our document
-				if (generatedElementFromNode != null)
+				if (generatedElementFromNode != null) {
 					mainAppender.appendChild(generatedElementFromNode);
+				}
 				// Continue to iterate over the xml tree
-				if (childNode.hasChildNodes())
-					ParseXMLRecursively(childNode, generatedElementFromNode);
+				if (childNode.hasChildNodes()) {
+					parseXMLRecursively(childNode, generatedElementFromNode);
+				}
 			}
 		}
 	}
@@ -170,34 +189,29 @@ public class MetricsResultFileBuilder {
 	 *            node to be analyzed and procesed.
 	 * @return A well formated element ready to be append
 	 */
-	private Element ProcessNodeParsing(Node childNode) {
+	private Element processNodeParsing(final Node childNode) {
 
 		Element myElement = null;
-		// Verifying that the node is an XML element
-		if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-			String nodeName = childNode.getNodeName();
-			// Creating the correspondant Element
-			myElement = newDocument.createElement(nodeName);
-			// Fetching the element value
-			String nodeValue = getNodeValue(childNode);
-			// Veryfing that text node value isn't empty
-			if (!nodeValue.equals("")) {
-				// Fetch in the hashtable the associated Metric with ID got
-				// previously
-				Metric myMetric = metricsHashTable.get(nodeValue);
-				// Verifying that the metric exists
-				if (myMetric != null)
-					AppendMetricsResultsToElement(myMetric, myElement);
-				// Appending the node value and dont calculates any metrics
-				else {
-					Text textValue = newDocument
-							.createTextNode(getNodeValue(childNode));
-					myElement.appendChild(textValue);
-				}
+		String nodeValue = getNodeValue(childNode);
+		String nodeName = childNode.getNodeName();
 
+		// Verifying that the node is an XML element
+		// Veryfing that text node value isn't empty
+		if (childNode.getNodeType() == Node.ELEMENT_NODE
+				&& !nodeValue.equals("")) {
+			// Creating the correspondant Element
+			myElement = theResultFile.createElement(nodeName);
+			// Fetch the associated Metric in the hashtable
+			Metric myMetric = metricsHashTable.get(nodeValue);
+			// Verifying that the metric exists
+			if (myMetric != null) {
+				appendMetricsResultsToElement(myMetric, myElement);
+				// Appending the node value and don't calculate any metrics
+			} else {
+				Text textValue = theResultFile.createTextNode(nodeValue);
+				myElement.appendChild(textValue);
 			}
 		}
-
 		return myElement;
 	}
 
@@ -211,8 +225,9 @@ public class MetricsResultFileBuilder {
 	 * @param myElement
 	 *            The element where the metric tag and value have to be append
 	 */
-	private void AppendMetricsResultsToElement(Metric myMetric,
-			Element myElement) {
+	private void appendMetricsResultsToElement(final Metric myMetric,
+			final Element myElement) {
+
 		// the metric has an atomic value return
 		if (myMetric.getMetricType().equals("single")) {
 
@@ -228,63 +243,88 @@ public class MetricsResultFileBuilder {
 
 			if (results != null) {
 				// Set the value to the element
-				Text textValue = newDocument.createTextNode(results.toString());
+				Text textValue = theResultFile.createTextNode(results
+						.toString());
 				myElement.appendChild(textValue);
 			}
 
-			// the metric returns a set of elements and value
-		} else {
+			return;
+		}
+
+		if (myMetric.getMetricType().equals("list")) {
 			try {
 
 				SequenceIterator iteratorResults = myMetric.getCompiledQuery()
 						.iterator(
 								SaxonProcessor.getInstance()
 										.getDynamicQueryContext());
-				try {
-					QueryResult.serializeSequence(iteratorResults,
-							SaxonProcessor.getInstance().getConfig(),
-							new PrintWriter(new FileOutputStream(new File(
-									"temp.xml"))), SaxonProcessor.getInstance()
-									.getProperties());
-				} catch (FileNotFoundException e1) { // TODO Bloc catch
-					// auto-généré
-					e1.printStackTrace();
+
+				QueryResult.serializeSequence(iteratorResults, SaxonProcessor
+						.getInstance().getConfig(), new PrintWriter(
+						new FileOutputStream(new File("temp.xml"))),
+						SaxonProcessor.getInstance().getProperties());
+
+				// Creates the XML Document
+				DocumentBuilder db = documentBuilderFactory
+						.newDocumentBuilder();
+				// Read the metrics configuration file
+				Document doc = db.parse("temp.xml");
+
+				Element rootElement = doc.getDocumentElement();
+
+				// Starting the parsing process
+				if (rootElement != null && rootElement.hasChildNodes()) {
+					// Fetching the child nodes
+					NodeList nodeList = rootElement.getChildNodes();
+					int cpt = 0;
+					// Stepping trough the child node
+					while (nodeList.getLength() > 0
+							&& cpt < nodeList.getLength()) {
+						Node childNode = nodeList.item(cpt++);
+						// Process the node to check his validity and generates
+						// the
+						// output element
+						Element generatedElementFromNode = processNodeParsing(childNode);
+						// Appending the new element to our document
+						if (generatedElementFromNode != null) {
+							myElement.appendChild(generatedElementFromNode);
+						}
+						// Continue to iterate over the xml tree
+						if (childNode.hasChildNodes()) {
+							parseXMLRecursively(childNode,
+									generatedElementFromNode);
+						}
+					}
 				}
 
-				try {
-					// Creates the XML Document
-					DocumentBuilder db = documentBuilderFactory
-							.newDocumentBuilder();
-					// Read the metrics configuration file
-					Document doc = db.parse("temp.xml");
-					ParseMetricsResulFileConfiguration(doc, myElement);
-
-				} catch (ParserConfigurationException e) {
-					// TODO Bloc catch auto-généré
-					e.printStackTrace();
-				} catch (SAXException e) {
-					// TODO Bloc catch auto-généré
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Bloc catch auto-généré
-					e.printStackTrace();
-				}
-
+			} catch (FileNotFoundException e1) { // TODO Bloc catch
+				// auto-généré
+				e1.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Bloc catch auto-généré
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Bloc catch auto-généré
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Bloc catch auto-généré
+				e.printStackTrace();
 			} catch (XPathException e) {
 				// TODO Bloc catch auto-généré
 				e.printStackTrace();
 			}
+			return;
 		}
 	}
 
 	/**
-	 * Get the the value encapsulated by a starting and finishing tag element
+	 * Get the the value encapsulated by a starting and finishing tag element.
 	 * 
 	 * @param n
 	 *            The node which the text value have to be extracted.
 	 * @return The extracted sting value.
 	 */
-	private String getNodeValue(Node n) {
+	private String getNodeValue(final Node n) {
 		Node textNode = n.getFirstChild();
 		if (textNode != null) {
 			return textNode.getNodeValue();
@@ -298,12 +338,12 @@ public class MetricsResultFileBuilder {
 	 * XML sub tree.
 	 * 
 	 * @param n
-	 *            Root node from which starts the parsing.
+	 *            Root node from which starts the parsing
 	 * @param childAppender
 	 *            Represents the current cursor of the results output file where
-	 *            the result data have to be append.
+	 *            the result data have to be append
 	 */
-	private void ParseXMLRecursively(Node n, Element childAppender) {
+	private void parseXMLRecursively(final Node n, final Element childAppender) {
 		// Getting all the child node under the Node n passed as parameter
 		NodeList nodeList = n.getChildNodes();
 		// Iterating over all the child nodes
@@ -313,68 +353,19 @@ public class MetricsResultFileBuilder {
 			// Process Node to check value contained in it.
 			// If value is a metric ID so the query is processed, also the found
 			// value is computed to element
-			Element generatedElementFromNode = ProcessNodeParsing(node);
+			Element generatedElementFromNode = processNodeParsing(node);
 
 			// The generated element is append to the root element childAppender
 			// passed as parameter
-			if (generatedElementFromNode != null)
+			if (generatedElementFromNode != null) {
 				childAppender.appendChild(generatedElementFromNode);
+			}
 
 			// If the iterated node has children, they'll be iterate recursively
 			// again
-			if (node.hasChildNodes())
-				ParseXMLRecursively(node, generatedElementFromNode);
-		}
-	}
-
-	/**
-	 * Creates the output results document
-	 * 
-	 */
-	private void createDocument() {
-
-		// get an instance of factory
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		try {
-			// get an instance of builder
-			DocumentBuilder db = dbf.newDocumentBuilder();
-
-			// create an instance of DOM
-			newDocument = db.newDocument();
-
-		} catch (ParserConfigurationException pce) {
-			// dump it
-			System.out
-					.println("Error while trying to instantiate DocumentBuilder "
-							+ pce);
-			System.exit(1);
-		}
-
-	}
-
-	/**
-	 * Saving the ouptut data stream to an XML file by serialization.
-	 */
-
-	private void printToFile(String pathOutput) {
-
-		try {
-			// print
-			OutputFormat format = new OutputFormat(newDocument);
-			format.setIndenting(true);
-
-			// to generate output to console use this serializer
-			// XMLSerializer serializer = new XMLSerializer(System.out, format);
-
-			// to generate a file output use fileoutputstream instead of
-			// system.out
-			XMLSerializer serializer = new XMLSerializer(new FileOutputStream(
-					new File(pathOutput)), format);
-
-			serializer.serialize(newDocument);
-
-		} catch (IOException ie) {
-			ie.printStackTrace();
+			if (node.hasChildNodes()) {
+				parseXMLRecursively(node, generatedElementFromNode);
+			}
 		}
 	}
 

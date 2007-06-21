@@ -17,25 +17,44 @@ import org.xml.sax.SAXException;
 
 import com.codesquale.utils.Utilities;
 
-
+/**
+ * Represents the collection of metrics proposed by CodeSquale.
+ * 
+ * @author dwillier
+ * 
+ */
 public class MetricsCollection {
 
-	Hashtable<String,Metric> metricsCollection;
+	/**
+	 * Hashtable representating the metrics collection. The key is identified by
+	 * the metric short name and the associated value is the metric object.
+	 */
+	private Hashtable<String, Metric> metricsCollection;
 
-	public Hashtable<String,Metric> getCollection()
-	{
+	/**
+	 * Returns the metrics collections.
+	 * 
+	 * @return Hashtable of the metrics colelction
+	 */
+	public final Hashtable<String, Metric> getCollection() {
 		return metricsCollection;
 	}
-	
-	public MetricsCollection() {
-		metricsCollection = new Hashtable<String,Metric>();
-	}
-	
+
 	/**
-	 * Initializes the parsing of the metrics collectin file
-	 * @param metricsFileDescriptorPath
+	 * Constructor by default. Initializes the metrics collection.
 	 */
-	public void ReadAvailableMetricsCollection(String metricsFileDescriptorPath) {
+	public MetricsCollection() {
+		metricsCollection = new Hashtable<String, Metric>();
+	}
+
+	/**
+	 * Initializes the parsing of the metrics collectin file.
+	 * 
+	 * @param metricsFileDescriptorPath
+	 *            Path of the file containing the metrics collection.
+	 */
+	public final void readAvailableMetricsCollection(
+			final String metricsFileDescriptorPath) {
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -45,7 +64,7 @@ public class MetricsCollection {
 			// Read the metrics configuration file
 			Document doc = db.parse(metricsFileDescriptorPath);
 
-			ParseMetricsCollectionFile(doc);
+			parseMetricsCollectionFile(doc);
 
 		} catch (ParserConfigurationException e) {
 			// TODO Bloc catch auto-généré
@@ -62,70 +81,80 @@ public class MetricsCollection {
 
 	/**
 	 * Builds the metrics collection from the collection file.
+	 * 
 	 * @param doc
+	 *            Input file to parse.
 	 */
-	private void ParseMetricsCollectionFile(Document doc)
-	{
+	private void parseMetricsCollectionFile(final Document doc) {
 		Element docElement = doc.getDocumentElement();
-		
+
 		NodeList nodeList = docElement.getElementsByTagName("metric");
-		
-		if(nodeList!= null && nodeList.getLength()>0)
-		{
-			for(int i=0;i<nodeList.getLength();i++)
-			{
-				Element metricElement = (Element)nodeList.item(i);
-				Metric m = GetMetricFromElement(metricElement);
-				
+
+		if (nodeList != null && nodeList.getLength() > 0) {
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element metricElement = (Element) nodeList.item(i);
+				Metric m = getMetricFromElement(metricElement);
+
 				metricsCollection.put(m.getMetricShortName(), m);
 			}
 		}
-		
+
 	}
 
 	/**
-	 * Construct an object Metric from a valid metric XML element
+	 * Construct an object Metric from a valid metric XML element.
+	 * 
 	 * @param e
-	 * @return
+	 *            Metric element read from the metrics collection file
+	 * @return A metric object instancied with the values contained in the
+	 *         element
 	 */
-	private Metric GetMetricFromElement(Element e) {
+	private Metric getMetricFromElement(final Element e) {
 		String metricLongName = getTextValue(e, "metricLongName");
 		String metricShortName = getTextValue(e, "metricShortName");
 		String metricDecription = getTextValue(e, "metricDescription");
 		String associatedXqueryPath = getTextValue(e, "associatedXQueryPath");
 		String enabled = getTextValue(e, "metricEnabled");
-		String type = getTextValue(e,"returnValueType");
+		String type = getTextValue(e, "returnValueType");
 		boolean metricEnabled = Boolean.parseBoolean(enabled);
 
-		
-		String literalXQueryExpression=null;
-		
+		String literalXQueryExpression = null;
+
 		try {
-			literalXQueryExpression = Utilities.readFileAsString(associatedXqueryPath);
+			literalXQueryExpression = Utilities
+					.readFileAsString(associatedXqueryPath);
 		} catch (IOException e1) {
 			// TODO Bloc catch auto-généré
 			e1.printStackTrace();
 		}
-		
-		XQueryExpression compiledQuery=null;
+
+		XQueryExpression compiledQuery = null;
 		try {
-			compiledQuery = SaxonProcessor.getInstance().compileXquery(literalXQueryExpression);
+			compiledQuery = SaxonProcessor.getInstance().compileXquery(
+					literalXQueryExpression);
 		} catch (XPathException e1) {
 			// TODO Bloc catch auto-généré
 			e1.printStackTrace();
 		}
-		
+
 		Metric m = new Metric(associatedXqueryPath, metricDecription,
-				metricLongName, metricShortName, metricEnabled,type,compiledQuery);
+				metricLongName, metricShortName, metricEnabled, type,
+				compiledQuery);
 
 		return m;
 	}
 
 	/**
 	 * I take a xml element and the tag name, look for the tag and get the text
-	 * content
+	 * content.
+	 * 
+	 * @param ele
+	 *            Element to read
+	 * @param tagName
+	 *            Element tag name for which value has to be retrieved
+	 * @return Read value
 	 */
-	private String getTextValue(Element ele, String tagName) {
+	private String getTextValue(final Element ele, final String tagName) {
 		String textVal = null;
 		NodeList nl = ele.getElementsByTagName(tagName);
 		if (nl != null && nl.getLength() > 0) {
