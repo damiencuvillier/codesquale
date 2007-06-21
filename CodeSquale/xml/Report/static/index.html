@@ -1,17 +1,59 @@
 <html>
-<head><title>Report</title>
-</head>
-<body>
-	<h1>CodeSquale Report</h1>
-	<a href="04.Report/SourceDescription/project.html">Global Structure</a><br />
-	<br /><br />
-	
-	<a href="http://code.google.com/p/codesquale/wiki/SoftwareMetricsExplanation">
-		Metrics Explanation
-	</a>
-	
-	<br /> <br />
-	Logs : <a href="./logs/GlobalInfo.html">Global</a> - <a href=".logs/FullLoggingInfo.html">Full</a>
-</body>
+	<head>
+		<title>CodeSquale Report</title>
+		<style>
+			h1{
+				text-align:center;
+				padding-bottom:20px;
+			}
+			div{
+				padding:10px;
+				text-align:center;
+				width:100%;
+				font-weight:bold;
+				font-variant: small-caps;
+				font-size:12pt;
+			}
+			div.block{
+				color:blue;
+			}
+			div.block:hover{
+				background-color:blue;
+				color:white;
+			}
+			a{
+				text-decoration:none;
+			}
+			a:hover{
+				text-decoration:underline;
+			}
+				
+				
+		</style>
+	</head>
+
+	<body>
+		<h1>CodeSquale Report</h1>
+		<a href="04.Report/SourceDescription/project.html">
+			<div class="block" style="font-size:14pt;padding:20px;">
+				See CodeSquale Report
+			</div>
+		</a>
+		<a href="http://code.google.com/p/codesquale/wiki/SoftwareMetricsExplanation">
+			<div class="block">
+				CodeSquale Metrics Explanation
+			</div>
+		 </a>
+		<a href="report.zip">
+			<div class="block">
+				Download This report as Zip File
+			</div>
+		</a>
+		<div>Logs : 
+			<a href="./logs/GlobalInfo.html">Global</a>
+			-
+			<a href=".logs/FullLoggingInfo.html">Full</a>
+		</div>
+	</body>
 
 </html>
