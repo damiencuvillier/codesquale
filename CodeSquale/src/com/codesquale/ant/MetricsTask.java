@@ -12,7 +12,6 @@ import org.apache.tools.ant.types.FileSet;
 
 import com.codesquale.metrics.MetricsCollection;
 import com.codesquale.metrics.MetricsResultFileBuilder;
-import com.codesquale.metrics.deprecated.ProjectGlobalCounters;
 
 public class MetricsTask extends Task {
 
@@ -28,16 +27,14 @@ public class MetricsTask extends Task {
 	// antTask.xml
 	private String queryFile;
 
-	// private IMetricsFactory myFactory =
-	// MetricsFactoryProvider.getInstance().GetMetricsFactory(MetricsFactoryType.SAXON_FACTORY);
 
 	public MetricsTask() {
-		String myConfigurationPath = "xml/XQuery/MetricsCollection.xml";
-		String myResultFileTemplatePath = "xml/XQuery/MetricsResultFileConfiguration.xml";
+		String myConfigurationPath = "XQuery/MetricsCollection.xml";
+		String myResultFileTemplatePath = "XQuery/MetricsResultFileConfiguration.xml";
 
 		// Init the metrics collection reader
 		myMetricsCollection = new MetricsCollection();
-		myMetricsCollection.ReadAvailableMetricsCollection(myConfigurationPath);
+		myMetricsCollection.readAvailableMetricsCollection(myConfigurationPath);
 
 		// Init the result builder
 		myMetricsResultFileBuilder = new MetricsResultFileBuilder(
@@ -68,11 +65,11 @@ public class MetricsTask extends Task {
                      File found = new File(base, includedFiles[i]);
                      foundLocation = found.getAbsolutePath();
                      
-                     myMetricsResultFileBuilder.BuildMetricsResultFile(foundLocation, outputDir+found.getName());	
+                     myMetricsResultFileBuilder.buildMetricsResultFile(foundLocation, outputDir+found.getName());	
              }
          }
          
-         ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project.xml");
+         //ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project.xml");
     }
     protected void validate() {
         if (filesets.size()<1) throw new BuildException("fileset not set");
