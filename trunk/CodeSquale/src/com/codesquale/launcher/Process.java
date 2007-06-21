@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 
 import com.codesquale.ant.AntRunner;
+import com.codesquale.utils.ExceptionLevel;
+import com.codesquale.utils.ExceptionManager;
 
 /**
  * 
@@ -18,9 +20,8 @@ import com.codesquale.ant.AntRunner;
 
 public class Process extends Thread{
 	
-	private File source, target, XMLFile;
+	private File source, target;
 	
-	private  org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Process.class);
 
 	
 	
@@ -29,12 +30,6 @@ public class Process extends Thread{
 		setTarget(target);	
 	}
 	
-	public Process(File source, File target, File XMLFile){
-		setSource(source);
-		setTarget(target);
-		setXMLFile(XMLFile);
-		
-	}
 	
 	@SuppressWarnings("unchecked")
 	public void run(){
@@ -42,20 +37,18 @@ public class Process extends Thread{
 		try
 		{
 			HashMap myHash = new HashMap();
-			AntRunner.getInstance().init("xml/AntScript.xml");
+			AntRunner.getInstance().init("xml/launch.xml");
 			
 			myHash.put("OutputDir", target.getAbsolutePath());
 			myHash.put("SourceDir",source.getAbsolutePath());
 			
 			AntRunner.getInstance().setProperties(myHash, true);
 
-			AntRunner.getInstance().runTarget("CodeSqualeMetricsProcess");
+			AntRunner.getInstance().runTarget("launch");
 			
 		}catch(Exception e){
-			
-			logger.fatal(e.getMessage());
+			ExceptionManager.aspectManagedException(e, ExceptionLevel.FATAL);
 		}
-		
 	}
 
 	public File getSource() {
@@ -74,13 +67,6 @@ public class Process extends Thread{
 		this.target = target;
 	}
 
-	public File getXMLFile() {
-		return XMLFile;
-	}
-
-	public void setXMLFile(File file) {
-		XMLFile = file;
-	}
 	
 	
 }
