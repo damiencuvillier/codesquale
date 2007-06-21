@@ -43,51 +43,102 @@ public class Metric {
 	private String metricType;
 
 	/**
-	 * It is the compiled object from  
+	 * It is the compiled object from the literal query.
 	 */
 	private XQueryExpression compiledQuery;
 
-	public Metric(String queryExpression, String metricDescription,
-			String metricLongName, String metricShortName, boolean enabled,
-			String metricType, XQueryExpression compiledQuery) {
+	/**
+	 * Specialized constructor.
+	 * 
+	 * @param queryExpression
+	 *            Represents the literal query
+	 * @param aMetricDescription
+	 *            Description of the behaviour of the metric
+	 * @param aMetricLongName
+	 *            Long name of the metric
+	 * @param aMetricShortName
+	 *            Short name of the metric (ID)
+	 * @param enabled
+	 *            Determines if the metric is enabled or not
+	 * @param aMetricType
+	 *            Gives the type of the metric
+	 * @param aCompiledQuery
+	 *            It is the compiled query object
+	 */
+	public Metric(final String queryExpression,
+			final String aMetricDescription, final String aMetricLongName,
+			final String aMetricShortName, final boolean enabled,
+			final String aMetricType, final XQueryExpression aCompiledQuery) {
 		this.metricXQueryExpression = queryExpression;
-		this.metricDescription = metricDescription;
-		this.metricLongName = metricLongName;
-		this.metricShortName = metricShortName;
+		this.metricDescription = aMetricDescription;
+		this.metricLongName = aMetricLongName;
+		this.metricShortName = aMetricShortName;
 		this.metricEnabled = enabled;
-		this.metricType = metricType;
-		this.compiledQuery = compiledQuery;
+		this.metricType = aMetricType;
+		this.compiledQuery = aCompiledQuery;
 	}
 
-	public boolean isMetricEnabled() {
+	/**
+	 * Returns if metric is enabled.
+	 * @return true if enabled
+	 */
+	public final boolean isMetricEnabled() {
 		return metricEnabled;
 	}
 
-	public void setMetricEnabled(boolean metricEnabled) {
-		this.metricEnabled = metricEnabled;
+	/**
+	 * Set the metricEnabled to true or false.
+	 * @param isMetricEnabled Set to true if you want to enale the metric
+	 */
+	public final void setMetricEnabled(boolean isMetricEnabled) {
+		this.metricEnabled = isMetricEnabled;
 	}
 
-	public String getMetricDescription() {
+	/**
+	 * Returns the metric description.
+	 * @return A string representing the metric description.
+	 */
+	public final String getMetricDescription() {
 		return metricDescription;
 	}
 
-	public String getMetricLongName() {
+	/**
+	 * Returns the metric long name.
+	 * @return String that is the metric long name
+	 */
+	public final String getMetricLongName() {
 		return metricLongName;
 	}
 
-	public String getMetricShortName() {
+	/**
+	 * Returns the metric short name.
+	 * @return String that is the metric short name.
+	 */
+	public final String getMetricShortName() {
 		return metricShortName;
 	}
 
-	public String getMetricXQueryExpression() {
+	/**
+	 * Returns the XQuery as String.
+	 * @return String that is the XQuery.
+	 */
+	public final String getMetricXQueryExpression() {
 		return metricXQueryExpression;
 	}
 
-	public XQueryExpression getCompiledQuery() {
+	/**
+	 * Returns the XQuery as a compiled object.
+	 * @return The compiled XQuery expression
+	 */
+	public final XQueryExpression getCompiledQuery() {
 		return compiledQuery;
 	}
 
-	public String getMetricType() {
+	/**
+	 * Returns the type of the metric as string.
+	 * @return Metric type as a string
+	 */
+	public final String getMetricType() {
 		return metricType;
 	}
 
