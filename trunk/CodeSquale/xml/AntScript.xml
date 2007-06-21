@@ -313,9 +313,16 @@
 	<target name="CodeSqualeGlobalProcess">
 		<status step="0" message="CodeSqualing..."/>
 		<antcall target="CodeSqualeReportProcess" />
+		<antcall target="CodeSqualeZipReport" />
 		<status step="5" message="Process done." />
 	</target>
-
+	<target name="CodeSqualeZipReport">
+		<zip destfile="${OutputDir}/report.zip">
+			<fileset dir="${OutputDir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
 </project>
 
 
