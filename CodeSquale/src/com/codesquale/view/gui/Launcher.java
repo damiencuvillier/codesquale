@@ -31,7 +31,7 @@ public class Launcher {
 			System.err.println("\nYou can also launch CodeSquale in graphical mode (no arguments)");
 		}else{
 			// Graphic mode
-			new ConsoleGUI();
+			new MainGui();
 		}
 	}
 
