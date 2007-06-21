@@ -1,6 +1,7 @@
 package com.codesquale.ant;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -12,6 +13,8 @@ import org.apache.tools.ant.types.FileSet;
 
 import com.codesquale.metrics.MetricsCollection;
 import com.codesquale.metrics.MetricsResultFileBuilder;
+import com.codesquale.metrics.ProjectMetricsResults;
+import com.codesquale.metrics.ResultFileBuildType;
 
 public class MetricsTask extends Task {
 
@@ -48,6 +51,8 @@ public class MetricsTask extends Task {
 
     public void execute() {
    
+    	
+    	
     	// Ant Task Format validator
     	 validate();         
     	 
@@ -65,11 +70,11 @@ public class MetricsTask extends Task {
                      File found = new File(base, includedFiles[i]);
                      foundLocation = found.getAbsolutePath();
                      
-                     myMetricsResultFileBuilder.buildMetricsResultFile(foundLocation, outputDir+found.getName());	
+                    myMetricsResultFileBuilder.buildMetricsResultFile(foundLocation, outputDir+found.getName(),ResultFileBuildType.UnitFile);	
              }
          }
-         
-         //ProjectGlobalCounters.getInstance().SerializeProjectsResult(outputDir+"\\project.xml");
+         //projectResults.PrintMetricsResults();
+         myMetricsResultFileBuilder.buildMetricsResultFile("", outputDir+"\\project.xml",ResultFileBuildType.ProjectFile);
     }
     protected void validate() {
         if (filesets.size()<1) throw new BuildException("fileset not set");
