@@ -19,9 +19,11 @@ public class ConsoleArea
 	private static final long serialVersionUID = 6161025167016289600L;
 	
 	
-	/** Constructor. */
-	public ConsoleArea() {
+	/** Constructor.
+	 * @param port TCP Socket Port */
+	public ConsoleArea(int port) {
 		super();
+		new SocketLoggerServer(port, this);
 	}
 	
 	/** log method. <br />.
