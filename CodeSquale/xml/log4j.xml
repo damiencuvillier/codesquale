@@ -34,7 +34,7 @@ Ajilon IT - Lille
 	  	FullFileAppender : Contains debug data
   	 -->
 	 <appender name="GlobalFileAppender" class="org.apache.log4j.FileAppender">
-	     <param name="file" value="../logs/GlobdebugoggingInfo.html"/>
+	     <param name="file" value="../logs/GlobalInfo.html"/>
 	     <layout class="org.apache.log4j.HTMLLayout"/>
 	 </appender>
  	 <appender name="FullFileAppender" class="org.apache.log4j.FileAppender">
@@ -145,6 +145,7 @@ Ajilon IT - Lille
  	<logger name="ReportingCodeSqualeProcess" additivity="true">
  		<level value="debug"/>
  		<appender-ref ref="ReportingSocketAppender" />
+ 		
  	</logger>
  	<!-- // Specific Processes -->
  	
