@@ -117,6 +117,7 @@
 	<property name="StructuredProjectDataDir" value="02.StructuredProjectData\" />
 	<property name="MetricsDir" value="03.Metrics\" />
 	<property name="ReportDir" value="04.Report\" />
+	<property name="ExternalToolsDir" value="05.ExternalTools\" />
 	<property name="ReportDataDir" value="SourceDescription\" />
 	<property name="ReportMetricsDir" value="Metrics\" />
 	
@@ -131,6 +132,7 @@
 	<property name="MetricsProcessDir" value="XQuery/" />
 	<property name="ReportProcessDir" value="Report/" />
 	<property name="ReportStaticElementsDir" value="Report/static/" />
+	<property name="ExternalToolsProcessDir" value="ExtTools/" />
 	 
 	<!-- tmpfile will be deleted before the end -->
 	<property name="tmpFile" value="tmp" />
@@ -150,7 +152,7 @@
 	<taskdef name="status" 
 			classname="com.codesquale.ant.StatusTask"
 			/>
-	
+	<taskdef resource="checkstyletask.properties"/>
 
 	<!-- Targets -->
 	 
@@ -179,6 +181,7 @@
 		<mkdir dir="${OutputDir}/${StructuredProjectDataDir}" />
 		<mkdir dir="${OutputDir}/${MetricsDir}" />	
 		<mkdir dir="${OutputDir}/${ReportDir}" />
+		<mkdir dir="${OutputDir}/${ExternalToolsDir}" />
 		
 		<!-- Copy Source Files -->
 		<copy todir="${OutputDir}/${OutputSourceDir}">
@@ -309,20 +312,36 @@
 			<factory name="org.apache.xalan.processor.TransformerFactoryImpl" />
 		</xslt>
 	</target>
-
-	<target name="CodeSqualeGlobalProcess">
-		<status step="0" message="CodeSqualing..."/>
-		<antcall target="CodeSqualeReportProcess" />
-		<antcall target="CodeSqualeZipReport" />
-		<status step="5" message="Process done." />
-	</target>
 	<target name="CodeSqualeZipReport">
+		<!-- Create a zip file with all Report data -->
 		<zip destfile="${OutputDir}/report.zip">
 			<fileset dir="${OutputDir}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
 	</target>
+	<target name="CodeSqualeLaunchsExternalTools">
+		<status step="5" message="Running External Tools." />
+		<!-- CheckStyle -->
+		<mkdir dir="${OutputDir}/${ExternalToolsDir}CheckStyle/" />
+		<checkstyle config="${ExternalToolsProcessDir}checkstyle_sun_checks.xml" failOnViolation="false">
+			<fileset dir="${SourceDir}">
+				<include name="**/*.java" />
+			</fileset>
+			<formatter type="xml" toFile="${OutputDir}/${ExternalToolsDir}CheckStyle/checkstyle_errors.xml"/>
+		</checkstyle>
+		<style in="${OutputDir}/${ExternalToolsDir}CheckStyle/checkstyle_errors.xml" 
+			out="${OutputDir}/${ExternalToolsDir}CheckStyle/checkstyle_errors.html" 
+			style="${ExternalToolsProcessDir}checkstyle-frames.xsl"/>	
+	</target>
+	<target name="CodeSqualeGlobalProcess">
+		<status step="0" message="CodeSqualing..."/>
+		<antcall target="CodeSqualeReportProcess" />
+		<antcall target="CodeSqualeLaunchsExternalTools" />
+		<antcall target="CodeSqualeZipReport" />
+		<status step="6" message="Process done." />
+	</target>
+	
 </project>
 
 
