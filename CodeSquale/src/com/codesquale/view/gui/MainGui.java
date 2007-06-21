@@ -146,9 +146,9 @@ public class MainGui extends JFrame {
 	private JPanel getProgressPanel() {
 		if (progressPanel == null) {
 			progressPanel = new JPanel();
-			progressPanel.setLayout(new GridLayout(1,5));
+			progressPanel.setLayout(new GridLayout(1,6));
 			progressPanel.setBounds(new Rectangle(0, 63, 788, 24));
-			for(int i = 0; i<5;i++){
+			for(int i = 0; i<6;i++){
 				progressPanel.add(getStepRadioButtons()[i]);
 				
 			}
@@ -168,9 +168,10 @@ public class MainGui extends JFrame {
 					new JRadioButton("1. Parsing Sources"),
 					new JRadioButton("2. Generics XML"),
 					new JRadioButton("3. Metrics Calculation"),
-					new JRadioButton("4. Building Report")
+					new JRadioButton("4. Building Report"),
+					new JRadioButton("5. External Tools")
 			};
-			for(int i = 0; i<5;i++){
+			for(int i = 0; i<6;i++){
 				stepRadioButtons[i].setEnabled(false);
 				stepRadioButtons[i].setFont(new Font("Arial", Font.PLAIN, 10));
 			}
@@ -356,7 +357,7 @@ public class MainGui extends JFrame {
 			if(step >0){
 				getStepRadioButtons()[step-1].setSelected(true);
 			}
-			if(step < 5){
+			if(step < 6){
 				getStepRadioButtons()[step].setFont(new Font("Arial", Font.BOLD, 11));
 			}else{
 				/* At the end, delete status file */
