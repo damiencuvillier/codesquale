@@ -1,6 +1,12 @@
 package com.codesquale.ant;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.apache.tools.ant.Task;
+
+import com.codesquale.utils.ExceptionLevel;
+import com.codesquale.utils.ExceptionManager;
 /** <h1>Progress Ant Task </h1><BR>
  * 
  * Provides progress status indicators for CodeSquale global Process
@@ -30,6 +36,16 @@ public class StatusTask extends Task {
 	/** Step Variable setter. */
 	public void setStep(int step) {
 		this.step = step;
+		/* Write to a binary file the status
+		 * TODO Change Status system
+		 */
+		try {
+			FileWriter writer = new FileWriter("status");
+			writer.write(step);
+			writer.close();
+		} catch (IOException e) {
+			ExceptionManager.aspectManagedException(e, ExceptionLevel.WARN);
+		}
 	}
 	/** Message Accessor.
 	 */
