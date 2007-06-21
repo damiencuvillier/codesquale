@@ -1,21 +1,26 @@
 package com.codesquale.view.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.io.File;
-import java.io.PrintStream;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.WriterAppender;
 
 public class ConsoleGUI extends JFrame {
 
@@ -37,24 +42,51 @@ public class ConsoleGUI extends JFrame {
 
 	private JLabel lbl_output = null;
 
-	private JButton btn_browseInput = null;
+	private JButton browseInputButton = null;
 
-	private JButton btn_browseOutput = null;
+	private JButton browseOutputButton = null;
 
-	private JTextArea field_console = null;
+	private JButton analyseButton = null;
 
-	private JButton btn_ok = null;
+	private JButton cancelButton = null;
 
-	private JButton btn_cancel = null;
-
-	private Logger rootLogger;
 	private com.codesquale.launcher.Process process ;
 
-	private JScrollPane jScrollPane = null;
+	private JPanel jPanel = null;
+
+	private JTabbedPane consoleTabPanel = null;
+
+	private JScrollPane mainConsolePanel = null;
+
+	private JScrollPane parsingConsolePanel = null;
+
+	private JScrollPane transformingConsolePanel = null;
+
+	private JScrollPane metricsConsolePanel = null;
+
+	private JScrollPane reportingConsolePanel = null;
+
+	private JScrollPane debugConsolePanel = null;
+
+	private JProgressBar progressBar = null;
+
+	private JPanel progressPanel = null;
+
+	private JTextField transformProgressField = null;
+
+	private JTextField copySourceProgressField = null;
+
+	private JTextField parsingProgressField = null;
+
+	private JTextField metricsProgressField = null;
+
+	private JTextField reportProgressField = null;
+
 	/**
 	 * This is the default constructor
+	 * @throws IOException 
 	 */
-	public ConsoleGUI() {
+	public ConsoleGUI()  {
 		super();
 		initialize();
 	}
@@ -63,32 +95,25 @@ public class ConsoleGUI extends JFrame {
 	 * This method initializes this
 	 * 
 	 * @return void
+	 * @throws IOException 
 	 */
 	private void initialize() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/codesquale/view/gui/icon.jpg")));
 		this.setBounds(new Rectangle(100, 100, 867, 642));
 		this.setResizable(false);
 		this.setContentPane(getJContentPane());
 		this.setTitle("CodeSquale");
 		this.setVisible(true);
-		rootLogger = Logger.getRootLogger();
-		// Setting standard out to a JTextArea	
-		CSOut os = new CSOut(field_console);
-		System.setOut(new PrintStream(os));
-		System.setErr(new PrintStream(os));
-//		 Setting to put log4j in a JTextArea	
-		WriterAppender appender = new WriterAppender(new SimpleLayout(), os);
-		appender.setName("consoleSwing");
-		appender.setImmediateFlush(true);
-		rootLogger.addAppender(appender);
 	}
 
 	/**
 	 * This method initializes jContentPane
 	 * 
 	 * @return javax.swing.JPanel
+	 * @throws IOException 
 	 */
-	private JPanel getJContentPane() {
+	private JPanel getJContentPane()  {
 		if (ctn_contentPane == null) {
 			ctn_contentPane = new JPanel();
 			ctn_contentPane.setLayout(new BorderLayout());
@@ -101,6 +126,7 @@ public class ConsoleGUI extends JFrame {
 	 * This method initializes FormPanel	
 	 * 	
 	 * @return javax.swing.JPanel	
+	 * @throws IOException 
 	 */
 	private JPanel getFormPanel() {
 		if (ctn_formPanel == null) {
@@ -111,6 +137,8 @@ public class ConsoleGUI extends JFrame {
 			ctn_formPanel.setLayout(null);
 			ctn_formPanel.add(getForm(), null);
 			ctn_formPanel.add(getConsole(), null);
+			ctn_formPanel.add(getProgressBar(), null);
+			ctn_formPanel.add(getProgressPanel(), null);
 		}
 		return ctn_formPanel;
 	}
@@ -144,13 +172,15 @@ public class ConsoleGUI extends JFrame {
 	 * This method initializes console	
 	 * 	
 	 * @return javax.swing.JPanel	
+	 * @throws IOException 
 	 */
 	private JPanel getConsole() {
 		if (ctn_console == null) {
 			ctn_console = new JPanel();
 			ctn_console.setLayout(null);
-			ctn_console.setBounds(new Rectangle(0, 56, 860, 551));
-			ctn_console.add(getJScrollPane(), null);
+			ctn_console.setBounds(new Rectangle(0, 87, 860, 520));
+			ctn_console.add(getJPanel(), null);
+			ctn_console.add(getConsoleTabPanel(), null);
 		}
 		return ctn_console;
 	}
@@ -196,7 +226,7 @@ public class ConsoleGUI extends JFrame {
 	}
 
 	public void activeAnalyseButton(){
-		if(!field_inputPath.getText().equals("")&&!field_outputPath.getText().equals("")) btn_ok.setEnabled(true);
+		if(!field_inputPath.getText().equals("")&&!field_outputPath.getText().equals("")) analyseButton.setEnabled(true);
 	}
 	/**
 	 * This method initializes browseInput	
@@ -204,18 +234,18 @@ public class ConsoleGUI extends JFrame {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getBrowseInput() {
-		if (btn_browseInput == null) {
-			btn_browseInput = new JButton();
-			btn_browseInput.setBounds(new Rectangle(488, 0, 47, 26));
-			btn_browseInput.setText("...");
-			btn_browseInput.addActionListener(new java.awt.event.ActionListener() {
+		if (browseInputButton == null) {
+			browseInputButton = new JButton();
+			browseInputButton.setBounds(new Rectangle(488, 0, 47, 26));
+			browseInputButton.setText("...");
+			browseInputButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					field_inputPath.setText(new FolderChooser().getFolder());
 					activeAnalyseButton();
 				}
 			});
 		}
-		return btn_browseInput;
+		return browseInputButton;
 	}
 
 	/**
@@ -224,30 +254,18 @@ public class ConsoleGUI extends JFrame {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getBrowseOutput() {
-		if (btn_browseOutput == null) {
-			btn_browseOutput = new JButton();
-			btn_browseOutput.setBounds(new Rectangle(488, 27, 47, 23));
-			btn_browseOutput.setText("...");
-			btn_browseOutput.addActionListener(new java.awt.event.ActionListener() {
+		if (browseOutputButton == null) {
+			browseOutputButton = new JButton();
+			browseOutputButton.setBounds(new Rectangle(488, 27, 47, 23));
+			browseOutputButton.setText("...");
+			browseOutputButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					field_outputPath.setText(new FolderChooser().getFolder());
 					activeAnalyseButton();
 				}
 			});
 		}
-		return btn_browseOutput;
-	}
-
-	/**
-	 * This method initializes consoleTextArea	
-	 * 	
-	 * @return javax.swing.JTextArea	
-	 */
-	private JTextArea getConsoleTextArea() {
-		if (field_console == null) {
-			field_console = new JTextArea();
-		}
-		return field_console;
+		return browseOutputButton;
 	}
 
 	/**
@@ -256,21 +274,21 @@ public class ConsoleGUI extends JFrame {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getOK() {
-		if (btn_ok == null) {
-			btn_ok = new JButton();
-			btn_ok.setBounds(new Rectangle(575, 3, 87, 21));
-			btn_ok.setEnabled(false);
-			btn_ok.setText("Analyse");
-			btn_ok.addActionListener(new java.awt.event.ActionListener() {
+		if (analyseButton == null) {
+			analyseButton = new JButton();
+			analyseButton.setBounds(new Rectangle(575, 3, 87, 21));
+			analyseButton.setEnabled(false);
+			analyseButton.setText("Analyse");
+			analyseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					btn_ok.setEnabled(false);
-					btn_cancel.setEnabled(true);
+					analyseButton.setEnabled(false);
+					cancelButton.setEnabled(true);
 					
-					field_console.setText("");
+//					field_console.setText("");
 					File input = new File(field_inputPath.getText());
 					File output = new File(field_outputPath.getText());
 					
-					field_console.setText(field_inputPath.getText()+"\n"+field_inputPath);
+//					field_console.setText(field_inputPath.getText()+"\n"+field_inputPath);
 					
 					if(input.exists()&& input.isDirectory())
 					{
@@ -278,13 +296,13 @@ public class ConsoleGUI extends JFrame {
 						
 						process.start();
 						
-						btn_ok.setEnabled(false);
+						analyseButton.setEnabled(false);
 					}
 					
 				}
 			});
 		}
-		return btn_ok;
+		return analyseButton;
 	}
 
 	/**
@@ -294,15 +312,15 @@ public class ConsoleGUI extends JFrame {
 	 */
 	private JButton getCancel() {
 		// FIXME Thread cancel is not efficient
-		if (btn_cancel == null) {
-			btn_cancel = new JButton();
-			btn_cancel.setBounds(new Rectangle(576, 29, 86, 22));
-			btn_cancel.setEnabled(false);
-			btn_cancel.setText("Cancel");
-			btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+		if (cancelButton == null) {
+			cancelButton = new JButton();
+			cancelButton.setBounds(new Rectangle(576, 29, 86, 22));
+			cancelButton.setEnabled(false);
+			cancelButton.setText("Cancel");
+			cancelButton.addActionListener(new java.awt.event.ActionListener() {
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					btn_ok.setEnabled(false);
+					analyseButton.setEnabled(false);
 					if(process != null){
 						if(process.isAlive()) process.stop();
 					}
@@ -311,21 +329,220 @@ public class ConsoleGUI extends JFrame {
 				}
 			});
 		}
-		return btn_cancel;
+		return cancelButton;
 	}
 
 	/**
-	 * This method initializes jScrollPane	
+	 * This method initializes jPanel	
 	 * 	
-	 * @return javax.swing.JScrollPane	
+	 * @return javax.swing.JPanel	
 	 */
-	private JScrollPane getJScrollPane() {
-		if (jScrollPane == null) {
-			jScrollPane = new JScrollPane();
-			jScrollPane.setBounds(new Rectangle(0, 0, 860, 551));
-			jScrollPane.setViewportView(getConsoleTextArea());
+	private JPanel getJPanel() {
+		if (jPanel == null) {
+			jPanel = new JPanel();
+			jPanel.setLayout(new GridBagLayout());
+			jPanel.setBounds(new Rectangle(5, 556, 10, 10));
 		}
-		return jScrollPane;
+		return jPanel;
+	}
+
+	/**
+	 * This method initializes consoleTabPanel	
+	 * 	
+	 * @return javax.swing.JTabbedPane	
+	 * @throws IOException 
+	 */
+	private JTabbedPane getConsoleTabPanel(){
+		if (consoleTabPanel == null) {
+			consoleTabPanel = new JTabbedPane();
+			consoleTabPanel.setBounds(new Rectangle(3, 0, 853, 400));
+			consoleTabPanel.addTab("Global Process", null, getMainConsolePanel(), null);
+			consoleTabPanel.addTab("Parsing Console", null, getParsingConsolePanel(), null);
+			consoleTabPanel.addTab("Transform Console", null, getTransformingConsolePanel(), null);
+			consoleTabPanel.addTab("Metrics Console", null, getMetricsConsolePanel(), null);
+			consoleTabPanel.addTab("Report Console", null, getReportingConsolePanel(), null);
+			consoleTabPanel.addTab("Debug Console", null, getDebugConsolePanel(), null);
+		}
+		return consoleTabPanel;
+	}
+
+	/**
+	 * This method initializes mainConsolePanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 * @throws IOException 
+	 */
+	private JScrollPane getMainConsolePanel() {
+		if (mainConsolePanel == null) {
+			mainConsolePanel = new ConsoleSocketListenerPanel(22020);
+		}
+		return mainConsolePanel;
+	}
+
+	/**
+	 * This method initializes parsingConsolePanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JScrollPane getParsingConsolePanel() {
+		if (parsingConsolePanel == null) {
+			parsingConsolePanel = new ConsoleSocketListenerPanel(22021);
+		}
+		return parsingConsolePanel;
+	}
+
+	/**
+	 * This method initializes transformingConsolePanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 * @throws IOException 
+	 */
+	private JScrollPane getTransformingConsolePanel()  {
+		if (transformingConsolePanel == null) {
+			transformingConsolePanel = new ConsoleSocketListenerPanel(22022);
+		}
+		return transformingConsolePanel;
+	}
+
+	/**
+	 * This method initializes metricsConsolePanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JScrollPane getMetricsConsolePanel() {
+		if (metricsConsolePanel == null) {
+			metricsConsolePanel = new ConsoleSocketListenerPanel(22023);
+		}
+		return metricsConsolePanel;
+	}
+
+	/**
+	 * This method initializes reportingConsolePanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JScrollPane getReportingConsolePanel() {
+		if (reportingConsolePanel == null) {
+			reportingConsolePanel = new ConsoleSocketListenerPanel(22024);
+		}
+		return reportingConsolePanel;
+	}
+
+	/** This method initializes debugConsolePanel.	
+	 * @return javax.swing.JPanel	
+	 */
+	private JScrollPane getDebugConsolePanel() {
+		if (debugConsolePanel == null) {
+			debugConsolePanel = new ConsoleSocketListenerPanel(22025);
+		}
+		return debugConsolePanel;
+	}
+
+	/** This method initializes progressBar.	
+	 * @return javax.swing.JProgressBar	
+	 */
+	private JProgressBar getProgressBar() {
+		if (progressBar == null) {
+			progressBar = new JProgressBar();
+			progressBar.setBounds(new Rectangle(347, 69, 328, 13));
+		}
+		return progressBar;
+	}
+
+	/**
+	 * This method initializes progressPanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getProgressPanel() {
+		if (progressPanel == null) {
+			GridLayout gridLayout = new GridLayout();
+			gridLayout.setRows(5);
+			gridLayout.setColumns(1);
+			progressPanel = new JPanel();
+			progressPanel.setLayout(gridLayout);
+			progressPanel.setBounds(new Rectangle(676, 6, 177, 77));
+			progressPanel.add(getCopySourceProgressField(), null);
+			progressPanel.add(getParsingProgressField(), null);
+			progressPanel.add(getTransformProgressField(), null);
+			progressPanel.add(getMetricsProgressField(), null);
+			progressPanel.add(getReportProgressField(), null);
+		}
+		return progressPanel;
+	}
+
+	/**
+	 * This method initializes transformProgressField	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getTransformProgressField() {
+		if (transformProgressField == null) {
+			transformProgressField = new JTextField();
+			transformProgressField.setEnabled(false);
+			transformProgressField.setBackground(Color.red);
+			transformProgressField.setText("Transforming");
+		}
+		return transformProgressField;
+	}
+
+	/**
+	 * This method initializes copySourceProgressField	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getCopySourceProgressField() {
+		if (copySourceProgressField == null) {
+			copySourceProgressField = new JTextField();
+			copySourceProgressField.setBackground(Color.red);
+			copySourceProgressField.setText("Copying Sources");
+			copySourceProgressField.setEnabled(false);
+		}
+		return copySourceProgressField;
+	}
+
+	/**
+	 * This method initializes parsingProgressField	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getParsingProgressField() {
+		if (parsingProgressField == null) {
+			parsingProgressField = new JTextField();
+			parsingProgressField.setBackground(Color.red);
+			parsingProgressField.setText("Parsing Source Code");
+			parsingProgressField.setEnabled(false);
+		}
+		return parsingProgressField;
+	}
+
+	/**
+	 * This method initializes metricsProgressField	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getMetricsProgressField() {
+		if (metricsProgressField == null) {
+			metricsProgressField = new JTextField();
+			metricsProgressField.setBackground(Color.red);
+			metricsProgressField.setText("Calculating Metrics");
+			metricsProgressField.setEnabled(false);
+		}
+		return metricsProgressField;
+	}
+
+	/** This method initializes reportProgressField.	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getReportProgressField() {
+		if (reportProgressField == null) {
+			reportProgressField = new JTextField();
+			reportProgressField.setBackground(Color.red);
+			reportProgressField.setText("Building report");
+			reportProgressField.setEnabled(false);
+		}
+		return reportProgressField;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
