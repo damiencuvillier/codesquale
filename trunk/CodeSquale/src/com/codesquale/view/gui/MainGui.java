@@ -1,35 +1,45 @@
 package com.codesquale.view.gui;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.apache.tools.ant.util.FileUtils;
 import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.desktop.DesktopException;
 
 import com.codesquale.logging.ConsoleArea;
 import com.codesquale.utils.ExceptionLevel;
-import com.codesquale.launcher.process;
 import com.codesquale.utils.ExceptionManager;
 
 public class MainGui extends JFrame {
 
 	private static final int GLOBALPROCESS_SOCKETPORT = 22020 ;
+	private static final int PARSINGPROCESS_SOCKETPORT = 22021 ;
+	private static final int TRANSFORMPROCESS_SOCKETPORT = 22022 ;
+	private static final int METRICSPROCESS_SOCKETPORT = 22023 ;
+	private static final int REPORTPROCESS_SOCKETPORT = 22024 ;
+	private static final int DEBUG_SOCKETPORT = 22025 ;
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	private JPanel jContentPane = null;
@@ -38,15 +48,8 @@ public class MainGui extends JFrame {
 
 	private JPanel progressPanel = null;
 
-	private JRadioButton step1RadioButton = null;
+	private JRadioButton[] stepRadioButtons = null;
 
-	private JRadioButton step2RadioButton = null;
-
-	private JRadioButton step0RadioButton = null;
-
-	private JRadioButton step3RadioButton = null;
-
-	private JRadioButton step4RadioButton = null;
 
 	private JLabel inputDirLabel = null;
 
@@ -85,6 +88,8 @@ public class MainGui extends JFrame {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/codesquale/view/gui/icon.jpg")));
 		this.setContentPane(getJContentPane());
 		this.setTitle("CodeSquale");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		this.setVisible(true);
 	}
 
@@ -140,42 +145,13 @@ public class MainGui extends JFrame {
 	 */
 	private JPanel getProgressPanel() {
 		if (progressPanel == null) {
-			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
-			gridBagConstraints4.insets = new Insets(0, 0, 0, 3);
-			gridBagConstraints4.gridy = 0;
-			gridBagConstraints4.ipadx = 31;
-			gridBagConstraints4.ipady = 3;
-			gridBagConstraints4.gridx = 5;
-			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
-			gridBagConstraints3.gridx = 4;
-			gridBagConstraints3.ipadx = 25;
-			gridBagConstraints3.ipady = 3;
-			gridBagConstraints3.gridy = 0;
-			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-			gridBagConstraints2.gridx = 2;
-			gridBagConstraints2.ipadx = -34;
-			gridBagConstraints2.ipady = 3;
-			gridBagConstraints2.weightx = 0.0D;
-			gridBagConstraints2.gridwidth = 2;
-			gridBagConstraints2.gridy = 0;
-			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
-			gridBagConstraints1.gridx = 1;
-			gridBagConstraints1.ipadx = 38;
-			gridBagConstraints1.ipady = 3;
-			gridBagConstraints1.gridy = 0;
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.gridx = 0;
-			gridBagConstraints.ipadx = 37;
-			gridBagConstraints.ipady = 3;
-			gridBagConstraints.gridy = 0;
 			progressPanel = new JPanel();
-			progressPanel.setLayout(new GridBagLayout());
+			progressPanel.setLayout(new GridLayout(1,5));
 			progressPanel.setBounds(new Rectangle(0, 63, 788, 24));
-			progressPanel.add(getStep0RadioButton(), gridBagConstraints);
-			progressPanel.add(getStep1RadioButton(), gridBagConstraints1);
-			progressPanel.add(getStep2RadioButton(), gridBagConstraints2);
-			progressPanel.add(getStep3RadioButton(), gridBagConstraints3);
-			progressPanel.add(getStep4RadioButton(), gridBagConstraints4);
+			for(int i = 0; i<5;i++){
+				progressPanel.add(getStepRadioButtons()[i]);
+				
+			}
 		}
 		return progressPanel;
 	}
@@ -185,75 +161,23 @@ public class MainGui extends JFrame {
 	 * 	
 	 * @return javax.swing.JRadioButton	
 	 */
-	private JRadioButton getStep1RadioButton() {
-		if (step1RadioButton == null) {
-			step1RadioButton = new JRadioButton();
-			step1RadioButton.setText("1. Parsing Sources");
-			step1RadioButton.setEnabled(false);
-			step1RadioButton.setFont(new Font("Arial", Font.BOLD, 10));
+	private JRadioButton[] getStepRadioButtons() {
+		if (stepRadioButtons == null) {
+			stepRadioButtons = new JRadioButton[]{
+					new JRadioButton("0. Copying Sources"),
+					new JRadioButton("1. Parsing Sources"),
+					new JRadioButton("2. Generics XML"),
+					new JRadioButton("3. Metrics Calculation"),
+					new JRadioButton("4. Building Report")
+			};
+			for(int i = 0; i<5;i++){
+				stepRadioButtons[i].setEnabled(false);
+				stepRadioButtons[i].setFont(new Font("Arial", Font.PLAIN, 10));
+			}
 		}
-		return step1RadioButton;
+		return stepRadioButtons;
 	}
 
-	/**
-	 * This method initializes step2RadioButton	
-	 * 	
-	 * @return javax.swing.JRadioButton	
-	 */
-	private JRadioButton getStep2RadioButton() {
-		if (step2RadioButton == null) {
-			step2RadioButton = new JRadioButton();
-			step2RadioButton.setFont(new Font("Arial", Font.BOLD, 10));
-			step2RadioButton.setEnabled(false);
-			step2RadioButton.setText("2. Transform to generic XML Data ");
-		}
-		return step2RadioButton;
-	}
-
-	/**
-	 * This method initializes step0RadioButton	
-	 * 	
-	 * @return javax.swing.JRadioButton	
-	 */
-	private JRadioButton getStep0RadioButton() {
-		if (step0RadioButton == null) {
-			step0RadioButton = new JRadioButton();
-			step0RadioButton.setFont(new Font("Arial", Font.BOLD, 10));
-			step0RadioButton.setEnabled(false);
-			step0RadioButton.setText("0. Copying Sources");
-		}
-		return step0RadioButton;
-	}
-
-	/**
-	 * This method initializes step3RadioButton	
-	 * 	
-	 * @return javax.swing.JRadioButton	
-	 */
-	private JRadioButton getStep3RadioButton() {
-		if (step3RadioButton == null) {
-			step3RadioButton = new JRadioButton();
-			step3RadioButton.setFont(new Font("Arial", Font.BOLD, 10));
-			step3RadioButton.setEnabled(false);
-			step3RadioButton.setText("3. Metrics Calculation");
-		}
-		return step3RadioButton;
-	}
-
-	/**
-	 * This method initializes step4RadioButton	
-	 * 	
-	 * @return javax.swing.JRadioButton	
-	 */
-	private JRadioButton getStep4RadioButton() {
-		if (step4RadioButton == null) {
-			step4RadioButton = new JRadioButton();
-			step4RadioButton.setFont(new Font("Arial", Font.BOLD, 10));
-			step4RadioButton.setEnabled(false);
-			step4RadioButton.setText("4. Generating Report");
-		}
-		return step4RadioButton;
-	}
 
 	/**
 	 * This method initializes inputDirField	
@@ -335,15 +259,38 @@ public class MainGui extends JFrame {
 			actionButton.setText("Analyse Code");
 			actionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					com.codesquale.launcher.Process process = 
-						new com.codesquale.launcher.Process(inputDirField.getText(),outputDirField.getText());
+					
+					/* Starting CodeSquale Process */
+					String inputDir = inputDirField.getText();
+					String outputDir = outputDirField.getText();
+					if(inputDir.equals("")
+							|| outputDir.equals("")){
+						/* Checks values are enterd */
+						JOptionPane.showMessageDialog(getInstance(), "Please refer to valid path",
+							      "Not possible",
+							      JOptionPane.WARNING_MESSAGE);
+						
+					}else{
+						actionButton.setText("Processing...");
+						actionButton.setEnabled(false);
+						com.codesquale.launcher.Process process = 
+							new com.codesquale.launcher.
+								Process(new File(inputDir),
+									new File(outputDir));
+						process.start();
+						new StatusWatcher().start();
+					}
+					
+					
 				}
 				
 			});
 		}
 		return actionButton;
 	}
-
+	private MainGui getInstance(){
+		return this;
+	}
 	private void launchResults(){
 		try {
 			Desktop.browse(new URL("file:///"+outputDirField.getText()+"/"+"index.html"));
@@ -365,20 +312,60 @@ public class MainGui extends JFrame {
 		if (consolesTabbedPane == null) {
 			consolesTabbedPane = new JTabbedPane();
 			consolesTabbedPane.setBounds(new Rectangle(0, 86, 793, 481));
-			consolesTabbedPane.addTab("CodeSquale Process", null, getGlobalProcessConsoleArea(), null);
+			consolesTabbedPane.addTab("CodeSquale Process", null, new ConsoleArea(GLOBALPROCESS_SOCKETPORT), null);
+			consolesTabbedPane.addTab("Parsing (1)", null, new ConsoleArea(PARSINGPROCESS_SOCKETPORT), null);
+			consolesTabbedPane.addTab("Transforming (2)", null, new ConsoleArea(TRANSFORMPROCESS_SOCKETPORT), null);
+			consolesTabbedPane.addTab("Metrics (3)", null, new ConsoleArea(METRICSPROCESS_SOCKETPORT), null);
+			consolesTabbedPane.addTab("Report (4)", null, new ConsoleArea(REPORTPROCESS_SOCKETPORT), null);
+			consolesTabbedPane.addTab("Debug Console", null, new ConsoleArea(DEBUG_SOCKETPORT), null);
 		}
 		return consolesTabbedPane;
 	}
-
-	/**
-	 * This method initializes consoleArea	
-	 * 	
-	 * @return com.codesquale.logging.ConsoleArea	
+	/** Watch Status file
+	 * @author Damien
+	 *
 	 */
-	private ConsoleArea getGlobalProcessConsoleArea() {
-		if (globalProcessConsoleArea == null) {
-			globalProcessConsoleArea = new ConsoleArea(GLOBALPROCESS_SOCKETPORT);
+	class StatusWatcher extends Thread{
+		private final static String statusFile = "xml/status";
+		private int step = -1 ;
+		public void run(){
+			try {
+				while(true){
+					sleep(1000);
+					int newStep = -1 ;
+					try{
+						FileReader reader = new FileReader(statusFile);
+						 newStep = reader.read();
+					}catch(IOException e){
+						ExceptionManager.aspectManagedException(e, ExceptionLevel.WARN);
+					}
+					if(newStep != step){
+						step = newStep;
+						showStatus(step);
+					}
+				}
+			} catch (InterruptedException e) {
+				ExceptionManager.aspectManagedException(e, ExceptionLevel.DEBUG);
+			} finally{
+				
+				
+			}
+			
 		}
-		return globalProcessConsoleArea;
+		public synchronized void showStatus(int step) {
+			if(step >0){
+				getStepRadioButtons()[step-1].setSelected(true);
+			}
+			if(step < 5){
+				getStepRadioButtons()[step].setFont(new Font("Arial", Font.BOLD, 11));
+			}else{
+				/* At the end, delete status file */
+				FileUtils.delete(new File(statusFile));
+				launchResults();
+				actionButton.setText("CodeSqualing Done");
+			}
+		}
 	}
+	
 }
+
