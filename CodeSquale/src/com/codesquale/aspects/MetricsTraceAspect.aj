@@ -7,6 +7,7 @@ import org.aspectj.lang.Signature;
 import org.w3c.dom.Node;
 
 import com.codesquale.metrics.Metric;
+import com.codesquale.metrics.ResultFileBuildType;
 
 public aspect MetricsTraceAspect {
 	
@@ -15,7 +16,7 @@ public aspect MetricsTraceAspect {
 	 */
 	pointcut  traceMetricsCollectionInit(com.codesquale.metrics.MetricsCollection c)
 			: target(c)
-			&& call(public void ReadAvailableMetricsCollection(String))
+			&& execution(public final void readAvailableMetricsCollection(String))
 			&& !within(MetricsTraceAspect);
 	/**
 	 * Pointcut that log MetricsResultFileBuilder construction
@@ -23,9 +24,9 @@ public aspect MetricsTraceAspect {
 	pointcut traceMetricsResultConstructor()
 			: preinitialization(com.codesquale.metrics.MetricsResultFileBuilder.new(..));
 	
-	pointcut traceMetricsResultFile(String input,String output)
-			: execution(public void com.codesquale.metrics.MetricsResultFileBuilder.BuildMetricsResultFile(String,String))
-			&& args(input,output)
+	pointcut traceMetricsResultFile(String input,String output, com.codesquale.metrics.ResultFileBuildType type)
+			: execution(public final void buildMetricsResultFile( String, String, com.codesquale.metrics.ResultFileBuildType))
+			&& args(input,output,type)
 			&& !within(MetricsTraceAspect);
 
 	pointcut traceMetricsNodeParsing(com.codesquale.metrics.MetricsResultFileBuilder b)
@@ -58,7 +59,7 @@ public aspect MetricsTraceAspect {
 		doLog(thisJoinPointStaticPart.getSignature(), "");	
 	}
 	
-	after(String input, String output) : traceMetricsResultFile(input,output)
+	after(String input, String output,ResultFileBuildType type) : traceMetricsResultFile(input,output,type)
 	{
 		doLog(thisJoinPointStaticPart.getSignature(), output );	
 	}

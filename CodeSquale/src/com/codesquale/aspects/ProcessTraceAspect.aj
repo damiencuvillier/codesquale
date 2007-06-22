@@ -37,7 +37,7 @@ public aspect ProcessTraceAspect {
 	before(com.codesquale.parser.AntlrParsingProcess p) : traceParsingProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.trace( sig.getDeclaringTypeName() + "." + sig.getName() + " start files analysis");
+		ParsingTraceAspect._logger.trace( sig.getName() + " start files analysis");
 	}
 	/**
 	 * After Intercepting AntlrParsingProcess
@@ -45,7 +45,7 @@ public aspect ProcessTraceAspect {
 	after(com.codesquale.parser.AntlrParsingProcess p) : traceParsingProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.trace( sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
+		ParsingTraceAspect._logger.trace( sig.getName() + " finished");
 	}
 	
 	
@@ -55,7 +55,7 @@ public aspect ProcessTraceAspect {
 	before(com.codesquale.parser.AntlrParsingProcess p) : traceDescriptionProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.trace( sig.getDeclaringTypeName() + "." + sig.getName() + " writing files description in "+ ProjectBrowser.getInstance().getProjectOutputFileName());
+		ParsingTraceAspect._logger.trace( sig.getName() + " writing files description in "+ ProjectBrowser.getInstance().getProjectOutputFileName());
 	}
 	/**
 	 * After Intercepting AntlrParsingProcess
@@ -63,7 +63,7 @@ public aspect ProcessTraceAspect {
 	after(com.codesquale.parser.AntlrParsingProcess p) : traceDescriptionProcess(p)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
-		ParsingTraceAspect._logger.trace(sig.getDeclaringTypeName() + "." + sig.getName() + " finished");
+		ParsingTraceAspect._logger.trace( sig.getName() + " finished");
 	}
 	
 	/************************************************************************/

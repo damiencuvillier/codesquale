@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import org.aspectj.lang.Signature;
 import org.apache.log4j.Logger;
 import com.codesquale.parser.IParsingUnit;
+import com.codesquale.utils.ExceptionLevel;
 
 /**
  * Aspect that log the parsing execution
@@ -63,18 +64,20 @@ public aspect ParsingTraceAspect {
 	/**
 	 * Pointcut for parsing file
 	 */
-	pointcut traceParseFile(com.codesquale.parser.ParsingUnit u)
-		: target(u) 
-		&& call(public void DoParse(java.io.File) ) 
-		&& !within(ParsingTraceAspect);
+//	pointcut traceParseFile(com.codesquale.parser.ParsingUnit u)
+//		: target(u) 
+//		&& call(public void DoParse(java.io.File) ) 
+//		&& !within(ParsingTraceAspect);
 	
+	pointcut traceParseFile(final java.io.File file ) 
+	: execution(public final void doParse(java.io.File))
+	&& args(file);
 	/**
 	 * Poincut for Abstract Transformation
 	 */
-	pointcut traceASTTransform(com.codesquale.parser.ParsingUnit u)
-		: target(u) 
-		&& call(public FileOutputStream ASTToXML(String)) 
-		&& !within(ParsingTraceAspect);
+	pointcut traceASTTransform(final String fileName)
+		: execution(public final FileOutputStream astToXml(String)) 
+		&& args(fileName);
 	
 	/**
 	 * Before parsing unit instanciation by factory   
@@ -89,27 +92,25 @@ public aspect ParsingTraceAspect {
 	/**
 	 * Before parsing file 
 	 */
-	before(com.codesquale.parser.ParsingUnit u) : traceParseFile(u)
+	before(java.io.File f) : traceParseFile(f)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 
-		ParsingTraceAspect._logger.debug( sig.getDeclaringTypeName() + "."+ sig.getName()+ " parse: "
-				+ u.getFileName());
+		ParsingTraceAspect._logger.debug(sig.getName()+ " parse: "
+				+ f.getName());
 		ParsingTraceAspect._logger.trace("parsing file: "
-				+ u.getFileName());
+				+ f.getName());
 	}
 
 	/**
 	 * Before writing XML AST Transformation 
 	 */
-	before(com.codesquale.parser.ParsingUnit u) : traceASTTransform(u)
+	before(final String fileName) : traceASTTransform(fileName)
 	{
 		Signature sig = thisJoinPointStaticPart.getSignature();
 		
-		ParsingTraceAspect._logger.debug(sig.getDeclaringTypeName() + "."+ sig.getName() + " transform: "
-				+ u.getXmlFileName());
-		ParsingTraceAspect._logger.trace("writing description: "
-				+ u.getXmlFileName());
+		ParsingTraceAspect._logger.debug(sig.getName() + " transform: "
+				+ fileName);
 	}
 	
 	/***************************************************************************/
