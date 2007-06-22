@@ -34,6 +34,7 @@ public aspect ParsingTraceAspect {
 		//&& !execution(* *.get*(..)) 
 		&& !within(com.codesquale.view.*.*)
 		&& !within(com.codesquale.aspects.*)
+		&& !within(com.codesquale.xslt.*)
 		&& !within(ParsingTraceAspect);
 	
 	/**
