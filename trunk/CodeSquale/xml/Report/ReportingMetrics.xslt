@@ -124,19 +124,19 @@ Metrics Part
 			</li>
 		</ul>
 		<br />
-		<!-- Average number of attributes per class : 
-		<xsl:value-of select="./averageNumberAttributesPerClass/all" />
+		Average number of attributes per class : 
+		<xsl:value-of select="./ratioMetrics/averageAttributeNumberPerClass/all" />
 		<ul>
 			<li>
 				Public : 
-				<xsl:value-of select="./averageNumberAttributesPerClass/public" />
+				<xsl:value-of select="./ratioMetrics/averageAttributeNumberPerClass/public" />
 			</li>
 			<li>
 				Others : 
-				<xsl:value-of select="./averageNumberAttributesPerClass/others" />
+				<xsl:value-of select="./ratioMetrics/averageAttributeNumberPerClass/others" />
 			</li>
 		</ul>
-		<br />-->
+		<br />
 	</xsl:template>
 	<!--  // end of project.xml file -->
 	
