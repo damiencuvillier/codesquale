@@ -5,7 +5,7 @@
 				<fileProperties>
 					<fileName>{$file/@name}</fileName>
 					<fileSize unit="KB">{data($file/@filesize)}</fileSize>
-					<fileLastmodification>{data($file/@lastmodified)}</fileLastmodification>
+					<fileLastModification>{data($file/@lastmodified)}</fileLastModification>
 				</fileProperties>
 				<sizeMetrics>
 					<numberOfLines>
