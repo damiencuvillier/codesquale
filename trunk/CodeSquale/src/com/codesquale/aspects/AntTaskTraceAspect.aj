@@ -19,7 +19,7 @@ public aspect AntTaskTraceAspect {
 	pointcut traceStatusTask (com.codesquale.ant.StatusTask s) : 
 		target(s) 
 		&& execution(public void  execute()) 
-		&& !within(TraceAspect);
+		&& !within(AntTaskTraceAspect);
 	
 	/**
 	 * Display status message before executing the task
