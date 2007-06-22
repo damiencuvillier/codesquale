@@ -12,7 +12,7 @@ Ajilon IT - Lille
  -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	 threshold="debug" debug="false">
+	 threshold="trace" debug="false">
     
     
     <!-- 
@@ -82,19 +82,19 @@ Ajilon IT - Lille
  	
  	<!--  Global Process -->
  	<logger name="org.apache.tools.ant.Task" additivity="true">
- 		<level value="debug" />
+ 		<level value="trace" />
  		<appender-ref ref="GlobalSocketAppender" />
  		<appender-ref ref="ConsoleAppender" />
  		<appender-ref ref="GlobalFileAppender" /> 	
  	</logger> 
- 	<logger name="com.codesquale.ant.StatusTask">
- 		 <level value="debug" />
+ 	<logger name="com.codesquale.ant.StatusTask" additivity="true">
+ 		<level value="trace" />
  		<appender-ref ref="GlobalSocketAppender" />
  		<appender-ref ref="ConsoleAppender" />
  		<appender-ref ref="GlobalFileAppender" /> 	
  	</logger>
- 	 <logger name="GlobalCodeSqualeProcess">
- 		 <level value="debug" />
+ 	 <logger name="GlobalCodeSqualeProcess" additivity="true">
+ 		<level value="trace" />>
  		<appender-ref ref="GlobalSocketAppender" />
  		<appender-ref ref="ConsoleAppender" />
  		<appender-ref ref="GlobalFileAppender" /> 	
@@ -104,46 +104,46 @@ Ajilon IT - Lille
  	<!-- Specific Processes -->
  	
  	<!-- AntLR Process & ProjectBrowser-->
- 	<logger name="com.codesquale.ant.AntLRTask" additivity="true">
- 		<level value="debug" />
+ 	<logger name="com.codesquale.ant.AntLRTask" additivity="true">	
+ 		<level value="trace" />
  		<appender-ref ref="AntLRSocketAppender" />
  	</logger>
  	<logger name="com.codesquale.file" additivity="true">
- 		<level value="debug" />
+ 		<level value="trace" />
  		<appender-ref ref="AntLRSocketAppender" />
  	</logger>
   	<logger name="com.codesquale.parser" additivity="true">
- 		<level value="debug" />
+  		<level value="trace" />
  		<appender-ref ref="AntLRSocketAppender" />
  	</logger>
   	<logger name="ParsingCodeSqualeProcess" additivity="true">
- 		<level value="debug" />
+  		<level value="trace" />
  		<appender-ref ref="AntLRSocketAppender" />
  	</logger>
  	
  	<!--  XSLT & Transforming Process -->
  	<logger name="TransformingCodeSqualeProcess" additivity="true">
- 		<level value="debug" />
+ 		<level value="trace" />
  		<appender-ref ref="XSLTSocketAppender" />
  	</logger>
  	
  	 <!-- Metrics Process -->
  	 <logger name="com.codesquale.metrics" additivity="true">
- 		<level value="debug" />
+ 	 	<level value="trace" />
  		<appender-ref ref="MetricsSocketAppender" />
  	</logger>
   	<logger name="com.codesquale.ant.MetricsTask" additivity="true">
- 		<level value="debug"/>
+  		<level value="trace" />
  		<appender-ref ref="MetricsSocketAppender" />
  	</logger>
   	<logger name="MetricsCodeSqualeProcess" additivity="true">
- 		<level value="debug"/>
+  		<level value="trace" />
  		<appender-ref ref="MetricsSocketAppender" />
  	</logger>
  	
  	<!-- Reporting Process -->
  	<logger name="ReportingCodeSqualeProcess" additivity="true">
- 		<level value="debug"/>
+ 		<level value="trace" />
  		<appender-ref ref="ReportingSocketAppender" />
  		
  	</logger>
@@ -153,30 +153,30 @@ Ajilon IT - Lille
  	
  	<!-- Technical Logger -->
  	<logger name="TechnicalCodeSquale" additivity="true">
- 		<level value="debug"/>
+ 		<level value="trace" />
  		<appender-ref ref="ConsoleAppender" />
  	</logger>
  	<logger name="com.codesquale.view" additivity="true">
- 		<level value="debug"/>
+ 		<level value="trace" />
  		<appender-ref ref="ConsoleAppender" />
  	</logger>
   	<logger name="com.codequale.launcher" additivity="true">
- 		<level value="debug"/>
+ 		<level value="trace" />
  		<appender-ref ref="ConsoleAppender" />
  	</logger>
   	<logger name="com.codesquale.aspects" additivity="true">
- 		<level value="debug"/>
+  		<level value="trace" />
  		<appender-ref ref="ConsoleAppender" />
  	</logger>
  	<logger name="com.codesquale.utils" additivity="true">
- 		<level value="debug"/>
+	 	<level value="trace" />
  		<appender-ref ref="ConsoleAppender" />
  	</logger>
  	
  	<!-- Root Logger
  		 Log only global fatal errors to console and GeneralLog.html -->
 	<root>
-	 	<level value="DEBUG" />
+	 	<level value="trace" />
 	 	<appender-ref ref="DebuggingSocketAppender" />
 	 	<appender-ref ref="FullFileAppender" />
 	</root>
