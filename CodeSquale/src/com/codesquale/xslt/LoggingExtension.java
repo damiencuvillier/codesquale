@@ -71,19 +71,19 @@ public final class LoggingExtension extends ElemTemplateElement {
 	
 	private static void log(String level, String message, String loggerName){
 	// Log4J Logger
-	Logger logger;
+	Logger log4jInstance;
 	
 	// Checks the logging level
 	if (!isLevel(level)) {
-		logger = Logger.getLogger("GlobalCodeSqualeProcess");
-		logger.error("LoggingExtension has tried to log a message +"
+		log4jInstance = Logger.getLogger("GlobalCodeSqualeProcess");
+		log4jInstance.error("LoggingExtension has tried to log a message +"
 				+ "with a bad level :" + level);
 	}
 	
 	// If level is right, log the setted message
-	logger = Logger.getLogger(loggerName);
-	logger.log(Level.toLevel(level), message);
-	
+	log4jInstance = Logger.getLogger("TransformingCodeSqualeProcess");
+	log4jInstance.log(Level.toLevel(level), message);
+	// TODO loggerName parameter is not yet used
 }
 	/**
 	 * Tell if param is a right LOG4J level
