@@ -208,6 +208,33 @@
 				<returnValueType>single</returnValueType>
 				<populationLevel>0</populationLevel>
 			</metric>
+			<metric>
+				<metricLongName>Average number of attributes per class</metricLongName>
+				<metricShortName>ANAC</metricShortName>
+				<metricDescription>Average number of attributes per class</metricDescription>
+				<associatedXQueryPath>XQuery/ratioMetrics/attributes/anac.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+				<populationLevel>0</populationLevel>
+			</metric>
+			<metric>
+				<metricLongName>Average number of public attributes per class</metricLongName>
+				<metricShortName>PAPC</metricShortName>
+				<metricDescription>Average number of public attributes per class</metricDescription>
+				<associatedXQueryPath>XQuery/ratioMetrics/attributes/papc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+				<populationLevel>0</populationLevel>
+			</metric>
+			<metric>
+				<metricLongName>Average number of others attributes per class</metricLongName>
+				<metricShortName>OAPC</metricShortName>
+				<metricDescription>Average number of others attributes (different than public) per class</metricDescription>
+				<associatedXQueryPath>XQuery/ratioMetrics/attributes/oapc.xquery</associatedXQueryPath>
+				<enabled>true</enabled>
+				<returnValueType>single</returnValueType>
+				<populationLevel>0</populationLevel>
+			</metric>
 		</methods>
 	</ratioMetrics>
 </metricsConfiguration>
