@@ -39,7 +39,14 @@ public class ConsoleArea
 	 * @param message Message to add to the JTextArea
 	 */
 	public final void log(final String message) {
-		textarea.setText(textarea.getText() + "\n" + message);
+
+		String oldText = textarea.getText();
+		// Keep only 10000 end lines
+		if(oldText.length() > 10000 ){
+			oldText = oldText.substring(oldText.length()-10000);
+		}
+		
+		textarea.setText(oldText + "\n" + message);
 		// Scroll Back
 		this.getVerticalScrollBar().setValue(this.getVerticalScrollBar().getMaximum());
 	}
