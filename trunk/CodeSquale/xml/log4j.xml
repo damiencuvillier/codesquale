@@ -176,7 +176,7 @@ Ajilon IT - Lille
  	<!-- Root Logger
  		 Log only global fatal errors to console and GeneralLog.html -->
 	<root>
-	 	<level value="trace" />
+	 	<level value="DEBUG" />
 	 	<appender-ref ref="DebuggingSocketAppender" />
 	 	<appender-ref ref="FullFileAppender" />
 	</root>
