@@ -35,7 +35,7 @@ class SocketLoggerClient extends Thread {
 			ois = new ObjectInputStream(client.getInputStream());
 			LoggingEvent event = (LoggingEvent) ois.readObject();
 			while (true) {
-                mReceiver.sendMessage(event.getLoggerName() + ":" + event.getMessage().toString());
+                mReceiver.sendMessage(event.getMessage().toString());
                 event = (LoggingEvent) ois.readObject();
             }
 		} catch (IOException e) {
