@@ -159,7 +159,16 @@ Report Building
 	
 		
 		<xsl:variable name="link">
-			<xsl:value-of select="str:replace(@descriptionFile,'.xml','.html')"/>
+			<xsl:choose>
+				<xsl:when test="@name = 'xml'">
+					<!--  Exception. Necesserary when package is called xml -->			
+					<xsl:value-of select="concat(../../@completeName,'.xml.html')" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="str:replace(@descriptionFile,'.xml','.html')"/>
+				</xsl:otherwise>
+			</xsl:choose>
+			
 		</xsl:variable>
 		<tr>
 			<td>
