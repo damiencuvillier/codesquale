@@ -266,9 +266,7 @@
 		</xslt>
 		
 		
-		<!-- Delete Temporary File -->
-		<status message="Deleting Temporary files" />
-		<delete file="${OutputDir}/${StructuredProjectDataDir}/${tmpFile}" />
+		
 		
 	</target>
 	
@@ -334,13 +332,24 @@
 			out="${OutputDir}/${ExternalToolsDir}CheckStyle/checkstyle_errors.html" 
 			style="${ExternalToolsProcessDir}checkstyle-frames.xsl"/>	
 	</target>
+	<target name="CodeSqualeDeleteTemporyFiles">
+		<!-- Delete Temporary File -->
+		<status message="Deleting Temporary files" />
+		<delete file="${OutputDir}/${StructuredProjectDataDir}/${tmpFile}" />
+		<delete file="status" />
+		<delete file="temp.xml" />
+	</target>
+		
+			
 	<target name="CodeSqualeGlobalProcess">
 		<status step="0" message="CodeSqualing..."/>
 		<antcall target="CodeSqualeReportProcess" />
 		<antcall target="CodeSqualeLaunchsExternalTools" />
 		<antcall target="CodeSqualeZipReport" />
+		<antcall target="CodeSqualeDeleteTemporyFiles" />
 		<status step="6" message="Process done." />
 	</target>
+	
 	
 </project>
 
