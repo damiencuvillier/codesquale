@@ -8,7 +8,6 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import com.codesquale.utils.ExceptionLevel;
 import com.codesquale.utils.ExceptionManager;
-import com.codesquale.utils.Utilities;
 /** Socket Logger Client. <br />
  * Uses LOG4J appender<br />
  * 
