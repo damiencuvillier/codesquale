@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.5.0_12"/>
+	<classpathentry kind="var" path="ASPECTJRT_LIB"/>
+	<classpathentry kind="lib" path="libs/ant.jar"/>
+	<classpathentry kind="lib" path="libs/ant-apache-log4j.jar"/>
+	<classpathentry kind="lib" path="libs/ant-commons-logging.jar"/>
+	<classpathentry kind="lib" path="libs/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="libs/antlr.jar"/>
+	<classpathentry kind="lib" path="libs/ant-trax.jar"/>
+	<classpathentry kind="lib" path="libs/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="libs/checkstyle-all-4.3.jar"/>
+	<classpathentry kind="lib" path="libs/CodeSquale.jar"/>
+	<classpathentry kind="lib" path="libs/CodeSquale-gui.jar"/>
+	<classpathentry kind="lib" path="libs/com.codesquale.parser.java.jar"/>
+	<classpathentry kind="lib" path="libs/jdic_stub.jar"/>
+	<classpathentry kind="lib" path="libs/jdic.jar"/>
+	<classpathentry kind="lib" path="libs/junit-4.3.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="libs/packager.jar"/>
+	<classpathentry kind="lib" path="libs/saxon8.jar"/>
+	<classpathentry kind="lib" path="libs/saxon8-dom.jar"/>
+	<classpathentry kind="lib" path="libs/serializer.jar"/>
+	<classpathentry kind="lib" path="libs/xalan.jar"/>
+	<classpathentry kind="lib" path="libs/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="libs/xml-apis.jar"/>
+	<classpathentry kind="lib" path="libs/xsltc.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
