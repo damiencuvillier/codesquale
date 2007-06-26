@@ -18,7 +18,7 @@ import com.codesquale.parser.java.JavaRecognizer;
  * provides the raw collected data. These data are necessary to calculte the
  * final metrics.
  * 
- * @author dwillier
+ * @author mbourguignon
  */
 public class ParsingUnit implements IParsingUnit {
 	/**
