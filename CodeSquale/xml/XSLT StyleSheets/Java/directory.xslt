@@ -16,13 +16,15 @@ Antlr to CodeSquale XML transforming
 	version="1.0"
 	xmlns:redirect="http://xml.apache.org/xalan/redirect"
 	xmlns:str="xalan://com.codesquale.xslt.StringExtension"
-    extension-element-prefixes="redirect str">
+	xmlns:log4j="xalan://com.codesquale.xslt.LoggingExtension"
+    extension-element-prefixes="redirect str log4j">
     
     
 	<!-- XML Output Format -->
 	<xsl:output method="xml" indent="yes" encoding="ISO-8859-1" />
 	<xsl:strip-space elements="*" />
 	
+	<xsl:variable name="LoggerName" value="TransformingCodeSqualeProcess" />
 	
 	<!--  File includes file scoped process -->
 	<xsl:include href="file.xslt" />
@@ -35,11 +37,16 @@ Antlr to CodeSquale XML transforming
 	<xalan:component prefix="str" elements="replace">
 		<xalan:script lang="javaclass" src="xalan://com.codesquale.xslt.StringExtension" />
 	</xalan:component>
+	<!-- Log4J Extension allows to log message with log4j tool -->
+	<xalan:component prefix="log4j" elements="log">
+		<xalan:script lang="javaclass" src="xalan://com.codesquale.xslt.LoggingExtension" />
+	</xalan:component>	
+	
 	
 	<!-- Directory Process -->
 	<xsl:template match="//directory">
 		
-		<xsl:message>Analyse directory <xsl:value-of select="@href" /></xsl:message>
+		<log4j:log level="info" message="Analyse directory @href" loggerName="$LoggerName"/>
 
 		<!-- Get Package Name -->
 		<xsl:variable name="packageName">
