@@ -21,7 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import org.apache.tools.ant.util.FileUtils;
 import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.desktop.DesktopException;
 
@@ -70,6 +69,10 @@ public class MainGui extends JFrame {
 		/** Window Minimal Height. */
 		private static final int SIZE_WINDOW_HEIGHT = 600;
 		
+		/* Fonts */
+		/** Default Font for GUI.*/
+		private static final Font DEFAULT_FONT =
+			new Font("Arial", Font.PLAIN, 10);
 	/* // Constants */
 		
 		
@@ -110,7 +113,12 @@ public class MainGui extends JFrame {
 	 * Sets size and JFrame Properties.
 	 */
 	private void initialize() {
-		this.setBounds(100,100,SIZE_WINDOW_WIDTH, SIZE_WINDOW_HEIGHT);
+		
+		final int topPosition = 100;
+		final int leftPosition = 100;
+		
+		this.setBounds(leftPosition, topPosition, 
+				SIZE_WINDOW_WIDTH, SIZE_WINDOW_HEIGHT);
 		this.setResizable(false);
 		this.setTitle(PROGRAM_TITLE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,8 +154,10 @@ public class MainGui extends JFrame {
 	 */
 	private JPanel getFormPanel() {
 		if (formPanel == null) {
+			final int leftPosition = 5;
+			final int topPosition = 25;
 			JLabel outputDirLabel = new JLabel();
-			outputDirLabel.setBounds(new Rectangle(5, 25, 100, 15));
+			outputDirLabel.setBounds(new Rectangle(leftPosition, topPosition, 100, 15));
 			outputDirLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 			outputDirLabel.setText("Output Dir :");
 			JLabel inputDirLabel = new JLabel();
@@ -202,7 +212,7 @@ public class MainGui extends JFrame {
 			};
 			for (int i = 0; i < stepRadioButtons.length; i++) {
 				stepRadioButtons[i].setEnabled(false);
-				stepRadioButtons[i].setFont(new Font("Arial", Font.PLAIN, 10));
+				stepRadioButtons[i].setFont(DEFAULT_FONT);
 			}
 		}
 		return stepRadioButtons;
@@ -245,18 +255,19 @@ public class MainGui extends JFrame {
 			inputBrowseButton = new JButton();
 			inputBrowseButton.setBounds(new Rectangle(510, 5, 30, 20));
 			inputBrowseButton.setText("...");
-			inputBrowseButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			inputBrowseButton.addActionListener(new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
 					String path = new FolderChooser().getFolder();
-					if(!path.equals("")) inputDirField.setText(path);
+					if (!path.equals("")) {
+						inputDirField.setText(path);
+					}
 				}
 			});
 		}
 		return inputBrowseButton;
 	}
 
-	/**
-	 * This method initializes outputBrowseButton	
+	/** This method initializes outputBrowseButton.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -291,7 +302,7 @@ public class MainGui extends JFrame {
 			actionButton.setBounds(new Rectangle(600, 5, 160, 25));
 			actionButton.setText("Analyse Code");
 			// Action : CodeSquale Launch
-			actionButton.addActionListener(new ActionListener(){
+			actionButton.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent arg0) {
 					/* Starting CodeSquale Process */
 					String inputDir = inputDirField.getText();
@@ -405,14 +416,15 @@ public class MainGui extends JFrame {
 		/** Actuel step. Got by status file reading. */
 		private int step = -1;
 		/** Thread run method. */
-		public void run(){
+		public void run() {
 			try {
 				while (true) {
 					sleep(REFRESH_DELAY);
-					int newStep = -1 ;
+					int newStep = -1;
 					try {
 						FileReader reader = new FileReader(STATUS_FILE);
 						 newStep = reader.read();
+						 reader.close();
 					} catch (IOException e) {
 						ExceptionManager.aspectManagedException(e, 
 								ExceptionLevel.WARN);
@@ -425,27 +437,22 @@ public class MainGui extends JFrame {
 			} catch (InterruptedException e) {
 				ExceptionManager.aspectManagedException(e, 
 						ExceptionLevel.DEBUG);
-			} finally{
-				
-				
 			}
 			
 		}
 		/** Step Status Manager. 
 		 * Update GUI according status step.
-		 * @param step step id
+		 * @param newStep step id
 		 */
-		public synchronized void showStatus(int newStep) {
+		public synchronized void showStatus(final int newStep) {
 			if (step > 0) {
 				getStepRadioButtons()[newStep - 1]
 				                      .setSelected(true);
 			}
-			if (step < getStepRadioButtons().length) {
+			if (step < 6) {
 				getStepRadioButtons()[newStep]
 				    .setFont(new Font("Arial", Font.BOLD, 11));
 			} else {
-				/* At the end, delete status file */
-				FileUtils.delete(new File(STATUS_FILE));
 				// Launch Browser
 				launchResults();
 				actionButton.setText("CodeSqualing Done");
