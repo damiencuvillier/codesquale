@@ -1,3 +1,1 @@
 [http://code.google.com/p/codesquale/ CodeSquale]
-
-<SCRIPT type='text/javascript' language='JavaScript' src='http://www.ohloh.net/projects/6291;badge_js'></SCRIPT>
